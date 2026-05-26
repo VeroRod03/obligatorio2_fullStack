@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Galería Áurea</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #e2c97e;
+      --gold-dim: #8a6e32;
+      --gold-pale: rgba(201,168,76,0.08);
+      --ink: #0d0c0a;
+      --surface: #141210;
+      --surface-2: #1e1b17;
+      --surface-3: #2a2620;
+      --border: rgba(201, 168, 76, 0.15);
+      --border-subtle: rgba(201, 168, 76, 0.07);
+      --text: #e8e0d0;
+      --text-muted: #7a7060;
+      --text-dim: #4a4438;
+      --error: #c0524a;
+      --success: #4a8c5c;
+      --sidebar-w: 240px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--ink);
+      color: var(--text);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* ═══════════════ SIDEBAR ═══════════════ */
+    .sidebar {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      z-index: 100;
+    }
+
+    .sidebar-brand {
+      padding: 1.8rem 1.5rem 1.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .brand-icon {
+      width: 32px; height: 32px;
+      border: 1px solid var(--gold-dim);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold); flex-shrink: 0;
+    }
+
+    .brand-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: var(--text);
+    }
+
+    .brand-name span { color: var(--gold); }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 1.5rem 0;
+      overflow-y: auto;
+    }
+
+    .nav-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .nav-section-title {
+      font-size: 0.62rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      padding: 0 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.7rem 1.5rem;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      border-left: 2px solid transparent;
+      user-select: none;
+    }
+
+    .nav-item:hover {
+      background: var(--gold-pale);
+      color: var(--text);
+    }
+
+    .nav-item.active {
+      color: var(--gold);
+      border-left-color: var(--gold);
+      background: var(--gold-pale);
+    }
+
+    .nav-item svg { flex-shrink: 0; opacity: 0.8; }
+    .nav-item.active svg { opacity: 1; }
+
+    .sidebar-footer {
+      padding: 1.2rem 1.5rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .user-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .user-avatar {
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem;
+      color: var(--ink);
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .user-info { flex: 1; min-width: 0; }
+    .user-name { font-size: 0.82rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .user-role { font-size: 0.68rem; color: var(--text-muted); letter-spacing: 0.08em; }
+
+    .logout-btn {
+      background: none; border: none; cursor: pointer;
+      color: var(--text-muted); transition: color 0.2s; padding: 2px;
+    }
+    .logout-btn:hover { color: var(--error); }
+
+    /* ═══════════════ MAIN ═══════════════ */
+    .main-content {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 2rem;
+      border-bottom: 1px solid var(--border-subtle);
+      background: var(--ink);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .topbar-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--text);
+    }
+
+    .topbar-title span { font-style: italic; color: var(--gold); }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn-ghost {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.55rem 1rem;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-ghost:hover { border-color: var(--gold-dim); color: var(--gold); }
+
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+      border: none;
+      color: var(--ink);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.55rem 1.2rem;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-gold:hover { opacity: 0.85; }
+
+    /* ── BODY ── */
+    .dashboard-body {
+      flex: 1;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    /* ── STATS ROW ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 1.4rem 1.6rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+    }
+
+    .stat-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.6rem;
+    }
+
+    .stat-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-value .unit {
+      font-size: 1rem;
+      color: var(--gold-dim);
+      margin-left: 0.2em;
+    }
+
+    .stat-change {
+      font-size: 0.7rem;
+      color: var(--success);
+    }
+
+    .stat-change.down { color: var(--error); }
+
+    .stat-icon {
+      position: absolute;
+      bottom: 1rem; right: 1.2rem;
+      color: var(--gold-dim);
+      opacity: 0.3;
+    }
+
+    /* ── MAIN GRID ── */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 1.5rem;
+    }
+
+    /* ── PANEL ── */
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-header {
+      padding: 1.2rem 1.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .panel-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--text);
+    }
+
+    .panel-title em { font-style: italic; color: var(--gold); }
+
+    .panel-body {
+      padding: 1.5rem;
+      flex: 1;
+    }
+
+    /* ── FILTER BAR ── */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-input {
+      flex: 1;
+      min-width: 160px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.82rem;
+      padding: 0.55rem 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .filter-input:focus { border-color: var(--gold-dim); }
+    .filter-input::placeholder { color: var(--text-muted); opacity: 0.5; }
+
+    .filter-select {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.78rem;
+      padding: 0.55rem 0.8rem;
+      outline: none;
+      cursor: pointer;
+      -webkit-appearance: none;
+    }
+
+    .filter-select:focus { border-color: var(--gold-dim); }
+
+    /* ── TABLE ── */
+    .obras-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.83rem;
+    }
+
+    .obras-table thead th {
+      text-align: left;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      padding: 0 0.8rem 0.8rem;
+      border-bottom: 1px solid var(--border-subtle);
+      font-weight: 400;
+    }
+
+    .obras-table tbody tr {
+      border-bottom: 1px solid var(--border-subtle);
+      transition: background 0.15s;
+    }
+
+    .obras-table tbody tr:hover { background: var(--gold-pale); }
+    .obras-table tbody tr:last-child { border-bottom: none; }
+
+    .obras-table td {
+      padding: 0.9rem 0.8rem;
+      color: var(--text-muted);
+      vertical-align: middle;
+    }
+
+    .obra-thumb {
+      width: 40px; height: 40px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-dim);
+    }
+
+    .obra-name { color: var(--text); font-weight: 400; }
+    .obra-artist { font-size: 0.75rem; color: var(--text-muted); }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.64rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border: 1px solid;
+    }
+
+    .badge-active   { color: #6aaf7e; border-color: rgba(106,175,126,0.35); background: rgba(106,175,126,0.07); }
+    .badge-inactive { color: var(--text-muted); border-color: var(--border); }
+    .badge-pending  { color: #c9943c; border-color: rgba(201,148,60,0.35); background: rgba(201,148,60,0.07); }
+
+    .price-col { color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 1rem; }
+
+    .actions-col {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .icon-btn {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      width: 30px; height: 30px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .icon-btn:hover { border-color: var(--gold-dim); color: var(--gold); }
+    .icon-btn.danger:hover { border-color: rgba(192,82,74,0.5); color: var(--error); }
+
+    /* ── RIGHT SIDEBAR PANELS ── */
+    .right-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* ── USAGE / PLAN ── */
+    .usage-meter {
+      margin-bottom: 1rem;
+    }
+
+    .usage-numbers {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.5rem;
+    }
+
+    .usage-current {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      color: var(--text);
+    }
+
+    .usage-max {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .progress-track {
+      height: 4px;
+      background: var(--surface-3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      background: linear-gradient(to right, var(--gold-dim), var(--gold));
+      width: 65%;
+      transition: width 0.8s ease;
+    }
+
+    .plan-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold-dim);
+      padding: 0.2rem 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .plan-feature {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      padding: 0.35rem 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .plan-feature:last-child { border-bottom: none; }
+    .plan-feature svg { color: var(--gold-dim); flex-shrink: 0; }
+
+    /* ── CHART PLACEHOLDER ── */
+    .chart-area {
+      background: var(--surface-2);
+      border: 1px dashed var(--border);
+      height: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      color: var(--text-dim);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chart-area::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 100%;
+      background:
+        linear-gradient(transparent 50%, var(--gold-pale) 100%);
+    }
+
+    /* fake chart bars */
+    .fake-bars {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      padding: 0 12px;
+      height: 120px;
+    }
+
+    .fake-bar {
+      flex: 1;
+      background: linear-gradient(to top, var(--gold-dim), transparent);
+      opacity: 0.25;
+      border-top: 1px solid rgba(201,168,76,0.3);
+    }
+
+    .chart-overlay-text {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .chart-overlay-text p {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── ADD DOCUMENT FORM ── */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .form-field { }
+    .form-field.full { grid-column: span 2; }
+
+    .form-field label {
+      display: block;
+      font-size: 0.64rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.82rem;
+      padding: 0.6rem 0.8rem;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-color: var(--gold-dim);
+    }
+
+    .form-field input::placeholder,
+    .form-field textarea::placeholder {
+      color: var(--text-muted);
+      opacity: 0.5;
+    }
+
+    .form-field textarea { resize: vertical; min-height: 70px; }
+
+    /* image upload zone */
+    .upload-zone {
+      border: 1px dashed var(--border);
+      background: var(--surface-2);
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+    }
+
+    .upload-zone:hover {
+      border-color: var(--gold-dim);
+      background: var(--surface-3);
+    }
+
+    .upload-zone svg { margin-bottom: 0.4rem; color: var(--gold-dim); }
+
+    /* ── OFERTA INLINE EDIT (example row) ── */
+    .inline-edit {
+      background: var(--surface-2);
+      border: 1px solid var(--gold-dim);
+      padding: 0.6rem 0.8rem;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .inline-edit input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.82rem;
+      outline: none;
+    }
+
+    .btn-mini {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.6rem;
+      border: 1px solid;
+      cursor: pointer;
+      font-family: 'Jost', sans-serif;
+      background: none;
+    }
+
+    .btn-mini.save {
+      border-color: var(--gold-dim);
+      color: var(--gold);
+    }
+
+    .btn-mini.cancel {
+      border-color: var(--border);
+      color: var(--text-muted);
+    }
+
+    /* ── MODAL (add document) ── */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(13,12,10,0.85);
+      z-index: 200;
+      display: flex; align-items: center; justify-content: center;
+      padding: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      width: 100%;
+      max-width: 560px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      transform: translateY(16px);
+      transition: transform 0.25s;
+    }
+
+    .modal-overlay.open .modal { transform: translateY(0); }
+
+    .modal-header {
+      padding: 1.4rem 1.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; background: var(--surface); z-index: 1;
+    }
+
+    .modal-header::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+
+    .modal-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 300;
+    }
+
+    .close-btn {
+      background: none; border: none; color: var(--text-muted);
+      cursor: pointer; padding: 4px; transition: color 0.2s;
+    }
+    .close-btn:hover { color: var(--text); }
+
+    .modal-body { padding: 1.5rem; }
+
+    /* scrollbar */
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: var(--surface); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dim); }
+
+    /* ── RESPONSIVE NOTE ── */
+    @media (max-width: 1100px) {
+      .main-grid { grid-template-columns: 1fr; }
+      .right-col { display: grid; grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 800px) {
+      .sidebar { transform: translateX(-100%); }
+      .main-content { margin-left: 0; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════════════ SIDEBAR ════════════════ -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">
+        <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.2">
+          <polygon points="9,2 16,7 13,15 5,15 2,7" />
+          <circle cx="9" cy="9" r="2" />
+        </svg>
+      </div>
+      <div class="brand-name">Galería <span>Áurea</span></div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-title">Principal</div>
+        <div class="nav-item active" onclick="setActive(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+            <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+          </svg>
+          Panel general
+        </div>
+        <div class="nav-item" onclick="setActive(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+          </svg>
+          Mis publicaciones
+        </div>
+        <div class="nav-item" onclick="setActive(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          Subastas activas
+        </div>
+        <div class="nav-item" onclick="setActive(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <line x1="12" y1="1" x2="12" y2="23"/>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+          Mis ofertas
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Catálogo</div>
+        <div class="nav-item" onclick="setActive(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><path d="m3 9 4-4 4 4 4-4 4 4"/>
+            <path d="M3 15h18"/>
+          </svg>
+          Tipos de obra
+        </div>
+        <div class="nav-item" onclick="setActive(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          Explorar obras
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Cuenta</div>
+        <div class="nav-item" onclick="setActive(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+          Mi perfil
+        </div>
+        <div class="nav-item" onclick="setActive(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          Plan y suscripción
+        </div>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-pill">
+        <div class="user-avatar">MG</div>
+        <div class="user-info">
+          <div class="user-name">María García</div>
+          <div class="user-role">Vendedora · Plus</div>
+        </div>
+        <button class="logout-btn" title="Cerrar sesión" onclick="alert('Logout')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ════════════════ MAIN ════════════════ -->
+  <div class="main-content">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <div class="topbar-title">Panel <span>general</span></div>
+      <div class="topbar-actions">
+        <button class="btn-ghost">Exportar</button>
+        <button class="btn-gold" onclick="openModal()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          Nueva publicación
+        </button>
+      </div>
+    </div>
+
+    <div class="dashboard-body">
+
+      <!-- STATS ROW -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-label">Publicaciones</div>
+          <div class="stat-value">13</div>
+          <div class="stat-change">↑ 2 este mes</div>
+          <div class="stat-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Subastas activas</div>
+          <div class="stat-value">5</div>
+          <div class="stat-change">↑ 1 nueva</div>
+          <div class="stat-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Ofertas recibidas</div>
+          <div class="stat-value">28</div>
+          <div class="stat-change">↑ 6 hoy</div>
+          <div class="stat-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+              <line x1="12" y1="1" x2="12" y2="23"/>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Monto más alto</div>
+          <div class="stat-value">4.200<span class="unit">USD</span></div>
+          <div class="stat-change">Paisaje nocturno</div>
+          <div class="stat-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+              <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAIN GRID -->
+      <div class="main-grid">
+
+        <!-- PUBLICATIONS TABLE -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Mis <em>publicaciones</em></div>
+            <div style="display:flex;gap:0.5rem;">
+              <div style="font-size:0.7rem;color:var(--text-muted);">13 / 20 documentos</div>
+            </div>
+          </div>
+          <div class="panel-body">
+
+            <!-- Filter bar -->
+            <div class="filter-bar">
+              <input class="filter-input" type="text" placeholder="Buscar por título o artista…" />
+              <select class="filter-select">
+                <option value="">Todos los estados</option>
+                <option>Activa</option>
+                <option>Pendiente</option>
+                <option>Cerrada</option>
+              </select>
+              <select class="filter-select">
+                <option value="">Tipo de obra</option>
+                <option>Pintura</option>
+                <option>Escultura</option>
+                <option>Fotografía</option>
+                <option>Cerámica</option>
+              </select>
+            </div>
+
+            <!-- Table -->
+            <table class="obras-table">
+              <thead>
+                <tr>
+                  <th style="width:44px;"></th>
+                  <th>Obra / Artista</th>
+                  <th>Tipo</th>
+                  <th>Precio base</th>
+                  <th>Estado</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Row 1: inline edit example -->
+                <tr>
+                  <td><div class="obra-thumb">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                      <rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/>
+                      <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                  </div></td>
+                  <td colspan="5">
+                    <div class="inline-edit">
+                      <input type="text" value="Paisaje nocturno · Juana Molina" />
+                      <button class="btn-mini save">Guardar</button>
+                      <button class="btn-mini cancel">Cancelar</button>
+                    </div>
+                  </td>
+                </tr>
+                <!-- Row 2 -->
+                <tr>
+                  <td><div class="obra-thumb" style="background:linear-gradient(135deg,#1a0f0a,#2d1a0d);">
+                  </div></td>
+                  <td>
+                    <div class="obra-name">Forma en reposo</div>
+                    <div class="obra-artist">Carlos Benedetti</div>
+                  </td>
+                  <td style="font-size:0.78rem;">Escultura</td>
+                  <td class="price-col">1.800 <span style="font-size:0.7rem;color:var(--text-muted);">USD</span></td>
+                  <td><span class="badge badge-active">Activa</span></td>
+                  <td>
+                    <div class="actions-col">
+                      <button class="icon-btn" title="Editar">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                        </svg>
+                      </button>
+                      <button class="icon-btn danger" title="Eliminar">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                          <polyline points="3 6 5 6 21 6"/>
+                          <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                          <path d="M10 11v6"/><path d="M14 11v6"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <!-- Row 3 -->
+                <tr>
+                  <td><div class="obra-thumb" style="background:linear-gradient(135deg,#0f1520,#1a2535);"></div></td>
+                  <td>
+                    <div class="obra-name">Mar en calma</div>
+                    <div class="obra-artist">Sofía Delgado</div>
+                  </td>
+                  <td style="font-size:0.78rem;">Fotografía</td>
+                  <td class="price-col">650 <span style="font-size:0.7rem;color:var(--text-muted);">USD</span></td>
+                  <td><span class="badge badge-pending">Pendiente</span></td>
+                  <td>
+                    <div class="actions-col">
+                      <button class="icon-btn" title="Editar">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                        </svg>
+                      </button>
+                      <button class="icon-btn danger" title="Eliminar">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                          <polyline points="3 6 5 6 21 6"/>
+                          <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <!-- Row 4 -->
+                <tr>
+                  <td><div class="obra-thumb" style="background:linear-gradient(135deg,#1a1208,#2e2010);"></div></td>
+                  <td>
+                    <div class="obra-name">Composición IV</div>
+                    <div class="obra-artist">Luis Aranda</div>
+                  </td>
+                  <td style="font-size:0.78rem;">Pintura</td>
+                  <td class="price-col">3.200 <span style="font-size:0.7rem;color:var(--text-muted);">USD</span></td>
+                  <td><span class="badge badge-inactive">Cerrada</span></td>
+                  <td>
+                    <div class="actions-col">
+                      <button class="icon-btn" title="Editar">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                        </svg>
+                      </button>
+                      <button class="icon-btn danger" title="Eliminar">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                          <polyline points="3 6 5 6 21 6"/>
+                          <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="right-col">
+
+          <!-- USAGE PANEL -->
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Uso del <em>plan</em></div>
+            </div>
+            <div class="panel-body">
+              <div class="plan-badge">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+                Plan Plus
+              </div>
+              <div class="usage-meter">
+                <div class="usage-numbers">
+                  <div class="usage-current">13 <span style="font-size:1rem;color:var(--text-muted);">docs</span></div>
+                  <div class="usage-max">máx. 20</div>
+                </div>
+                <div class="progress-track">
+                  <div class="progress-fill" style="width:65%;"></div>
+                </div>
+                <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.3rem;">65% utilizado · 7 restantes</div>
+              </div>
+              <div class="plan-feature">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                Hasta 20 publicaciones
+              </div>
+              <div class="plan-feature">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                Imágenes de alta resolución
+              </div>
+              <div class="plan-feature">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                <span style="opacity:0.5;">Publicaciones ilimitadas</span>
+              </div>
+              <button class="btn-gold" style="margin-top:1.2rem;width:100%;justify-content:center;">
+                Actualizar a Premium
+              </button>
+            </div>
+          </div>
+
+          <!-- CHART PANEL -->
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Actividad <em>mensual</em></div>
+            </div>
+            <div class="panel-body" style="padding:1rem;">
+              <div class="chart-area">
+                <div class="fake-bars">
+                  <div class="fake-bar" style="height:30%;"></div>
+                  <div class="fake-bar" style="height:55%;"></div>
+                  <div class="fake-bar" style="height:40%;"></div>
+                  <div class="fake-bar" style="height:80%;"></div>
+                  <div class="fake-bar" style="height:60%;"></div>
+                  <div class="fake-bar" style="height:90%;"></div>
+                  <div class="fake-bar" style="height:70%;"></div>
+                </div>
+                <div class="chart-overlay-text">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="color:var(--gold-dim);margin-bottom:4px;">
+                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+                  </svg>
+                  <p>Gráfico de ofertas / mes</p>
+                  <p style="color:var(--text-dim);font-size:0.65rem;margin-top:2px;">Se renderizará con Recharts</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════ MODAL: Nueva publicación ════════════════ -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div class="modal-title">Nueva publicación</div>
+        <button class="close-btn" onclick="closeModal()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div style="margin-bottom:1.2rem;">
+          <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold-dim);font-size:0.9rem;border-bottom:1px solid var(--border-subtle);padding-bottom:0.6rem;margin-bottom:1rem;">
+            Datos de la obra
+          </p>
+          <div class="form-row">
+            <div class="form-field">
+              <label>ID de obra</label>
+              <input type="text" placeholder="ID de la obra existente" />
+            </div>
+            <div class="form-field">
+              <label>Tipo de obra</label>
+              <select>
+                <option value="">Seleccioná un tipo…</option>
+                <option>Pintura al Óleo</option>
+                <option>Escultura</option>
+                <option>Fotografía</option>
+                <option>Cerámica</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:1.2rem;">
+          <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold-dim);font-size:0.9rem;border-bottom:1px solid var(--border-subtle);padding-bottom:0.6rem;margin-bottom:1rem;">
+            Configuración de subasta
+          </p>
+          <div class="form-row">
+            <div class="form-field">
+              <label>Precio base (USD)</label>
+              <input type="number" placeholder="ej. 500" min="0" />
+            </div>
+            <div class="form-field">
+              <label>Estado</label>
+              <select>
+                <option value="activa">Activa</option>
+                <option value="pausada">Pausada</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field full">
+              <label>
+                <input type="checkbox" style="width:auto;padding:0;margin-right:0.4rem;accent-color:var(--gold);" />
+                Marcar como donación
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:1.5rem;">
+          <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold-dim);font-size:0.9rem;border-bottom:1px solid var(--border-subtle);padding-bottom:0.6rem;margin-bottom:1rem;">
+            Imagen
+          </p>
+          <div class="upload-zone">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            <p>Arrastrá una imagen o hacé clic para subir</p>
+            <p style="font-size:0.68rem;color:var(--text-dim);margin-top:0.2rem;">JPG, PNG · máx. 5 MB</p>
+          </div>
+        </div>
+
+        <button class="btn-gold" style="width:100%;justify-content:center;padding:0.9rem;">
+          Publicar obra
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function setActive(el) {
+      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function openModal() {
+      document.getElementById('modalOverlay').classList.add('open');
+    }
+
+    function closeModal(e) {
+      if (!e || e.target === document.getElementById('modalOverlay')) {
+        document.getElementById('modalOverlay').classList.remove('open');
+      }
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+</body>
+</html>

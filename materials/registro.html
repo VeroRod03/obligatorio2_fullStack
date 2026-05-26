@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro — Galería Áurea</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #e2c97e;
+      --gold-dim: #8a6e32;
+      --ink: #0d0c0a;
+      --surface: #141210;
+      --surface-2: #1e1b17;
+      --surface-3: #2a2620;
+      --border: rgba(201, 168, 76, 0.18);
+      --text: #e8e0d0;
+      --text-muted: #7a7060;
+      --error: #c0524a;
+      --success: #4a8c5c;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--ink);
+      color: var(--text);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      display: flex;
+      align-items: stretch;
+    }
+
+    /* ── SIDE DECORATION ── */
+    .side-deco {
+      width: 6px;
+      background: linear-gradient(to bottom,
+        transparent 0%,
+        var(--gold-dim) 20%,
+        var(--gold) 50%,
+        var(--gold-dim) 80%,
+        transparent 100%
+      );
+      flex-shrink: 0;
+    }
+
+    /* ── MAIN CONTENT ── */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+      position: relative;
+    }
+
+    .main::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 50% 30%, rgba(201,168,76,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ── HEADER ── */
+    .page-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      animation: slideDown 0.8s ease both;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin-bottom: 2rem;
+      text-decoration: none;
+    }
+
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--gold-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+    }
+
+    .brand-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--text);
+    }
+
+    .brand-name span { color: var(--gold); }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    .subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── FORM CARD ── */
+    .form-card {
+      width: 100%;
+      max-width: 580px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      animation: slideUp 0.8s 0.15s ease both;
+      position: relative;
+    }
+
+    .form-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+
+    /* ── ROLE SELECTOR ── */
+    .role-selector {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      margin-bottom: 2rem;
+    }
+
+    .role-option {
+      position: relative;
+    }
+
+    .role-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0; height: 0;
+    }
+
+    .role-label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1.2rem 1rem;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      text-align: center;
+    }
+
+    .role-label:hover {
+      border-color: var(--gold-dim);
+    }
+
+    .role-option input:checked + .role-label {
+      border-color: var(--gold);
+      background: var(--surface-3);
+    }
+
+    .role-icon { color: var(--gold-dim); transition: color 0.2s; }
+    .role-option input:checked + .role-label .role-icon { color: var(--gold); }
+
+    .role-title {
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+
+    .role-desc {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    /* ── FIELDS ── */
+    .fields-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem 1.4rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .field { }
+    .field.full { grid-column: span 2; }
+
+    label {
+      display: block;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.45rem;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      padding: 0.8rem 1rem;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      -webkit-appearance: none;
+    }
+
+    input:focus {
+      border-color: var(--gold-dim);
+      background: var(--surface-3);
+    }
+
+    input.invalid {
+      border-color: var(--error) !important;
+    }
+
+    input.valid {
+      border-color: rgba(74, 140, 92, 0.5);
+    }
+
+    input::placeholder { color: var(--text-muted); opacity: 0.5; }
+
+    .input-icon {
+      position: absolute;
+      right: 0.8rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .input-icon:hover { color: var(--gold); }
+
+    .field-error {
+      font-size: 0.7rem;
+      color: var(--error);
+      margin-top: 0.35rem;
+      display: none;
+    }
+
+    .field-error.visible { display: block; }
+
+    /* ── PASSWORD STRENGTH ── */
+    .strength-bar {
+      display: flex;
+      gap: 3px;
+      margin-top: 0.5rem;
+    }
+
+    .strength-segment {
+      flex: 1;
+      height: 3px;
+      background: var(--surface-3);
+      transition: background 0.3s;
+    }
+
+    .strength-segment.active-weak    { background: var(--error); }
+    .strength-segment.active-medium  { background: #c9943c; }
+    .strength-segment.active-strong  { background: var(--success); }
+
+    .strength-label {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+    }
+
+    /* ── ERROR BANNER ── */
+    .error-banner {
+      background: rgba(192, 82, 74, 0.12);
+      border: 1px solid rgba(192, 82, 74, 0.3);
+      color: #e08078;
+      font-size: 0.8rem;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1.5rem;
+      display: none;
+    }
+
+    .error-banner.visible { display: block; }
+
+    /* ── SUBMIT ── */
+    .form-footer {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .btn-primary {
+      width: 100%;
+      background: linear-gradient(135deg, var(--gold-dim) 0%, var(--gold) 100%);
+      border: none;
+      color: var(--ink);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 1rem;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.08);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .btn-primary:hover::after { opacity: 1; }
+    .btn-primary:hover { transform: translateY(-1px); }
+    .btn-primary:active { transform: none; }
+
+    .btn-primary:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .login-link {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .login-link a {
+      color: var(--gold);
+      text-decoration: none;
+      margin-left: 0.3em;
+      transition: color 0.2s;
+    }
+
+    .login-link a:hover { color: var(--gold-light); }
+
+    /* ── SECTION DIVIDER ── */
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem;
+      font-style: italic;
+      color: var(--gold-dim);
+      letter-spacing: 0.1em;
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="side-deco"></div>
+
+  <div class="main">
+    <div class="page-header">
+      <a href="login.html" class="brand">
+        <div class="brand-icon">
+          <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.2">
+            <polygon points="9,2 16,7 13,15 5,15 2,7" />
+            <circle cx="9" cy="9" r="2" />
+          </svg>
+        </div>
+        <div class="brand-name">Galería <span>Áurea</span></div>
+      </a>
+      <h1>Crear cuenta</h1>
+      <p class="subtitle">Ingresá tus datos para registrarte en la plataforma</p>
+    </div>
+
+    <div class="form-card">
+
+      <!-- Rol -->
+      <p class="section-title">¿Cómo vas a usar la plataforma?</p>
+      <div class="role-selector">
+        <div class="role-option">
+          <input type="radio" name="rol" id="rolVendedor" value="vendedor" checked onchange="validate()" />
+          <label for="rolVendedor" class="role-label">
+            <span class="role-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+                <rect x="3" y="7" width="18" height="14" rx="1"/>
+                <path d="M16 7V5a2 2 0 0 0-4 0v2"/>
+                <path d="M8 7V5a2 2 0 0 0-4 0v2"/>
+                <path d="M3 11h18"/>
+              </svg>
+            </span>
+            <span class="role-title">Vendedor</span>
+            <span class="role-desc">Publicar y subastar obras</span>
+          </label>
+        </div>
+        <div class="role-option">
+          <input type="radio" name="rol" id="rolComprador" value="comprador" onchange="validate()" />
+          <label for="rolComprador" class="role-label">
+            <span class="role-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <path d="M16 10a4 4 0 01-8 0"/>
+              </svg>
+            </span>
+            <span class="role-title">Comprador</span>
+            <span class="role-desc">Explorar y ofertar en subastas</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Error banner -->
+      <div id="errorBanner" class="error-banner">
+        No fue posible completar el registro. Verificá los datos.
+      </div>
+
+      <!-- Nombre -->
+      <p class="section-title">Datos personales</p>
+      <div class="fields-grid">
+        <div class="field">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" placeholder="María" oninput="validate()" />
+          <div class="field-error" id="errNombre">Ingresá tu nombre.</div>
+        </div>
+        <div class="field">
+          <label for="apellido">Apellido</label>
+          <input type="text" id="apellido" placeholder="García" oninput="validate()" />
+          <div class="field-error" id="errApellido">Ingresá tu apellido.</div>
+        </div>
+        <div class="field full">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" placeholder="nombre@ejemplo.com" oninput="validate()" />
+          <div class="field-error" id="errEmail">Ingresá un email válido.</div>
+        </div>
+      </div>
+
+      <!-- Contraseñas -->
+      <p class="section-title">Seguridad</p>
+      <div class="fields-grid">
+        <div class="field full">
+          <label for="password">Contraseña</label>
+          <div class="input-wrap">
+            <input type="password" id="password" placeholder="Mínimo 8 caracteres" oninput="checkStrength(); validate()" />
+            <span class="input-icon" onclick="togglePass('password', this)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </span>
+          </div>
+          <div class="strength-bar">
+            <div class="strength-segment" id="s1"></div>
+            <div class="strength-segment" id="s2"></div>
+            <div class="strength-segment" id="s3"></div>
+            <div class="strength-segment" id="s4"></div>
+          </div>
+          <div class="strength-label" id="strengthLabel"></div>
+          <div class="field-error" id="errPass">Mínimo 8 caracteres.</div>
+        </div>
+        <div class="field full">
+          <label for="confirmPass">Confirmar contraseña</label>
+          <div class="input-wrap">
+            <input type="password" id="confirmPass" placeholder="Repetí la contraseña" oninput="validate()" />
+            <span class="input-icon" onclick="togglePass('confirmPass', this)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </span>
+          </div>
+          <div class="field-error" id="errConfirm">Las contraseñas no coinciden.</div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="form-footer">
+        <button id="btnRegister" class="btn-primary" disabled onclick="handleRegister()">
+          Crear cuenta
+        </button>
+        <div class="login-link">
+          ¿Ya tenés cuenta?<a href="login.html">Iniciar sesión</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="side-deco"></div>
+
+  <script>
+    function togglePass(id, icon) {
+      const input = document.getElementById(id);
+      input.type = input.type === 'password' ? 'text' : 'password';
+      icon.style.color = input.type === 'text' ? 'var(--gold)' : '';
+    }
+
+    function checkStrength() {
+      const val = document.getElementById('password').value;
+      const segs = ['s1','s2','s3','s4'];
+      const label = document.getElementById('strengthLabel');
+      let score = 0;
+      if (val.length >= 8)  score++;
+      if (/[A-Z]/.test(val)) score++;
+      if (/[0-9]/.test(val)) score++;
+      if (/[^A-Za-z0-9]/.test(val)) score++;
+
+      const cls = score <= 1 ? 'active-weak' : score <= 2 ? 'active-medium' : 'active-strong';
+      const labels = ['', 'Débil', 'Regular', 'Buena', 'Fuerte'];
+      segs.forEach((id, i) => {
+        const el = document.getElementById(id);
+        el.className = 'strength-segment' + (i < score ? ' ' + cls : '');
+      });
+      label.textContent = val.length ? labels[score] : '';
+    }
+
+    function validate() {
+      const nombre = document.getElementById('nombre').value.trim();
+      const apellido = document.getElementById('apellido').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirm = document.getElementById('confirmPass').value;
+      const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+      const ok =
+        nombre.length > 0 &&
+        apellido.length > 0 &&
+        emailValid &&
+        password.length >= 8 &&
+        password === confirm;
+
+      document.getElementById('btnRegister').disabled = !ok;
+    }
+
+    function handleRegister() {
+      // Placeholder — se conectará con POST /auth/registro
+      document.getElementById('errorBanner').classList.remove('visible');
+    }
+  </script>
+</body>
+</html>

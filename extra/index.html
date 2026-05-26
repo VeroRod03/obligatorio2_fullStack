@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Art Auction API Test</title>
+  </head>
+  <body>
+    <h1>Art Auction API Test</h1>
+
+    <label
+      >Base URL:
+      <input
+        id="baseUrl"
+        type="text"
+        size="60"
+        value="https://obligatorio-full-stack-ashy.vercel.app/v1"
+    /></label>
+
+    <hr />
+    <h2>Estado</h2>
+    <pre id="estado"></pre>
+
+    <hr />
+
+    <!-- AUTH -->
+    <h2>Auth</h2>
+
+    <h3>Registro Vendedor</h3>
+    <textarea id="body-registroVendedor" rows="8" cols="60"></textarea><br />
+    <button onclick="registroVendedor()">Registro Vendedor</button>
+    <pre id="res-registroVendedor"></pre>
+
+    <h3>Registro Otro Vendedor</h3>
+    <textarea id="body-registroOtroVendedor" rows="8" cols="60"></textarea
+    ><br />
+    <button onclick="registroOtroVendedor()">Registro Otro Vendedor</button>
+    <pre id="res-registroOtroVendedor"></pre>
+
+    <h3>Registro Comprador</h3>
+    <textarea id="body-registroComprador" rows="8" cols="60"></textarea><br />
+    <button onclick="registroComprador()">Registro Comprador</button>
+    <pre id="res-registroComprador"></pre>
+
+    <h3>Login Vendedor</h3>
+    <textarea id="body-loginVendedor" rows="4" cols="60"></textarea><br />
+    <button onclick="loginVendedor()">Login Vendedor</button>
+    <pre id="res-loginVendedor"></pre>
+
+    <h3>Login Otro Vendedor</h3>
+    <textarea id="body-loginOtroVendedor" rows="4" cols="60"></textarea><br />
+    <button onclick="loginOtroVendedor()">Login Otro Vendedor</button>
+    <pre id="res-loginOtroVendedor"></pre>
+
+    <h3>Login Comprador</h3>
+    <textarea id="body-loginComprador" rows="4" cols="60"></textarea><br />
+    <button onclick="loginComprador()">Login Comprador</button>
+    <pre id="res-loginComprador"></pre>
+
+    <hr />
+
+    <!-- TIPO OBRA -->
+    <h2>Tipo Obra</h2>
+
+    <h3>Crear TipoObra</h3>
+    <textarea id="body-crearTipoObra" rows="3" cols="60">
+{"nombre": "Ceramica"}</textarea
+    ><br />
+    <button onclick="crearTipoObra()">Crear TipoObra</button>
+    <pre id="res-crearTipoObra"></pre>
+
+    <h3>Obtener Todos los TiposObra</h3>
+    <button onclick="obtenerTiposObra()">Obtener TiposObra</button>
+    <pre id="res-obtenerTiposObra"></pre>
+
+    <h3>Obtener TipoObra por ID</h3>
+    <button onclick="obtenerTipoObraById()">Obtener TipoObra por ID</button>
+    <pre id="res-obtenerTipoObraById"></pre>
+
+    <h3>Modificar TipoObra</h3>
+    <textarea id="body-modificarTipoObra" rows="3" cols="60">
+{"nombre": "Pintura al Óleo"}</textarea
+    ><br />
+    <button onclick="modificarTipoObra()">Modificar TipoObra</button>
+    <pre id="res-modificarTipoObra"></pre>
+
+    <h3>Eliminar TipoObra</h3>
+    <button onclick="eliminarTipoObra()">Eliminar TipoObra</button>
+    <pre id="res-eliminarTipoObra"></pre>
+
+    <hr />
+
+    <!-- PUBLICACION -->
+    <h2>Publicación</h2>
+
+    <h3>Setup: Crear TipoObra</h3>
+    <textarea id="body-crearTipoObra" rows="3" cols="60">
+{"nombre": "Cuadro"}</textarea
+    ><br />
+    <button onclick="crearTipoObra()">Crear TipoObra</button>
+    <pre id="res-crearTipoObra"></pre>
+
+    <h3>Crear Publicación (Vendedor)</h3>
+    <textarea id="body-crearPublicacion" rows="8" cols="60"></textarea><br />
+    <button onclick="crearPublicacion()">Crear Publicación</button>
+    <pre id="res-crearPublicacion"></pre>
+
+    <h3>Crear Otra Publicación (Otro Vendedor)</h3>
+    <textarea id="body-crearOtraPublicacion" rows="8" cols="60"></textarea
+    ><br />
+    <button onclick="crearOtraPublicacion()">Crear Otra Publicación</button>
+    <pre id="res-crearOtraPublicacion"></pre>
+
+    <h3>Obtener Publicaciones</h3>
+    <button onclick="obtenerPublicaciones()">Obtener Publicaciones</button>
+    <pre id="res-obtenerPublicaciones"></pre>
+
+    <h3>Obtener Publicación por ID</h3>
+    <button onclick="obtenerPublicacionById()">
+      Obtener Publicación por ID
+    </button>
+    <pre id="res-obtenerPublicacionById"></pre>
+
+    <h3>Mis Publicaciones (Vendedor)</h3>
+    <button onclick="misPublicacionesVendedor()">
+      Mis Publicaciones Vendedor
+    </button>
+    <pre id="res-misPublicacionesVendedor"></pre>
+
+    <h3>Mis Publicaciones (Comprador)</h3>
+    <button onclick="misPublicacionesComprador()">
+      Mis Publicaciones Comprador
+    </button>
+    <pre id="res-misPublicacionesComprador"></pre>
+
+    <h3>Modificar Publicación</h3>
+    <textarea id="body-modificarPublicacion" rows="3" cols="60">
+{"estado": "pausada"}</textarea
+    ><br />
+    <button onclick="modificarPublicacion()">Modificar Publicación</button>
+    <pre id="res-modificarPublicacion"></pre>
+
+    <h3>Finalizar Publicación</h3>
+    <button onclick="finalizarPublicacion()">Finalizar Publicación</button>
+    <pre id="res-finalizarPublicacion"></pre>
+
+    <h3>Eliminar Publicación</h3>
+    <button onclick="eliminarPublicacion()">Eliminar Publicación</button>
+    <pre id="res-eliminarPublicacion"></pre>
+
+    <hr />
+
+    <!-- OFERTA -->
+    <h2>Oferta</h2>
+
+    <h3>Crear Oferta</h3>
+    <textarea id="body-crearOferta" rows="3" cols="60">{"monto": 600}</textarea
+    ><br />
+    <button onclick="crearOferta()">Crear Oferta</button>
+    <pre id="res-crearOferta"></pre>
+
+    <h3>Obtener Ofertas de Publicación</h3>
+    <button onclick="obtenerOfertas()">Obtener Ofertas</button>
+    <pre id="res-obtenerOfertas"></pre>
+
+    <hr />
+
+    <!-- USUARIO -->
+    <h2>Usuario</h2>
+
+    <h3>Actualizar Plan Premium</h3>
+    <button onclick="actualizarPlanPremium()">Actualizar Plan Premium</button>
+    <pre id="res-actualizarPlanPremium"></pre>
+
+    <hr />
+
+    <!-- UPLOADS -->
+    <h2>Uploads</h2>
+
+    <h3>Subir Imagen</h3>
+    <input type="file" id="file-subirImagen" accept="image/*" /><br />
+    <button onclick="subirImagen()">Subir Imagen</button>
+    <pre id="res-subirImagen"></pre>
+
+    <hr />
+
+    <script src="app.js"></script>
+  </body>
+</html>
