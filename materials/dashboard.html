@@ -1,499 +1,868 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard — Galería Áurea</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="dashboard.css" />
-</head>
-<body>
-
-  <!-- ════════════════ SIDEBAR ════════════════ -->
-  <aside class="sidebar">
-    <div class="sidebar-brand">
-      <div class="brand-icon">
-        <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.2">
-          <polygon points="9,2 16,7 13,15 5,15 2,7" />
-          <circle cx="9" cy="9" r="2" />
-        </svg>
-      </div>
-      <div class="brand-name">Galería <span>Áurea</span></div>
-    </div>
-
-    <nav class="sidebar-nav">
-      <div class="nav-section">
-        <div class="nav-section-title">Principal</div>
-        <div class="nav-item active" onclick="setActive(this)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
-            <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard — Galería Áurea</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="dashboard.css" />
+  </head>
+  <body>
+    <!-- ════════════════ SIDEBAR ════════════════ -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 18 18"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.2"
+          >
+            <polygon points="9,2 16,7 13,15 5,15 2,7" />
+            <circle cx="9" cy="9" r="2" />
           </svg>
-          Panel general
         </div>
-        <div class="nav-item" onclick="setActive(this)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-            <polyline points="14 2 14 8 20 8"/>
-          </svg>
-          Mis publicaciones
-        </div>
-        <div class="nav-item" onclick="setActive(this)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <circle cx="12" cy="12" r="10"/>
-            <polyline points="12 6 12 12 16 14"/>
-          </svg>
-          Subastas activas
-        </div>
-        <div class="nav-item" onclick="setActive(this)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <line x1="12" y1="1" x2="12" y2="23"/>
-            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-          </svg>
-          Mis ofertas
-        </div>
+        <div class="brand-name">Galería <span>Áurea</span></div>
       </div>
 
-      <div class="nav-section">
-        <div class="nav-section-title">Catálogo</div>
-        <div class="nav-item" onclick="setActive(this)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <rect x="3" y="3" width="18" height="18" rx="2"/><path d="m3 9 4-4 4 4 4-4 4 4"/>
-            <path d="M3 15h18"/>
-          </svg>
-          Tipos de obra
-        </div>
-        <div class="nav-item" onclick="setActive(this)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-          </svg>
-          Explorar obras
-        </div>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-section-title">Cuenta</div>
-        <div class="nav-item" onclick="setActive(this)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-          </svg>
-          Mi perfil
-        </div>
-        <div class="nav-item" onclick="setActive(this)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-          </svg>
-          Plan y suscripción
-        </div>
-      </div>
-    </nav>
-
-    <div class="sidebar-footer">
-      <div class="user-pill">
-        <div class="user-avatar">MG</div>
-        <div class="user-info">
-          <div class="user-name">María García</div>
-          <div class="user-role">Vendedora · Plus</div>
-        </div>
-        <button class="logout-btn" title="Cerrar sesión" onclick="alert('Logout')">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-            <polyline points="16 17 21 12 16 7"/>
-            <line x1="21" y1="12" x2="9" y2="12"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </aside>
-
-  <!-- ════════════════ MAIN ════════════════ -->
-  <div class="main-content">
-
-    <!-- TOP BAR -->
-    <div class="topbar">
-      <div class="topbar-title">Panel <span>general</span></div>
-      <div class="topbar-actions">
-        <button class="btn-ghost">Exportar</button>
-        <button class="btn-gold" onclick="openModal()">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-          </svg>
-          Nueva publicación
-        </button>
-      </div>
-    </div>
-
-    <div class="dashboard-body">
-
-      <!-- STATS ROW -->
-      <div class="stats-row">
-        <div class="stat-card">
-          <div class="stat-label">Publicaciones</div>
-          <div class="stat-value">13</div>
-          <div class="stat-change">↑ 2 este mes</div>
-          <div class="stat-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Principal</div>
+          <div class="nav-item active" onclick="setActive(this)">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <rect x="3" y="3" width="7" height="7" />
+              <rect x="14" y="3" width="7" height="7" />
+              <rect x="14" y="14" width="7" height="7" />
+              <rect x="3" y="14" width="7" height="7" />
             </svg>
+            Panel general
+          </div>
+          <div class="nav-item" onclick="setActive(this)">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+              />
+              <polyline points="14 2 14 8 20 8" />
+            </svg>
+            Mis publicaciones
+          </div>
+          <div class="nav-item" onclick="setActive(this)">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+            Subastas activas
+          </div>
+          <div class="nav-item" onclick="setActive(this)">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <line x1="12" y1="1" x2="12" y2="23" />
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+            </svg>
+            Mis ofertas
           </div>
         </div>
-        <div class="stat-card">
-          <div class="stat-label">Subastas activas</div>
-          <div class="stat-value">5</div>
-          <div class="stat-change">↑ 1 nueva</div>
-          <div class="stat-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Catálogo</div>
+          <div class="nav-item" onclick="setActive(this)">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <path d="m3 9 4-4 4 4 4-4 4 4" />
+              <path d="M3 15h18" />
             </svg>
+            Tipos de obra
+          </div>
+          <div class="nav-item" onclick="setActive(this)">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            Explorar obras
           </div>
         </div>
-        <div class="stat-card">
-          <div class="stat-label">Ofertas recibidas</div>
-          <div class="stat-value">28</div>
-          <div class="stat-change">↑ 6 hoy</div>
-          <div class="stat-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-              <line x1="12" y1="1" x2="12" y2="23"/>
-              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Cuenta</div>
+          <div class="nav-item" onclick="setActive(this)">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
             </svg>
+            Mi perfil
+          </div>
+          <div class="nav-item" onclick="setActive(this)">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+            Plan y suscripción
           </div>
         </div>
-        <div class="stat-card">
-          <div class="stat-label">Monto más alto</div>
-          <div class="stat-value">4.200<span class="unit">USD</span></div>
-          <div class="stat-change">Paisaje nocturno</div>
-          <div class="stat-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-              <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
-            </svg>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-pill">
+          <div class="user-avatar">MG</div>
+          <div class="user-info">
+            <div class="user-name">María García</div>
+            <div class="user-role">Vendedora · Plus</div>
           </div>
+          <button
+            class="logout-btn"
+            title="Cerrar sesión"
+            onclick="alert('Logout')"
+          >
+            <svg
+              width="15"
+              height="15"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ════════════════ MAIN ════════════════ -->
+    <div class="main-content">
+      <!-- TOP BAR -->
+      <div class="topbar">
+        <div class="topbar-title">Panel <span>general</span></div>
+        <div class="topbar-actions">
+          <button class="btn-ghost">Exportar</button>
+          <button class="btn-gold" onclick="openModal()">
+            <svg
+              width="13"
+              height="13"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            Nueva publicación
+          </button>
         </div>
       </div>
 
-      <!-- MAIN GRID -->
-      <div class="main-grid">
-
-        <!-- PUBLICATIONS TABLE -->
-        <div class="panel">
-          <div class="panel-header">
-            <div class="panel-title">Mis <em>publicaciones</em></div>
-            <div style="display:flex;gap:0.5rem;">
-              <div style="font-size:0.7rem;color:var(--text-muted);">13 / 20 documentos</div>
+      <div class="dashboard-body">
+        <!-- STATS ROW -->
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-label">Publicaciones</div>
+            <div class="stat-value">13</div>
+            <div class="stat-change">↑ 2 este mes</div>
+            <div class="stat-icon">
+              <svg
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1"
+              >
+                <path
+                  d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                />
+              </svg>
             </div>
           </div>
-          <div class="panel-body">
-
-            <!-- Filter bar -->
-            <div class="filter-bar">
-              <input class="filter-input" type="text" placeholder="Buscar por título o artista…" />
-              <select class="filter-select">
-                <option value="">Todos los estados</option>
-                <option>Activa</option>
-                <option>Pendiente</option>
-                <option>Cerrada</option>
-              </select>
-              <select class="filter-select">
-                <option value="">Tipo de obra</option>
-                <option>Pintura</option>
-                <option>Escultura</option>
-                <option>Fotografía</option>
-                <option>Cerámica</option>
-              </select>
+          <div class="stat-card">
+            <div class="stat-label">Subastas activas</div>
+            <div class="stat-value">5</div>
+            <div class="stat-change">↑ 1 nueva</div>
+            <div class="stat-icon">
+              <svg
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
             </div>
-
-            <!-- Table -->
-            <table class="obras-table">
-              <thead>
-                <tr>
-                  <th style="width:44px;"></th>
-                  <th>Obra / Artista</th>
-                  <th>Tipo</th>
-                  <th>Precio base</th>
-                  <th>Estado</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <!-- Row 1: inline edit example -->
-                <tr>
-                  <td><div class="obra-thumb">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-                      <rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/>
-                      <polyline points="21 15 16 10 5 21"/>
-                    </svg>
-                  </div></td>
-                  <td colspan="5">
-                    <div class="inline-edit">
-                      <input type="text" value="Paisaje nocturno · Juana Molina" />
-                      <button class="btn-mini save">Guardar</button>
-                      <button class="btn-mini cancel">Cancelar</button>
-                    </div>
-                  </td>
-                </tr>
-                <!-- Row 2 -->
-                <tr>
-                  <td><div class="obra-thumb" style="background:linear-gradient(135deg,#1a0f0a,#2d1a0d);">
-                  </div></td>
-                  <td>
-                    <div class="obra-name">Forma en reposo</div>
-                    <div class="obra-artist">Carlos Benedetti</div>
-                  </td>
-                  <td style="font-size:0.78rem;">Escultura</td>
-                  <td class="price-col">1.800 <span style="font-size:0.7rem;color:var(--text-muted);">USD</span></td>
-                  <td><span class="badge badge-active">Activa</span></td>
-                  <td>
-                    <div class="actions-col">
-                      <button class="icon-btn" title="Editar">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                        </svg>
-                      </button>
-                      <button class="icon-btn danger" title="Eliminar">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                          <polyline points="3 6 5 6 21 6"/>
-                          <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
-                          <path d="M10 11v6"/><path d="M14 11v6"/>
-                        </svg>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <!-- Row 3 -->
-                <tr>
-                  <td><div class="obra-thumb" style="background:linear-gradient(135deg,#0f1520,#1a2535);"></div></td>
-                  <td>
-                    <div class="obra-name">Mar en calma</div>
-                    <div class="obra-artist">Sofía Delgado</div>
-                  </td>
-                  <td style="font-size:0.78rem;">Fotografía</td>
-                  <td class="price-col">650 <span style="font-size:0.7rem;color:var(--text-muted);">USD</span></td>
-                  <td><span class="badge badge-pending">Pendiente</span></td>
-                  <td>
-                    <div class="actions-col">
-                      <button class="icon-btn" title="Editar">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                        </svg>
-                      </button>
-                      <button class="icon-btn danger" title="Eliminar">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                          <polyline points="3 6 5 6 21 6"/>
-                          <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
-                        </svg>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <!-- Row 4 -->
-                <tr>
-                  <td><div class="obra-thumb" style="background:linear-gradient(135deg,#1a1208,#2e2010);"></div></td>
-                  <td>
-                    <div class="obra-name">Composición IV</div>
-                    <div class="obra-artist">Luis Aranda</div>
-                  </td>
-                  <td style="font-size:0.78rem;">Pintura</td>
-                  <td class="price-col">3.200 <span style="font-size:0.7rem;color:var(--text-muted);">USD</span></td>
-                  <td><span class="badge badge-inactive">Cerrada</span></td>
-                  <td>
-                    <div class="actions-col">
-                      <button class="icon-btn" title="Editar">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                        </svg>
-                      </button>
-                      <button class="icon-btn danger" title="Eliminar">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                          <polyline points="3 6 5 6 21 6"/>
-                          <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
-                        </svg>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Ofertas recibidas</div>
+            <div class="stat-value">28</div>
+            <div class="stat-change">↑ 6 hoy</div>
+            <div class="stat-icon">
+              <svg
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1"
+              >
+                <line x1="12" y1="1" x2="12" y2="23" />
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+              </svg>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Monto más alto</div>
+            <div class="stat-value">4.200<span class="unit">USD</span></div>
+            <div class="stat-change">Paisaje nocturno</div>
+            <div class="stat-icon">
+              <svg
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1"
+              >
+                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+              </svg>
+            </div>
           </div>
         </div>
 
-        <!-- RIGHT COLUMN -->
-        <div class="right-col">
-
-          <!-- USAGE PANEL -->
+        <!-- MAIN GRID -->
+        <div class="main-grid">
+          <!-- PUBLICATIONS TABLE -->
           <div class="panel">
             <div class="panel-header">
-              <div class="panel-title">Uso del <em>plan</em></div>
+              <div class="panel-title">Mis <em>publicaciones</em></div>
+              <div style="display: flex; gap: 0.5rem">
+                <div style="font-size: 0.7rem; color: var(--text-muted)">
+                  13 / 20 documentos
+                </div>
+              </div>
             </div>
             <div class="panel-body">
-              <div class="plan-badge">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-                Plan Plus
+              <!-- Filter bar -->
+              <div class="filter-bar">
+                <input
+                  class="filter-input"
+                  type="text"
+                  placeholder="Buscar por título o artista…"
+                />
+                <select class="filter-select">
+                  <option value="">Todos los estados</option>
+                  <option>Activa</option>
+                  <option>Pendiente</option>
+                  <option>Cerrada</option>
+                </select>
+                <select class="filter-select">
+                  <option value="">Tipo de obra</option>
+                  <option>Pintura</option>
+                  <option>Escultura</option>
+                  <option>Fotografía</option>
+                  <option>Cerámica</option>
+                </select>
               </div>
-              <div class="usage-meter">
-                <div class="usage-numbers">
-                  <div class="usage-current">13 <span style="font-size:1rem;color:var(--text-muted);">docs</span></div>
-                  <div class="usage-max">máx. 20</div>
-                </div>
-                <div class="progress-track">
-                  <div class="progress-fill" style="width:65%;"></div>
-                </div>
-                <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.3rem;">65% utilizado · 7 restantes</div>
-              </div>
-              <div class="plan-feature">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                Hasta 20 publicaciones
-              </div>
-              <div class="plan-feature">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                Imágenes de alta resolución
-              </div>
-              <div class="plan-feature">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                <span style="opacity:0.5;">Publicaciones ilimitadas</span>
-              </div>
-              <button class="btn-gold" style="margin-top:1.2rem;width:100%;justify-content:center;">
-                Actualizar a Premium
-              </button>
+
+              <!-- Table -->
+              <table class="obras-table">
+                <thead>
+                  <tr>
+                    <th style="width: 44px"></th>
+                    <th>Obra / Artista</th>
+                    <th>Tipo</th>
+                    <th>Precio base</th>
+                    <th>Estado</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Row 1: inline edit example -->
+                  <tr>
+                    <td>
+                      <div class="obra-thumb">
+                        <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.2"
+                        >
+                          <rect x="3" y="3" width="18" height="18" rx="1" />
+                          <circle cx="8.5" cy="8.5" r="1.5" />
+                          <polyline points="21 15 16 10 5 21" />
+                        </svg>
+                      </div>
+                    </td>
+                    <td colspan="5">
+                      <div class="inline-edit">
+                        <input
+                          type="text"
+                          value="Paisaje nocturno · Juana Molina"
+                        />
+                        <button class="btn-mini save">Guardar</button>
+                        <button class="btn-mini cancel">Cancelar</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <!-- Row 2 -->
+                  <tr>
+                    <td>
+                      <div
+                        class="obra-thumb"
+                        style="
+                          background: linear-gradient(135deg, #1a0f0a, #2d1a0d);
+                        "
+                      ></div>
+                    </td>
+                    <td>
+                      <div class="obra-name">Forma en reposo</div>
+                      <div class="obra-artist">Carlos Benedetti</div>
+                    </td>
+                    <td style="font-size: 0.78rem">Escultura</td>
+                    <td class="price-col">
+                      1.800
+                      <span style="font-size: 0.7rem; color: var(--text-muted)"
+                        >USD</span
+                      >
+                    </td>
+                    <td><span class="badge badge-active">Activa</span></td>
+                    <td>
+                      <div class="actions-col">
+                        <button class="icon-btn" title="Editar">
+                          <svg
+                            width="13"
+                            height="13"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                          >
+                            <path
+                              d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+                            />
+                            <path
+                              d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+                            />
+                          </svg>
+                        </button>
+                        <button class="icon-btn danger" title="Eliminar">
+                          <svg
+                            width="13"
+                            height="13"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                          >
+                            <polyline points="3 6 5 6 21 6" />
+                            <path
+                              d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"
+                            />
+                            <path d="M10 11v6" />
+                            <path d="M14 11v6" />
+                          </svg>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <!-- Row 3 -->
+                  <tr>
+                    <td>
+                      <div
+                        class="obra-thumb"
+                        style="
+                          background: linear-gradient(135deg, #0f1520, #1a2535);
+                        "
+                      ></div>
+                    </td>
+                    <td>
+                      <div class="obra-name">Mar en calma</div>
+                      <div class="obra-artist">Sofía Delgado</div>
+                    </td>
+                    <td style="font-size: 0.78rem">Fotografía</td>
+                    <td class="price-col">
+                      650
+                      <span style="font-size: 0.7rem; color: var(--text-muted)"
+                        >USD</span
+                      >
+                    </td>
+                    <td><span class="badge badge-pending">Pendiente</span></td>
+                    <td>
+                      <div class="actions-col">
+                        <button class="icon-btn" title="Editar">
+                          <svg
+                            width="13"
+                            height="13"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                          >
+                            <path
+                              d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+                            />
+                            <path
+                              d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+                            />
+                          </svg>
+                        </button>
+                        <button class="icon-btn danger" title="Eliminar">
+                          <svg
+                            width="13"
+                            height="13"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                          >
+                            <polyline points="3 6 5 6 21 6" />
+                            <path
+                              d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <!-- Row 4 -->
+                  <tr>
+                    <td>
+                      <div
+                        class="obra-thumb"
+                        style="
+                          background: linear-gradient(135deg, #1a1208, #2e2010);
+                        "
+                      ></div>
+                    </td>
+                    <td>
+                      <div class="obra-name">Composición IV</div>
+                      <div class="obra-artist">Luis Aranda</div>
+                    </td>
+                    <td style="font-size: 0.78rem">Pintura</td>
+                    <td class="price-col">
+                      3.200
+                      <span style="font-size: 0.7rem; color: var(--text-muted)"
+                        >USD</span
+                      >
+                    </td>
+                    <td><span class="badge badge-inactive">Cerrada</span></td>
+                    <td>
+                      <div class="actions-col">
+                        <button class="icon-btn" title="Editar">
+                          <svg
+                            width="13"
+                            height="13"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                          >
+                            <path
+                              d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+                            />
+                            <path
+                              d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+                            />
+                          </svg>
+                        </button>
+                        <button class="icon-btn danger" title="Eliminar">
+                          <svg
+                            width="13"
+                            height="13"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                          >
+                            <polyline points="3 6 5 6 21 6" />
+                            <path
+                              d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
 
-          <!-- CHART PANEL -->
-          <div class="panel">
-            <div class="panel-header">
-              <div class="panel-title">Actividad <em>mensual</em></div>
-            </div>
-            <div class="panel-body" style="padding:1rem;">
-              <div class="chart-area">
-                <div class="fake-bars">
-                  <div class="fake-bar" style="height:30%;"></div>
-                  <div class="fake-bar" style="height:55%;"></div>
-                  <div class="fake-bar" style="height:40%;"></div>
-                  <div class="fake-bar" style="height:80%;"></div>
-                  <div class="fake-bar" style="height:60%;"></div>
-                  <div class="fake-bar" style="height:90%;"></div>
-                  <div class="fake-bar" style="height:70%;"></div>
-                </div>
-                <div class="chart-overlay-text">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="color:var(--gold-dim);margin-bottom:4px;">
-                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+          <!-- RIGHT COLUMN -->
+          <div class="right-col">
+            <!-- USAGE PANEL -->
+            <div class="panel">
+              <div class="panel-header">
+                <div class="panel-title">Uso del <em>plan</em></div>
+              </div>
+              <div class="panel-body">
+                <div class="plan-badge">
+                  <svg
+                    width="10"
+                    height="10"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <polygon
+                      points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
+                    />
                   </svg>
-                  <p>Gráfico de ofertas / mes</p>
-                  <p style="color:var(--text-dim);font-size:0.65rem;margin-top:2px;">Se renderizará con Recharts</p>
+                  Plan Plus
+                </div>
+                <div class="usage-meter">
+                  <div class="usage-numbers">
+                    <div class="usage-current">
+                      13
+                      <span style="font-size: 1rem; color: var(--text-muted)"
+                        >docs</span
+                      >
+                    </div>
+                    <div class="usage-max">máx. 20</div>
+                  </div>
+                  <div class="progress-track">
+                    <div class="progress-fill" style="width: 65%"></div>
+                  </div>
+                  <div
+                    style="
+                      font-size: 0.7rem;
+                      color: var(--text-muted);
+                      margin-top: 0.3rem;
+                    "
+                  >
+                    65% utilizado · 7 restantes
+                  </div>
+                </div>
+                <div class="plan-feature">
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  Hasta 20 publicaciones
+                </div>
+                <div class="plan-feature">
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  Imágenes de alta resolución
+                </div>
+                <div class="plan-feature">
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                  <span style="opacity: 0.5">Publicaciones ilimitadas</span>
+                </div>
+                <button
+                  class="btn-gold"
+                  style="
+                    margin-top: 1.2rem;
+                    width: 100%;
+                    justify-content: center;
+                  "
+                >
+                  Actualizar a Premium
+                </button>
+              </div>
+            </div>
+
+            <!-- CHART PANEL -->
+            <div class="panel">
+              <div class="panel-header">
+                <div class="panel-title">Actividad <em>mensual</em></div>
+              </div>
+              <div class="panel-body" style="padding: 1rem">
+                <div class="chart-area">
+                  <div class="fake-bars">
+                    <div class="fake-bar" style="height: 30%"></div>
+                    <div class="fake-bar" style="height: 55%"></div>
+                    <div class="fake-bar" style="height: 40%"></div>
+                    <div class="fake-bar" style="height: 80%"></div>
+                    <div class="fake-bar" style="height: 60%"></div>
+                    <div class="fake-bar" style="height: 90%"></div>
+                    <div class="fake-bar" style="height: 70%"></div>
+                  </div>
+                  <div class="chart-overlay-text">
+                    <svg
+                      width="22"
+                      height="22"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1"
+                      style="color: var(--gold-dim); margin-bottom: 4px"
+                    >
+                      <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+                    </svg>
+                    <p>Gráfico de ofertas / mes</p>
+                    <p
+                      style="
+                        color: var(--text-dim);
+                        font-size: 0.65rem;
+                        margin-top: 2px;
+                      "
+                    >
+                      Se renderizará con Recharts
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- ════════════════ MODAL: Nueva publicación ════════════════ -->
-  <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
-    <div class="modal" onclick="event.stopPropagation()">
-      <div class="modal-header">
-        <div class="modal-title">Nueva publicación</div>
-        <button class="close-btn" onclick="closeModal()">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-          </svg>
-        </button>
-      </div>
-      <div class="modal-body">
-
-        <div style="margin-bottom:1.2rem;">
-          <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold-dim);font-size:0.9rem;border-bottom:1px solid var(--border-subtle);padding-bottom:0.6rem;margin-bottom:1rem;">
-            Datos de la obra
-          </p>
-          <div class="form-row">
-            <div class="form-field">
-              <label>ID de obra</label>
-              <input type="text" placeholder="ID de la obra existente" />
-            </div>
-            <div class="form-field">
-              <label>Tipo de obra</label>
-              <select>
-                <option value="">Seleccioná un tipo…</option>
-                <option>Pintura al Óleo</option>
-                <option>Escultura</option>
-                <option>Fotografía</option>
-                <option>Cerámica</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div style="margin-bottom:1.2rem;">
-          <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold-dim);font-size:0.9rem;border-bottom:1px solid var(--border-subtle);padding-bottom:0.6rem;margin-bottom:1rem;">
-            Configuración de subasta
-          </p>
-          <div class="form-row">
-            <div class="form-field">
-              <label>Precio base (USD)</label>
-              <input type="number" placeholder="ej. 500" min="0" />
-            </div>
-            <div class="form-field">
-              <label>Estado</label>
-              <select>
-                <option value="activa">Activa</option>
-                <option value="pausada">Pausada</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-field full">
-              <label>
-                <input type="checkbox" style="width:auto;padding:0;margin-right:0.4rem;accent-color:var(--gold);" />
-                Marcar como donación
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <div style="margin-bottom:1.5rem;">
-          <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold-dim);font-size:0.9rem;border-bottom:1px solid var(--border-subtle);padding-bottom:0.6rem;margin-bottom:1rem;">
-            Imagen
-          </p>
-          <div class="upload-zone">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-              <rect x="3" y="3" width="18" height="18" rx="2"/>
-              <circle cx="8.5" cy="8.5" r="1.5"/>
-              <polyline points="21 15 16 10 5 21"/>
+    <!-- ════════════════ MODAL: Nueva publicación ════════════════ -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+      <div class="modal" onclick="event.stopPropagation()">
+        <div class="modal-header">
+          <div class="modal-title">Nueva publicación</div>
+          <button class="close-btn" onclick="closeModal()">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
-            <p>Arrastrá una imagen o hacé clic para subir</p>
-            <p style="font-size:0.68rem;color:var(--text-dim);margin-top:0.2rem;">JPG, PNG · máx. 5 MB</p>
-          </div>
+          </button>
         </div>
+        <div class="modal-body">
+          <div style="margin-bottom: 1.2rem">
+            <p
+              style="
+                font-family: &quot;Cormorant Garamond&quot;, serif;
+                font-style: italic;
+                color: var(--gold-dim);
+                font-size: 0.9rem;
+                border-bottom: 1px solid var(--border-subtle);
+                padding-bottom: 0.6rem;
+                margin-bottom: 1rem;
+              "
+            >
+              Datos de la obra
+            </p>
+            <div class="form-row">
+              <div class="form-field">
+                <label>ID de obra</label>
+                <input type="text" placeholder="ID de la obra existente" />
+              </div>
+              <div class="form-field">
+                <label>Tipo de obra</label>
+                <select>
+                  <option value="">Seleccioná un tipo…</option>
+                  <option>Pintura al Óleo</option>
+                  <option>Escultura</option>
+                  <option>Fotografía</option>
+                  <option>Cerámica</option>
+                </select>
+              </div>
+            </div>
+          </div>
 
-        <button class="btn-gold" style="width:100%;justify-content:center;padding:0.9rem;">
-          Publicar obra
-        </button>
+          <div style="margin-bottom: 1.2rem">
+            <p
+              style="
+                font-family: &quot;Cormorant Garamond&quot;, serif;
+                font-style: italic;
+                color: var(--gold-dim);
+                font-size: 0.9rem;
+                border-bottom: 1px solid var(--border-subtle);
+                padding-bottom: 0.6rem;
+                margin-bottom: 1rem;
+              "
+            >
+              Configuración de subasta
+            </p>
+            <div class="form-row">
+              <div class="form-field">
+                <label>Precio base (USD)</label>
+                <input type="number" placeholder="ej. 500" min="0" />
+              </div>
+              <div class="form-field">
+                <label>Estado</label>
+                <select>
+                  <option value="activa">Activa</option>
+                  <option value="pausada">Pausada</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field full">
+                <label>
+                  <input
+                    type="checkbox"
+                    style="
+                      width: auto;
+                      padding: 0;
+                      margin-right: 0.4rem;
+                      accent-color: var(--gold);
+                    "
+                  />
+                  Marcar como donación
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 1.5rem">
+            <p
+              style="
+                font-family: &quot;Cormorant Garamond&quot;, serif;
+                font-style: italic;
+                color: var(--gold-dim);
+                font-size: 0.9rem;
+                border-bottom: 1px solid var(--border-subtle);
+                padding-bottom: 0.6rem;
+                margin-bottom: 1rem;
+              "
+            >
+              Imagen
+            </p>
+            <div class="upload-zone">
+              <svg
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.2"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <circle cx="8.5" cy="8.5" r="1.5" />
+                <polyline points="21 15 16 10 5 21" />
+              </svg>
+              <p>Arrastrá una imagen o hacé clic para subir</p>
+              <p
+                style="
+                  font-size: 0.68rem;
+                  color: var(--text-dim);
+                  margin-top: 0.2rem;
+                "
+              >
+                JPG, PNG · máx. 5 MB
+              </p>
+            </div>
+          </div>
+
+          <button
+            class="btn-gold"
+            style="width: 100%; justify-content: center; padding: 0.9rem"
+          >
+            Publicar obra
+          </button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <script>
-    function setActive(el) {
-      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-      el.classList.add('active');
-    }
-
-    function openModal() {
-      document.getElementById('modalOverlay').classList.add('open');
-    }
-
-    function closeModal(e) {
-      if (!e || e.target === document.getElementById('modalOverlay')) {
-        document.getElementById('modalOverlay').classList.remove('open');
+    <script>
+      function setActive(el) {
+        document
+          .querySelectorAll(".nav-item")
+          .forEach((i) => i.classList.remove("active"));
+        el.classList.add("active");
       }
-    }
 
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') closeModal();
-    });
-  </script>
-</body>
+      function openModal() {
+        document.getElementById("modalOverlay").classList.add("open");
+      }
+
+      function closeModal(e) {
+        if (!e || e.target === document.getElementById("modalOverlay")) {
+          document.getElementById("modalOverlay").classList.remove("open");
+        }
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeModal();
+      });
+    </script>
+  </body>
 </html>

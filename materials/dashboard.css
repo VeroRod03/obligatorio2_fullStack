@@ -7,13 +7,13 @@
   --surface: #141210;
   --surface-2: #1e1b17;
   --surface-3: #2a2620;
-  --border: rgba(201, 168, 76, 0.15);
-  --border-subtle: rgba(201, 168, 76, 0.07);
-  --text: #e8e0d0;
-  --text-muted: #7a7060;
-  --text-dim: #4a4438;
-  --error: #c0524a;
-  --success: #4a8c5c;
+  --border: rgba(201, 168, 76, 0.22);
+  --border-subtle: rgba(201, 168, 76, 0.12);
+  --text: #f0e8d8;
+  --text-muted: #a89880;
+  --text-dim: #5a5040;
+  --error: #d96056;
+  --success: #4a9c5c;
   --sidebar-w: 240px;
 }
 
@@ -670,7 +670,7 @@ body {
 .fake-bar {
   flex: 1;
   background: linear-gradient(to top, var(--gold-dim), transparent);
-  opacity: 0.25;
+  opacity: 0.35;
   border-top: 1px solid rgba(201, 168, 76, 0.3);
 }
 
@@ -810,7 +810,7 @@ body {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(13, 12, 10, 0.85);
+  background: rgba(13, 12, 10, 0.88);
   z-index: 200;
   display: flex;
   align-items: center;

@@ -6,11 +6,11 @@
   --surface: #141210;
   --surface-2: #1e1b17;
   --surface-3: #2a2620;
-  --border: rgba(201, 168, 76, 0.18);
-  --text: #e8e0d0;
-  --text-muted: #7a7060;
-  --error: #c0524a;
-  --success: #4a8c5c;
+  --border: rgba(201, 168, 76, 0.28);
+  --text: #f0e8d8;
+  --text-muted: #a89880;
+  --error: #d96056;
+  --success: #4a9c5c;
 }
 
 *,
@@ -62,7 +62,7 @@ body {
   inset: 0;
   background: radial-gradient(
     ellipse 60% 40% at 50% 30%,
-    rgba(201, 168, 76, 0.05) 0%,
+    rgba(184, 146, 46, 0.07) 0%,
     transparent 70%
   );
   pointer-events: none;
