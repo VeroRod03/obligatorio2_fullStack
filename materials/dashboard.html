@@ -10,311 +10,352 @@
     />
     <link rel="stylesheet" href="dashboard.css" />
   </head>
-  <body>
+  <!-- data-role se setea desde JS al cargar; cambialo aquí para demo -->
+  <body data-role="vendedor">
+
+    <!-- ════ OVERLAY MOBILE (cierra sidebar) ════ -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
     <!-- ════════════════ SIDEBAR ════════════════ -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
       <div class="sidebar-brand">
         <div class="brand-icon">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 18 18"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.2"
-          >
+          <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.2">
             <polygon points="9,2 16,7 13,15 5,15 2,7" />
             <circle cx="9" cy="9" r="2" />
           </svg>
         </div>
         <div class="brand-name">Galería <span>Áurea</span></div>
+        <!-- Botón cerrar sidebar en mobile -->
+        <button class="sidebar-close-btn" onclick="closeSidebar()" title="Cerrar menú">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
       </div>
 
-      <nav class="sidebar-nav">
+      <!-- ── NAV VENDEDOR ── -->
+      <nav class="sidebar-nav" id="navVendedor">
         <div class="nav-section">
           <div class="nav-section-title">Principal</div>
-          <div class="nav-item active" onclick="setActive(this)">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-            >
-              <rect x="3" y="3" width="7" height="7" />
-              <rect x="14" y="3" width="7" height="7" />
-              <rect x="14" y="14" width="7" height="7" />
-              <rect x="3" y="14" width="7" height="7" />
+          <div class="nav-item active" data-nav="panel-general" onclick="navigate(this)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
             </svg>
             Panel general
           </div>
-          <div class="nav-item" onclick="setActive(this)">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-            >
-              <path
-                d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-              />
-              <polyline points="14 2 14 8 20 8" />
+          <div class="nav-item" data-nav="publicaciones" onclick="navigate(this)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
             </svg>
-            Mis publicaciones
-          </div>
-          <div class="nav-item" onclick="setActive(this)">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-            >
-              <circle cx="12" cy="12" r="10" />
-              <polyline points="12 6 12 12 16 14" />
-            </svg>
-            Subastas activas
-          </div>
-          <div class="nav-item" onclick="setActive(this)">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-            >
-              <line x1="12" y1="1" x2="12" y2="23" />
-              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-            </svg>
-            Mis ofertas
+            Publicaciones activas
           </div>
         </div>
-
         <div class="nav-section">
           <div class="nav-section-title">Catálogo</div>
-          <div class="nav-item" onclick="setActive(this)">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-            >
-              <rect x="3" y="3" width="18" height="18" rx="2" />
-              <path d="m3 9 4-4 4 4 4-4 4 4" />
-              <path d="M3 15h18" />
+          <div class="nav-item" data-nav="tipos-obra" onclick="navigate(this)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <path d="m3 9 4-4 4 4 4-4 4 4"/><path d="M3 15h18"/>
             </svg>
             Tipos de obra
           </div>
-          <div class="nav-item" onclick="setActive(this)">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          <div class="nav-item" data-nav="explorar" onclick="navigate(this)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
             Explorar obras
           </div>
         </div>
-
         <div class="nav-section">
           <div class="nav-section-title">Cuenta</div>
-          <div class="nav-item" onclick="setActive(this)">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-            >
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
+          <div class="nav-item" data-nav="perfil" onclick="navigate(this)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
             </svg>
             Mi perfil
           </div>
-          <div class="nav-item" onclick="setActive(this)">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-            >
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          <div class="nav-item" data-nav="plan" onclick="navigate(this)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
             </svg>
             Plan y suscripción
           </div>
         </div>
       </nav>
 
+      <!-- ── NAV COMPRADOR ── -->
+      <nav class="sidebar-nav" id="navComprador" style="display:none">
+        <div class="nav-section">
+          <div class="nav-section-title">Principal</div>
+          <div class="nav-item active" data-nav="panel-general" onclick="navigate(this)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+            </svg>
+            Panel general
+          </div>
+          <div class="nav-item" data-nav="mis-ofertas" onclick="navigate(this)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <line x1="12" y1="1" x2="12" y2="23"/>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+            Mis ofertas
+          </div>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Cuenta</div>
+          <div class="nav-item" data-nav="perfil" onclick="navigate(this)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+            </svg>
+            Mi perfil
+          </div>
+        </div>
+      </nav>
+
+      <!-- ── SIDEBAR FOOTER ── -->
       <div class="sidebar-footer">
         <div class="user-pill">
-          <div class="user-avatar">MG</div>
+          <div class="user-avatar" id="userAvatarSidebar">MG</div>
           <div class="user-info">
-            <div class="user-name">María García</div>
-            <div class="user-role">Vendedora · Plus</div>
+            <div class="user-name" id="sidebarUserName">María García</div>
+            <div class="user-role" id="sidebarUserRole">Vendedora · Plus</div>
           </div>
-          <button
-            class="logout-btn"
-            title="Cerrar sesión"
-            onclick="alert('Logout')"
-          >
-            <svg
-              width="15"
-              height="15"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-            >
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-              <polyline points="16 17 21 12 16 7" />
-              <line x1="21" y1="12" x2="9" y2="12" />
+          <button class="logout-btn" title="Cerrar sesión" onclick="alert('Logout')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
             </svg>
           </button>
+        </div>
+        <!-- Demo: cambio de rol -->
+        <div class="role-demo-toggle">
+          <span>Demo rol:</span>
+          <button class="role-btn active" id="btnRoleVendedor" onclick="setRole('vendedor')">Vendedor</button>
+          <button class="role-btn" id="btnRoleComprador" onclick="setRole('comprador')">Comprador</button>
         </div>
       </div>
     </aside>
 
-    <!-- ════════════════ MAIN ════════════════ -->
+    <!-- ════════════════ MAIN CONTENT ════════════════ -->
     <div class="main-content">
-      <!-- TOP BAR -->
+
+      <!-- ── TOP BAR ── -->
       <div class="topbar">
-        <div class="topbar-title">Panel <span>general</span></div>
-        <div class="topbar-actions">
-          <button class="btn-ghost">Exportar</button>
-          <button class="btn-gold" onclick="openModal()">
-            <svg
-              width="13"
-              height="13"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <line x1="12" y1="5" x2="12" y2="19" />
-              <line x1="5" y1="12" x2="19" y2="12" />
+        <div class="topbar-left">
+          <button class="hamburger-btn" id="hamburgerBtn" onclick="openSidebar()" title="Menú">
+            <span></span><span></span><span></span>
+          </button>
+          <div class="topbar-title" id="topbarTitle">Panel <span>general</span></div>
+        </div>
+        <div class="topbar-actions" id="topbarActions">
+          <button class="btn-gold" id="btnNuevaPublicacion" onclick="openModalNuevaPublicacion()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
             </svg>
             Nueva publicación
           </button>
         </div>
       </div>
 
-      <div class="dashboard-body">
-        <!-- STATS ROW -->
-        <div class="stats-row">
-          <div class="stat-card">
-            <div class="stat-label">Publicaciones</div>
-            <div class="stat-value">13</div>
-            <div class="stat-change">↑ 2 este mes</div>
-            <div class="stat-icon">
-              <svg
-                width="28"
-                height="28"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1"
-              >
-                <path
-                  d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-                />
-              </svg>
+      <!-- ══════════════════════════════════════════════
+           VIEW: PANEL GENERAL
+      ══════════════════════════════════════════════ -->
+      <div class="view active" id="view-panel-general">
+
+        <!-- ── VENDEDOR: Panel general ── -->
+        <div class="dashboard-body" id="panelVendedor">
+          <!-- Stats: 3 tarjetas (sin "Subastas activas") -->
+          <div class="stats-row stats-row-3">
+            <div class="stat-card">
+              <div class="stat-label">Publicaciones</div>
+              <div class="stat-value">13</div>
+              <div class="stat-change">↑ 2 este mes</div>
+              <div class="stat-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Ofertas recibidas</div>
+              <div class="stat-value">28</div>
+              <div class="stat-change">↑ 6 hoy</div>
+              <div class="stat-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                  <line x1="12" y1="1" x2="12" y2="23"/>
+                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Monto más alto</div>
+              <div class="stat-value">4.200<span class="unit">USD</span></div>
+              <div class="stat-change">Paisaje nocturno</div>
+              <div class="stat-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                  <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+                </svg>
+              </div>
             </div>
           </div>
-          <div class="stat-card">
-            <div class="stat-label">Subastas activas</div>
-            <div class="stat-value">5</div>
-            <div class="stat-change">↑ 1 nueva</div>
-            <div class="stat-icon">
-              <svg
-                width="28"
-                height="28"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1"
-              >
-                <circle cx="12" cy="12" r="10" />
-                <polyline points="12 6 12 12 16 14" />
-              </svg>
+
+          <!-- Main grid: tabla + gráfico -->
+          <div class="main-grid">
+            <!-- Tabla publicaciones -->
+            <div class="panel">
+              <div class="panel-header">
+                <div class="panel-title">Mis <em>publicaciones</em></div>
+                <div style="font-size:0.7rem;color:var(--text-muted)">13 / 20</div>
+              </div>
+              <div class="panel-body">
+                <div class="filter-bar">
+                  <input class="filter-input" type="text" placeholder="Buscar por título o artista…"/>
+                  <select class="filter-select">
+                    <option value="">Todos los estados</option>
+                    <option>Activa</option>
+                    <option>Pausada</option>
+                    <option>Cerrada</option>
+                  </select>
+                </div>
+                <table class="obras-table">
+                  <thead>
+                    <tr>
+                      <th style="width:44px"></th>
+                      <th>Obra / Artista</th>
+                      <th>Tipo</th>
+                      <th>Precio base</th>
+                      <th>Estado</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><div class="obra-thumb" style="background:linear-gradient(135deg,#1a0f0a,#2d1a0d)"></div></td>
+                      <td><div class="obra-name">Paisaje nocturno</div><div class="obra-artist">Juana Molina</div></td>
+                      <td style="font-size:.78rem">Pintura</td>
+                      <td class="price-col">4.200 <span style="font-size:.7rem;color:var(--text-muted)">USD</span></td>
+                      <td><span class="badge badge-active">Activa</span></td>
+                      <td><div class="actions-col">
+                        <button class="icon-btn" title="Editar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                        <button class="icon-btn danger" title="Eliminar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
+                      </div></td>
+                    </tr>
+                    <tr>
+                      <td><div class="obra-thumb" style="background:linear-gradient(135deg,#1a0f0a,#2d1a0d)"></div></td>
+                      <td><div class="obra-name">Forma en reposo</div><div class="obra-artist">Carlos Benedetti</div></td>
+                      <td style="font-size:.78rem">Escultura</td>
+                      <td class="price-col">1.800 <span style="font-size:.7rem;color:var(--text-muted)">USD</span></td>
+                      <td><span class="badge badge-active">Activa</span></td>
+                      <td><div class="actions-col">
+                        <button class="icon-btn" title="Editar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                        <button class="icon-btn danger" title="Eliminar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>
+                      </div></td>
+                    </tr>
+                    <tr>
+                      <td><div class="obra-thumb" style="background:linear-gradient(135deg,#0f1520,#1a2535)"></div></td>
+                      <td><div class="obra-name">Mar en calma</div><div class="obra-artist">Sofía Delgado</div></td>
+                      <td style="font-size:.78rem">Fotografía</td>
+                      <td class="price-col">650 <span style="font-size:.7rem;color:var(--text-muted)">USD</span></td>
+                      <td><span class="badge badge-pending">Pausada</span></td>
+                      <td><div class="actions-col">
+                        <button class="icon-btn" title="Editar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                        <button class="icon-btn danger" title="Eliminar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>
+                      </div></td>
+                    </tr>
+                    <tr>
+                      <td><div class="obra-thumb" style="background:linear-gradient(135deg,#1a1208,#2e2010)"></div></td>
+                      <td><div class="obra-name">Composición IV</div><div class="obra-artist">Luis Aranda</div></td>
+                      <td style="font-size:.78rem">Pintura</td>
+                      <td class="price-col">3.200 <span style="font-size:.7rem;color:var(--text-muted)">USD</span></td>
+                      <td><span class="badge badge-inactive">Cerrada</span></td>
+                      <td><div class="actions-col">
+                        <button class="icon-btn" title="Editar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                        <button class="icon-btn danger" title="Eliminar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>
+                      </div></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Ofertas recibidas</div>
-            <div class="stat-value">28</div>
-            <div class="stat-change">↑ 6 hoy</div>
-            <div class="stat-icon">
-              <svg
-                width="28"
-                height="28"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1"
-              >
-                <line x1="12" y1="1" x2="12" y2="23" />
-                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-              </svg>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Monto más alto</div>
-            <div class="stat-value">4.200<span class="unit">USD</span></div>
-            <div class="stat-change">Paisaje nocturno</div>
-            <div class="stat-icon">
-              <svg
-                width="28"
-                height="28"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1"
-              >
-                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
-              </svg>
+
+            <!-- Gráfico actividad -->
+            <div class="right-col">
+              <div class="panel">
+                <div class="panel-header">
+                  <div class="panel-title">Actividad <em>mensual</em></div>
+                </div>
+                <div class="panel-body" style="padding:1rem">
+                  <div class="chart-area">
+                    <div class="fake-bars">
+                      <div class="fake-bar" style="height:30%"></div>
+                      <div class="fake-bar" style="height:55%"></div>
+                      <div class="fake-bar" style="height:40%"></div>
+                      <div class="fake-bar" style="height:80%"></div>
+                      <div class="fake-bar" style="height:60%"></div>
+                      <div class="fake-bar" style="height:90%"></div>
+                      <div class="fake-bar" style="height:70%"></div>
+                    </div>
+                    <div class="chart-overlay-text">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="color:var(--gold-dim);margin-bottom:4px">
+                        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+                      </svg>
+                      <p>Gráfico de ofertas / mes</p>
+                      <p style="color:var(--text-dim);font-size:.65rem;margin-top:2px">Se renderizará con Recharts</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- MAIN GRID -->
-        <div class="main-grid">
-          <!-- PUBLICATIONS TABLE -->
+        <!-- ── COMPRADOR: Panel general ── -->
+        <div class="dashboard-body" id="panelComprador" style="display:none">
           <div class="panel">
             <div class="panel-header">
-              <div class="panel-title">Mis <em>publicaciones</em></div>
-              <div style="display: flex; gap: 0.5rem">
-                <div style="font-size: 0.7rem; color: var(--text-muted)">
-                  13 / 20 documentos
-                </div>
+              <div class="panel-title">Publicaciones <em>activas</em></div>
+              <div class="pub-filter-bar">
+                <input class="filter-input" type="text" id="compradorSearch" placeholder="Buscar por título o artista…" oninput="filterPublicaciones()"/>
+                <select class="filter-select" id="compradorTipo" onchange="filterPublicaciones()">
+                  <option value="">Todos los tipos</option>
+                  <option>Pintura</option>
+                  <option>Escultura</option>
+                  <option>Fotografía</option>
+                  <option>Cerámica</option>
+                </select>
               </div>
             </div>
             <div class="panel-body">
-              <!-- Filter bar -->
+              <div class="pub-grid" id="pubGrid">
+                <!-- Cards generadas por JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           VIEW: PUBLICACIONES ACTIVAS (Vendedor)
+      ══════════════════════════════════════════════ -->
+      <div class="view" id="view-publicaciones">
+        <div class="dashboard-body">
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Publicaciones <em>activas</em></div>
+              <div style="font-size:.7rem;color:var(--text-muted)">5 activas</div>
+            </div>
+            <div class="panel-body">
               <div class="filter-bar">
-                <input
-                  class="filter-input"
-                  type="text"
-                  placeholder="Buscar por título o artista…"
-                />
+                <input class="filter-input" type="text" placeholder="Buscar por título o artista…"/>
                 <select class="filter-select">
-                  <option value="">Todos los estados</option>
-                  <option>Activa</option>
-                  <option>Pendiente</option>
-                  <option>Cerrada</option>
+                  <option value="activa" selected>Activas</option>
+                  <option value="">Todas</option>
+                  <option value="pausada">Pausadas</option>
+                  <option value="cerrada">Cerradas</option>
                 </select>
                 <select class="filter-select">
                   <option value="">Tipo de obra</option>
@@ -324,368 +365,206 @@
                   <option>Cerámica</option>
                 </select>
               </div>
-
-              <!-- Table -->
               <table class="obras-table">
                 <thead>
                   <tr>
-                    <th style="width: 44px"></th>
+                    <th style="width:44px"></th>
                     <th>Obra / Artista</th>
                     <th>Tipo</th>
                     <th>Precio base</th>
+                    <th>Última oferta</th>
                     <th>Estado</th>
                     <th></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <!-- Row 1: inline edit example -->
                   <tr>
-                    <td>
-                      <div class="obra-thumb">
-                        <svg
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.2"
-                        >
-                          <rect x="3" y="3" width="18" height="18" rx="1" />
-                          <circle cx="8.5" cy="8.5" r="1.5" />
-                          <polyline points="21 15 16 10 5 21" />
-                        </svg>
-                      </div>
-                    </td>
-                    <td colspan="5">
-                      <div class="inline-edit">
-                        <input
-                          type="text"
-                          value="Paisaje nocturno · Juana Molina"
-                        />
-                        <button class="btn-mini save">Guardar</button>
-                        <button class="btn-mini cancel">Cancelar</button>
-                      </div>
-                    </td>
-                  </tr>
-                  <!-- Row 2 -->
-                  <tr>
-                    <td>
-                      <div
-                        class="obra-thumb"
-                        style="
-                          background: linear-gradient(135deg, #1a0f0a, #2d1a0d);
-                        "
-                      ></div>
-                    </td>
-                    <td>
-                      <div class="obra-name">Forma en reposo</div>
-                      <div class="obra-artist">Carlos Benedetti</div>
-                    </td>
-                    <td style="font-size: 0.78rem">Escultura</td>
-                    <td class="price-col">
-                      1.800
-                      <span style="font-size: 0.7rem; color: var(--text-muted)"
-                        >USD</span
-                      >
-                    </td>
+                    <td><div class="obra-thumb" style="background:linear-gradient(135deg,#1a0f0a,#2d1a0d)"></div></td>
+                    <td><div class="obra-name">Paisaje nocturno</div><div class="obra-artist">Juana Molina</div></td>
+                    <td style="font-size:.78rem">Pintura</td>
+                    <td class="price-col">4.200 <span style="font-size:.7rem;color:var(--text-muted)">USD</span></td>
+                    <td class="price-col" style="color:var(--gold-light)">5.100 <span style="font-size:.7rem;color:var(--text-muted)">USD</span></td>
                     <td><span class="badge badge-active">Activa</span></td>
-                    <td>
-                      <div class="actions-col">
-                        <button class="icon-btn" title="Editar">
-                          <svg
-                            width="13"
-                            height="13"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                          >
-                            <path
-                              d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
-                            />
-                            <path
-                              d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
-                            />
-                          </svg>
-                        </button>
-                        <button class="icon-btn danger" title="Eliminar">
-                          <svg
-                            width="13"
-                            height="13"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                          >
-                            <polyline points="3 6 5 6 21 6" />
-                            <path
-                              d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"
-                            />
-                            <path d="M10 11v6" />
-                            <path d="M14 11v6" />
-                          </svg>
-                        </button>
-                      </div>
-                    </td>
+                    <td><div class="actions-col">
+                      <button class="icon-btn" title="Editar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                      <button class="icon-btn danger" title="Eliminar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
+                    </div></td>
                   </tr>
-                  <!-- Row 3 -->
                   <tr>
-                    <td>
-                      <div
-                        class="obra-thumb"
-                        style="
-                          background: linear-gradient(135deg, #0f1520, #1a2535);
-                        "
-                      ></div>
-                    </td>
-                    <td>
-                      <div class="obra-name">Mar en calma</div>
-                      <div class="obra-artist">Sofía Delgado</div>
-                    </td>
-                    <td style="font-size: 0.78rem">Fotografía</td>
-                    <td class="price-col">
-                      650
-                      <span style="font-size: 0.7rem; color: var(--text-muted)"
-                        >USD</span
-                      >
-                    </td>
-                    <td><span class="badge badge-pending">Pendiente</span></td>
-                    <td>
-                      <div class="actions-col">
-                        <button class="icon-btn" title="Editar">
-                          <svg
-                            width="13"
-                            height="13"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                          >
-                            <path
-                              d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
-                            />
-                            <path
-                              d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
-                            />
-                          </svg>
-                        </button>
-                        <button class="icon-btn danger" title="Eliminar">
-                          <svg
-                            width="13"
-                            height="13"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                          >
-                            <polyline points="3 6 5 6 21 6" />
-                            <path
-                              d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"
-                            />
-                          </svg>
-                        </button>
-                      </div>
-                    </td>
+                    <td><div class="obra-thumb" style="background:linear-gradient(135deg,#1a0f0a,#2d1a0d)"></div></td>
+                    <td><div class="obra-name">Forma en reposo</div><div class="obra-artist">Carlos Benedetti</div></td>
+                    <td style="font-size:.78rem">Escultura</td>
+                    <td class="price-col">1.800 <span style="font-size:.7rem;color:var(--text-muted)">USD</span></td>
+                    <td style="font-size:.78rem;color:var(--text-dim)">Sin ofertas</td>
+                    <td><span class="badge badge-active">Activa</span></td>
+                    <td><div class="actions-col">
+                      <button class="icon-btn" title="Editar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                      <button class="icon-btn danger" title="Eliminar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>
+                    </div></td>
                   </tr>
-                  <!-- Row 4 -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           VIEW: TIPOS DE OBRA (Vendedor)
+      ══════════════════════════════════════════════ -->
+      <div class="view" id="view-tipos-obra">
+        <div class="dashboard-body">
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Tipos de <em>obra</em></div>
+              <button class="btn-gold" onclick="showNuevoTipo()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+                Nuevo tipo
+              </button>
+            </div>
+            <div class="panel-body">
+              <!-- Formulario nuevo tipo (oculto por defecto) -->
+              <div class="nuevo-tipo-form" id="nuevoTipoForm" style="display:none">
+                <div class="filter-bar" style="margin-bottom:0.8rem">
+                  <input class="filter-input" type="text" id="nuevoTipoInput" placeholder="Nombre del tipo de obra…" maxlength="50"/>
+                  <button class="btn-gold" onclick="guardarNuevoTipo()" style="padding:.5rem 1rem;font-size:.72rem">Guardar</button>
+                  <button class="btn-ghost" onclick="cancelarNuevoTipo()" style="padding:.5rem 1rem;font-size:.72rem">Cancelar</button>
+                </div>
+              </div>
+
+              <table class="obras-table" id="tiposObraTable">
+                <thead>
                   <tr>
-                    <td>
-                      <div
-                        class="obra-thumb"
-                        style="
-                          background: linear-gradient(135deg, #1a1208, #2e2010);
-                        "
-                      ></div>
+                    <th>Nombre</th>
+                    <th>ID</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="tiposObraTbody">
+                  <tr data-tipo-id="tipo_001">
+                    <td id="cell-nombre-tipo_001">
+                      <span class="tipo-nombre">Pintura al Óleo</span>
                     </td>
-                    <td>
-                      <div class="obra-name">Composición IV</div>
-                      <div class="obra-artist">Luis Aranda</div>
+                    <td style="font-size:.72rem;color:var(--text-dim);font-family:monospace">tipo_001</td>
+                    <td><div class="actions-col">
+                      <button class="icon-btn" title="Editar" onclick="editarTipo('tipo_001')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                      <button class="icon-btn danger" title="Eliminar" onclick="eliminarTipo('tipo_001', 'Pintura al Óleo')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
+                    </div></td>
+                  </tr>
+                  <tr data-tipo-id="tipo_002">
+                    <td id="cell-nombre-tipo_002">
+                      <span class="tipo-nombre">Escultura</span>
                     </td>
-                    <td style="font-size: 0.78rem">Pintura</td>
-                    <td class="price-col">
-                      3.200
-                      <span style="font-size: 0.7rem; color: var(--text-muted)"
-                        >USD</span
-                      >
+                    <td style="font-size:.72rem;color:var(--text-dim);font-family:monospace">tipo_002</td>
+                    <td><div class="actions-col">
+                      <button class="icon-btn" title="Editar" onclick="editarTipo('tipo_002')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                      <button class="icon-btn danger" title="Eliminar" onclick="eliminarTipo('tipo_002', 'Escultura')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
+                    </div></td>
+                  </tr>
+                  <tr data-tipo-id="tipo_003">
+                    <td id="cell-nombre-tipo_003">
+                      <span class="tipo-nombre">Fotografía</span>
                     </td>
-                    <td><span class="badge badge-inactive">Cerrada</span></td>
-                    <td>
-                      <div class="actions-col">
-                        <button class="icon-btn" title="Editar">
-                          <svg
-                            width="13"
-                            height="13"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                          >
-                            <path
-                              d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
-                            />
-                            <path
-                              d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
-                            />
-                          </svg>
-                        </button>
-                        <button class="icon-btn danger" title="Eliminar">
-                          <svg
-                            width="13"
-                            height="13"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                          >
-                            <polyline points="3 6 5 6 21 6" />
-                            <path
-                              d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"
-                            />
-                          </svg>
-                        </button>
-                      </div>
+                    <td style="font-size:.72rem;color:var(--text-dim);font-family:monospace">tipo_003</td>
+                    <td><div class="actions-col">
+                      <button class="icon-btn" title="Editar" onclick="editarTipo('tipo_003')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                      <button class="icon-btn danger" title="Eliminar" onclick="eliminarTipo('tipo_003', 'Fotografía')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
+                    </div></td>
+                  </tr>
+                  <tr data-tipo-id="tipo_004">
+                    <td id="cell-nombre-tipo_004">
+                      <span class="tipo-nombre">Cerámica</span>
                     </td>
+                    <td style="font-size:.72rem;color:var(--text-dim);font-family:monospace">tipo_004</td>
+                    <td><div class="actions-col">
+                      <button class="icon-btn" title="Editar" onclick="editarTipo('tipo_004')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                      <button class="icon-btn danger" title="Eliminar" onclick="eliminarTipo('tipo_004', 'Cerámica')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
+                    </div></td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
 
-          <!-- RIGHT COLUMN -->
-          <div class="right-col">
-            <!-- USAGE PANEL -->
-            <div class="panel">
-              <div class="panel-header">
-                <div class="panel-title">Uso del <em>plan</em></div>
-              </div>
-              <div class="panel-body">
-                <div class="plan-badge">
-                  <svg
-                    width="10"
-                    height="10"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <polygon
-                      points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
-                    />
-                  </svg>
-                  Plan Plus
-                </div>
-                <div class="usage-meter">
-                  <div class="usage-numbers">
-                    <div class="usage-current">
-                      13
-                      <span style="font-size: 1rem; color: var(--text-muted)"
-                        >docs</span
-                      >
-                    </div>
-                    <div class="usage-max">máx. 20</div>
-                  </div>
-                  <div class="progress-track">
-                    <div class="progress-fill" style="width: 65%"></div>
-                  </div>
-                  <div
-                    style="
-                      font-size: 0.7rem;
-                      color: var(--text-muted);
-                      margin-top: 0.3rem;
-                    "
-                  >
-                    65% utilizado · 7 restantes
-                  </div>
-                </div>
-                <div class="plan-feature">
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                  Hasta 20 publicaciones
-                </div>
-                <div class="plan-feature">
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                  Imágenes de alta resolución
-                </div>
-                <div class="plan-feature">
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <line x1="18" y1="6" x2="6" y2="18" />
-                    <line x1="6" y1="6" x2="18" y2="18" />
-                  </svg>
-                  <span style="opacity: 0.5">Publicaciones ilimitadas</span>
-                </div>
-                <button
-                  class="btn-gold"
-                  style="
-                    margin-top: 1.2rem;
-                    width: 100%;
-                    justify-content: center;
-                  "
-                >
-                  Actualizar a Premium
-                </button>
-              </div>
-            </div>
+          <!-- Explorar obras (puede estar acá o en su propia vista) -->
+        </div>
+      </div>
 
-            <!-- CHART PANEL -->
-            <div class="panel">
-              <div class="panel-header">
-                <div class="panel-title">Actividad <em>mensual</em></div>
+      <!-- ══════════════════════════════════════════════
+           VIEW: EXPLORAR OBRAS
+      ══════════════════════════════════════════════ -->
+      <div class="view" id="view-explorar">
+        <div class="dashboard-body">
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Explorar <em>obras</em></div>
+            </div>
+            <div class="panel-body">
+              <div class="filter-bar">
+                <input class="filter-input" type="text" placeholder="Buscar obra, artista…"/>
+                <select class="filter-select">
+                  <option value="">Todos los tipos</option>
+                  <option>Pintura</option>
+                  <option>Escultura</option>
+                  <option>Fotografía</option>
+                  <option>Cerámica</option>
+                </select>
               </div>
-              <div class="panel-body" style="padding: 1rem">
-                <div class="chart-area">
-                  <div class="fake-bars">
-                    <div class="fake-bar" style="height: 30%"></div>
-                    <div class="fake-bar" style="height: 55%"></div>
-                    <div class="fake-bar" style="height: 40%"></div>
-                    <div class="fake-bar" style="height: 80%"></div>
-                    <div class="fake-bar" style="height: 60%"></div>
-                    <div class="fake-bar" style="height: 90%"></div>
-                    <div class="fake-bar" style="height: 70%"></div>
+              <div class="pub-grid explorar-grid">
+                <div class="pub-card">
+                  <div class="pub-card-img" style="background:linear-gradient(135deg,#1a0f0a,#2d1a0d)">
+                    <div class="pub-card-tipo">Pintura</div>
                   </div>
-                  <div class="chart-overlay-text">
-                    <svg
-                      width="22"
-                      height="22"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="1"
-                      style="color: var(--gold-dim); margin-bottom: 4px"
-                    >
-                      <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
-                    </svg>
-                    <p>Gráfico de ofertas / mes</p>
-                    <p
-                      style="
-                        color: var(--text-dim);
-                        font-size: 0.65rem;
-                        margin-top: 2px;
-                      "
-                    >
-                      Se renderizará con Recharts
-                    </p>
+                  <div class="pub-card-body">
+                    <div class="pub-card-title">Paisaje nocturno</div>
+                    <div class="pub-card-artist">Juana Molina · 1998</div>
+                  </div>
+                </div>
+                <div class="pub-card">
+                  <div class="pub-card-img" style="background:linear-gradient(135deg,#0f1520,#1a2535)">
+                    <div class="pub-card-tipo">Escultura</div>
+                  </div>
+                  <div class="pub-card-body">
+                    <div class="pub-card-title">Forma en reposo</div>
+                    <div class="pub-card-artist">Carlos Benedetti · 2003</div>
+                  </div>
+                </div>
+                <div class="pub-card">
+                  <div class="pub-card-img" style="background:linear-gradient(135deg,#10160a,#1e2d10)">
+                    <div class="pub-card-tipo">Fotografía</div>
+                  </div>
+                  <div class="pub-card-body">
+                    <div class="pub-card-title">Mar en calma</div>
+                    <div class="pub-card-artist">Sofía Delgado · 2015</div>
+                  </div>
+                </div>
+                <div class="pub-card">
+                  <div class="pub-card-img" style="background:linear-gradient(135deg,#1a1208,#2e2010)">
+                    <div class="pub-card-tipo">Pintura</div>
+                  </div>
+                  <div class="pub-card-body">
+                    <div class="pub-card-title">Composición IV</div>
+                    <div class="pub-card-artist">Luis Aranda · 2010</div>
+                  </div>
+                </div>
+                <div class="pub-card">
+                  <div class="pub-card-img" style="background:linear-gradient(135deg,#160a14,#2a1228)">
+                    <div class="pub-card-tipo">Cerámica</div>
+                  </div>
+                  <div class="pub-card-body">
+                    <div class="pub-card-title">Vasija ritual</div>
+                    <div class="pub-card-artist">Ana Torres · 2007</div>
+                  </div>
+                </div>
+                <div class="pub-card">
+                  <div class="pub-card-img" style="background:linear-gradient(135deg,#0a1616,#102a2a)">
+                    <div class="pub-card-tipo">Fotografía</div>
+                  </div>
+                  <div class="pub-card-body">
+                    <div class="pub-card-title">Ciudad de noche</div>
+                    <div class="pub-card-artist">Pablo Ruiz · 2019</div>
                   </div>
                 </div>
               </div>
@@ -693,46 +572,247 @@
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- ════════════════ MODAL: Nueva publicación ════════════════ -->
-    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+      <!-- ══════════════════════════════════════════════
+           VIEW: MI PERFIL (ambos roles)
+      ══════════════════════════════════════════════ -->
+      <div class="view" id="view-perfil">
+        <div class="dashboard-body">
+          <div class="perfil-layout">
+            <!-- Columna izquierda: avatar -->
+            <div class="panel perfil-avatar-panel">
+              <div class="panel-header">
+                <div class="panel-title">Foto de <em>perfil</em></div>
+              </div>
+              <div class="panel-body" style="display:flex;flex-direction:column;align-items:center;gap:1.2rem;padding:2rem 1.5rem">
+                <div class="avatar-upload-area" id="avatarUploadArea" onclick="document.getElementById('avatarFileInput').click()">
+                  <div class="avatar-preview" id="avatarPreview">
+                    <span id="avatarInitials">MG</span>
+                    <img id="avatarImg" style="display:none;width:100%;height:100%;object-fit:cover"/>
+                  </div>
+                  <div class="avatar-overlay">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                      <circle cx="12" cy="13" r="4"/>
+                    </svg>
+                    <span>Cambiar foto</span>
+                  </div>
+                </div>
+                <input type="file" id="avatarFileInput" accept="image/*" style="display:none" onchange="previewAvatar(event)"/>
+                <p style="font-size:.72rem;color:var(--text-dim);text-align:center">JPG, PNG · máx. 2 MB<br>La imagen se recortará en círculo</p>
+                <button class="btn-gold" style="width:100%;justify-content:center" onclick="alert('Foto guardada (demo)')">Guardar foto</button>
+              </div>
+            </div>
+
+            <!-- Columna derecha: datos -->
+            <div class="panel perfil-datos-panel">
+              <div class="panel-header">
+                <div class="panel-title">Datos <em>personales</em></div>
+              </div>
+              <div class="panel-body">
+                <div class="form-section-title">Información general</div>
+                <div class="form-row">
+                  <div class="form-field">
+                    <label>Nombre</label>
+                    <input type="text" value="María"/>
+                  </div>
+                  <div class="form-field">
+                    <label>Apellido</label>
+                    <input type="text" value="García"/>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-field full">
+                    <label>Email</label>
+                    <input type="email" value="maria.garcia@email.com"/>
+                  </div>
+                </div>
+
+                <div class="form-section-title" style="margin-top:1.5rem">Cambiar contraseña</div>
+                <div class="form-row">
+                  <div class="form-field full">
+                    <label>Contraseña actual</label>
+                    <input type="password" placeholder="••••••••"/>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-field">
+                    <label>Nueva contraseña</label>
+                    <input type="password" placeholder="••••••••"/>
+                  </div>
+                  <div class="form-field">
+                    <label>Confirmar contraseña</label>
+                    <input type="password" placeholder="••••••••"/>
+                  </div>
+                </div>
+
+                <button class="btn-gold" style="margin-top:1.5rem;justify-content:center;width:100%;padding:.9rem" onclick="alert('Perfil guardado (demo)')">
+                  Guardar cambios
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           VIEW: PLAN Y SUSCRIPCIÓN (solo Vendedor)
+      ══════════════════════════════════════════════ -->
+      <div class="view" id="view-plan">
+        <div class="dashboard-body">
+          <div class="plan-page-layout">
+            <!-- Card plan actual -->
+            <div class="panel">
+              <div class="panel-header">
+                <div class="panel-title">Uso del <em>plan</em></div>
+              </div>
+              <div class="panel-body">
+                <div class="plan-badge">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+                  </svg>
+                  Plan Plus
+                </div>
+                <div class="usage-meter">
+                  <div class="usage-numbers">
+                    <div class="usage-current">13 <span style="font-size:1rem;color:var(--text-muted)">docs</span></div>
+                    <div class="usage-max">máx. 20</div>
+                  </div>
+                  <div class="progress-track">
+                    <div class="progress-fill" style="width:65%"></div>
+                  </div>
+                  <div style="font-size:.7rem;color:var(--text-muted);margin-top:.3rem">65% utilizado · 7 restantes</div>
+                </div>
+                <div class="plan-feature">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  Hasta 20 publicaciones
+                </div>
+                <div class="plan-feature">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  Imágenes de alta resolución
+                </div>
+                <div class="plan-feature">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  <span style="opacity:.5">Publicaciones ilimitadas</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Opciones de plan -->
+            <div class="plan-options">
+              <div class="plan-option-card">
+                <div class="plan-option-name">Básico</div>
+                <div class="plan-option-price">Gratis</div>
+                <ul class="plan-option-features">
+                  <li>Hasta 5 publicaciones</li>
+                  <li>Imágenes estándar</li>
+                </ul>
+                <button class="btn-ghost" style="width:100%;justify-content:center;padding:.8rem">Seleccionar</button>
+              </div>
+              <div class="plan-option-card plan-option-current">
+                <div class="plan-option-badge">Actual</div>
+                <div class="plan-option-name">Plus</div>
+                <div class="plan-option-price">$9.99 <span style="font-size:.8rem;color:var(--text-muted)">/mes</span></div>
+                <ul class="plan-option-features">
+                  <li>Hasta 20 publicaciones</li>
+                  <li>Imágenes de alta resolución</li>
+                  <li>Estadísticas avanzadas</li>
+                </ul>
+                <button class="btn-ghost" style="width:100%;justify-content:center;padding:.8rem;opacity:.4" disabled>Plan actual</button>
+              </div>
+              <div class="plan-option-card">
+                <div class="plan-option-name">Premium</div>
+                <div class="plan-option-price">$24.99 <span style="font-size:.8rem;color:var(--text-muted)">/mes</span></div>
+                <ul class="plan-option-features">
+                  <li>Publicaciones ilimitadas</li>
+                  <li>Imágenes de alta resolución</li>
+                  <li>Estadísticas avanzadas</li>
+                  <li>Soporte prioritario</li>
+                </ul>
+                <button class="btn-gold" style="width:100%;justify-content:center;padding:.8rem">Actualizar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           VIEW: MIS OFERTAS (Comprador)
+      ══════════════════════════════════════════════ -->
+      <div class="view" id="view-mis-ofertas">
+        <div class="dashboard-body">
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Mis <em>ofertas</em></div>
+              <div style="font-size:.7rem;color:var(--text-muted)">3 ofertas realizadas</div>
+            </div>
+            <div class="panel-body">
+              <table class="obras-table">
+                <thead>
+                  <tr>
+                    <th style="width:44px"></th>
+                    <th>Obra</th>
+                    <th>Tipo</th>
+                    <th>Mi oferta</th>
+                    <th>Última oferta</th>
+                    <th>Estado subasta</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><div class="obra-thumb" style="background:linear-gradient(135deg,#1a0f0a,#2d1a0d)"></div></td>
+                    <td><div class="obra-name">Paisaje nocturno</div><div class="obra-artist">Juana Molina</div></td>
+                    <td style="font-size:.78rem">Pintura</td>
+                    <td class="price-col">4.800 <span style="font-size:.7rem;color:var(--text-muted)">USD</span></td>
+                    <td class="price-col" style="color:var(--gold-light)">5.100 <span style="font-size:.7rem;color:var(--text-muted)">USD</span></td>
+                    <td><span class="badge badge-active">Activa</span></td>
+                  </tr>
+                  <tr>
+                    <td><div class="obra-thumb" style="background:linear-gradient(135deg,#0f1520,#1a2535)"></div></td>
+                    <td><div class="obra-name">Mar en calma</div><div class="obra-artist">Sofía Delgado</div></td>
+                    <td style="font-size:.78rem">Fotografía</td>
+                    <td class="price-col">700 <span style="font-size:.7rem;color:var(--text-muted)">USD</span></td>
+                    <td class="price-col" style="color:var(--gold)">700 <span style="font-size:.7rem;color:var(--text-muted)">USD</span></td>
+                    <td><span class="badge badge-pending">Pausada</span></td>
+                  </tr>
+                  <tr>
+                    <td><div class="obra-thumb" style="background:linear-gradient(135deg,#160a14,#2a1228)"></div></td>
+                    <td><div class="obra-name">Vasija ritual</div><div class="obra-artist">Ana Torres</div></td>
+                    <td style="font-size:.78rem">Cerámica</td>
+                    <td class="price-col">1.200 <span style="font-size:.7rem;color:var(--text-muted)">USD</span></td>
+                    <td class="price-col" style="color:var(--error)">1.500 <span style="font-size:.7rem;color:var(--text-muted)">USD</span></td>
+                    <td><span class="badge badge-active">Activa</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /main-content -->
+
+
+    <!-- ════════════════ MODAL: Nueva publicación (Vendedor) ════════════════ -->
+    <div class="modal-overlay" id="modalNuevaPublicacion" onclick="closeModalNuevaPublicacion(event)">
       <div class="modal" onclick="event.stopPropagation()">
         <div class="modal-header">
           <div class="modal-title">Nueva publicación</div>
-          <button class="close-btn" onclick="closeModal()">
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-            >
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
+          <button class="close-btn" onclick="closeModalNuevaPublicacion()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
             </svg>
           </button>
         </div>
         <div class="modal-body">
-          <div style="margin-bottom: 1.2rem">
-            <p
-              style="
-                font-family: &quot;Cormorant Garamond&quot;, serif;
-                font-style: italic;
-                color: var(--gold-dim);
-                font-size: 0.9rem;
-                border-bottom: 1px solid var(--border-subtle);
-                padding-bottom: 0.6rem;
-                margin-bottom: 1rem;
-              "
-            >
+          <div style="margin-bottom:1.2rem">
+            <p class="form-section-title" style="border-bottom:1px solid var(--border-subtle);padding-bottom:.6rem;margin-bottom:1rem">
               Datos de la obra
             </p>
             <div class="form-row">
               <div class="form-field">
-                <label>ID de obra</label>
-                <input type="text" placeholder="ID de la obra existente" />
+                <label>ID de obra <span style="font-size:.6rem;color:var(--text-dim)">(API artic.edu)</span></label>
+                <input type="text" placeholder="ej. 27992"/>
               </div>
               <div class="form-field">
                 <label>Tipo de obra</label>
@@ -747,24 +827,14 @@
             </div>
           </div>
 
-          <div style="margin-bottom: 1.2rem">
-            <p
-              style="
-                font-family: &quot;Cormorant Garamond&quot;, serif;
-                font-style: italic;
-                color: var(--gold-dim);
-                font-size: 0.9rem;
-                border-bottom: 1px solid var(--border-subtle);
-                padding-bottom: 0.6rem;
-                margin-bottom: 1rem;
-              "
-            >
+          <div style="margin-bottom:1.5rem">
+            <p class="form-section-title" style="border-bottom:1px solid var(--border-subtle);padding-bottom:.6rem;margin-bottom:1rem">
               Configuración de subasta
             </p>
             <div class="form-row">
               <div class="form-field">
                 <label>Precio base (USD)</label>
-                <input type="number" placeholder="ej. 500" min="0" />
+                <input type="number" placeholder="ej. 500" min="0"/>
               </div>
               <div class="form-field">
                 <label>Estado</label>
@@ -777,92 +847,383 @@
             <div class="form-row">
               <div class="form-field full">
                 <label>
-                  <input
-                    type="checkbox"
-                    style="
-                      width: auto;
-                      padding: 0;
-                      margin-right: 0.4rem;
-                      accent-color: var(--gold);
-                    "
-                  />
+                  <input type="checkbox" style="width:auto;padding:0;margin-right:.4rem;accent-color:var(--gold)"/>
                   Marcar como donación
                 </label>
               </div>
             </div>
           </div>
 
-          <div style="margin-bottom: 1.5rem">
-            <p
-              style="
-                font-family: &quot;Cormorant Garamond&quot;, serif;
-                font-style: italic;
-                color: var(--gold-dim);
-                font-size: 0.9rem;
-                border-bottom: 1px solid var(--border-subtle);
-                padding-bottom: 0.6rem;
-                margin-bottom: 1rem;
-              "
-            >
-              Imagen
-            </p>
-            <div class="upload-zone">
-              <svg
-                width="28"
-                height="28"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.2"
-              >
-                <rect x="3" y="3" width="18" height="18" rx="2" />
-                <circle cx="8.5" cy="8.5" r="1.5" />
-                <polyline points="21 15 16 10 5 21" />
-              </svg>
-              <p>Arrastrá una imagen o hacé clic para subir</p>
-              <p
-                style="
-                  font-size: 0.68rem;
-                  color: var(--text-dim);
-                  margin-top: 0.2rem;
-                "
-              >
-                JPG, PNG · máx. 5 MB
-              </p>
-            </div>
-          </div>
-
-          <button
-            class="btn-gold"
-            style="width: 100%; justify-content: center; padding: 0.9rem"
-          >
+          <button class="btn-gold" style="width:100%;justify-content:center;padding:.9rem" onclick="alert('Publicación creada (demo)')">
             Publicar obra
           </button>
         </div>
       </div>
     </div>
 
+    <!-- ════════════════ MODAL: Detalle publicación (Comprador) ════════════════ -->
+    <div class="modal-overlay" id="modalDetalle" onclick="closeModalDetalle(event)">
+      <div class="modal modal-detalle" onclick="event.stopPropagation()">
+        <div class="modal-header">
+          <div class="modal-title" id="detalleTitle">Paisaje nocturno</div>
+          <button class="close-btn" onclick="closeModalDetalle()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="detalle-layout">
+            <!-- Imagen -->
+            <div class="detalle-img" id="detalleImg"></div>
+            <!-- Info -->
+            <div class="detalle-info">
+              <div class="detalle-field">
+                <span class="detalle-label">Artista</span>
+                <span class="detalle-value" id="detalleArtista">—</span>
+              </div>
+              <div class="detalle-field">
+                <span class="detalle-label">Tipo de obra</span>
+                <span class="detalle-value" id="detalleTipo">—</span>
+              </div>
+              <div class="detalle-field">
+                <span class="detalle-label">Estado</span>
+                <span id="detalleEstado">—</span>
+              </div>
+              <div class="detalle-field">
+                <span class="detalle-label">Precio base</span>
+                <span class="detalle-value price-col" id="detallePrecioBase">—</span>
+              </div>
+              <div class="detalle-field">
+                <span class="detalle-label">Última oferta</span>
+                <span class="detalle-value price-col" style="color:var(--gold-light)" id="detalleUltimaOferta">—</span>
+              </div>
+              <div class="detalle-field">
+                <span class="detalle-label">Vendedor</span>
+                <span class="detalle-value" id="detalleVendedor">—</span>
+              </div>
+              <div class="detalle-field">
+                <span class="detalle-label">Donación</span>
+                <span class="detalle-value" id="detalleDonacion">—</span>
+              </div>
+
+              <!-- Formulario oferta (oculto por defecto) -->
+              <div id="ofertaForm" style="display:none;margin-top:1rem">
+                <div class="form-section-title" style="margin-bottom:.8rem">Realizar oferta</div>
+                <div class="form-field" style="margin-bottom:.8rem">
+                  <label>Monto (USD)</label>
+                  <input type="number" id="ofertaMonto" placeholder="Ingresá tu oferta…" min="1"/>
+                </div>
+                <div style="display:flex;gap:.6rem">
+                  <button class="btn-gold" style="flex:1;justify-content:center;padding:.75rem" onclick="confirmarOferta()">Confirmar oferta</button>
+                  <button class="btn-ghost" style="justify-content:center;padding:.75rem" onclick="cancelarOferta()">Cancelar</button>
+                </div>
+              </div>
+
+              <button class="btn-gold" id="btnRealizarOferta" style="width:100%;justify-content:center;padding:.85rem;margin-top:1rem" onclick="mostrarFormOferta()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="1" x2="12" y2="23"/>
+                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                </svg>
+                Realizar oferta
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ════════════════════════════════════════════
+         SCRIPT
+    ════════════════════════════════════════════ -->
     <script>
-      function setActive(el) {
-        document
-          .querySelectorAll(".nav-item")
-          .forEach((i) => i.classList.remove("active"));
-        el.classList.add("active");
+      // ── Estado ──────────────────────────────────────
+      let currentRole = 'vendedor';
+      let currentView = 'panel-general';
+
+      // Datos demo publicaciones activas (para comprador)
+      const publicacionesActivas = [
+        { id: 1, titulo: 'Paisaje nocturno', artista: 'Juana Molina', tipo: 'Pintura', precioBase: 4200, ultimaOferta: 5100, estado: 'activa', vendedor: 'María García', donacion: false, bg: 'linear-gradient(135deg,#1a0f0a,#2d1a0d)' },
+        { id: 2, titulo: 'Forma en reposo',  artista: 'Carlos Benedetti', tipo: 'Escultura', precioBase: 1800, ultimaOferta: null, estado: 'activa', vendedor: 'María García', donacion: false, bg: 'linear-gradient(135deg,#1a0f0a,#3d2a1d)' },
+        { id: 3, titulo: 'Mar en calma',     artista: 'Sofía Delgado', tipo: 'Fotografía', precioBase: 650, ultimaOferta: 700, estado: 'activa', vendedor: 'Juan Pérez', donacion: false, bg: 'linear-gradient(135deg,#0f1520,#1a2535)' },
+        { id: 4, titulo: 'Composición IV',   artista: 'Luis Aranda', tipo: 'Pintura', precioBase: 3200, ultimaOferta: null, estado: 'activa', vendedor: 'Juan Pérez', donacion: false, bg: 'linear-gradient(135deg,#1a1208,#2e2010)' },
+        { id: 5, titulo: 'Vasija ritual',    artista: 'Ana Torres', tipo: 'Cerámica', precioBase: 950, ultimaOferta: 1200, estado: 'activa', vendedor: 'María García', donacion: true, bg: 'linear-gradient(135deg,#160a14,#2a1228)' },
+        { id: 6, titulo: 'Ciudad de noche',  artista: 'Pablo Ruiz', tipo: 'Fotografía', precioBase: 420, ultimaOferta: null, estado: 'activa', vendedor: 'Juan Pérez', donacion: false, bg: 'linear-gradient(135deg,#0a1616,#102a2a)' },
+      ];
+
+      // ── Navegación ──────────────────────────────────
+      const viewTitles = {
+        'panel-general': 'Panel <span>general</span>',
+        'publicaciones':  'Publicaciones <span>activas</span>',
+        'tipos-obra':     'Tipos de <span>obra</span>',
+        'explorar':       'Explorar <span>obras</span>',
+        'perfil':         'Mi <span>perfil</span>',
+        'plan':           'Plan y <span>suscripción</span>',
+        'mis-ofertas':    'Mis <span>ofertas</span>',
+      };
+
+      function navigate(el) {
+        const view = el.dataset.nav;
+        if (!view) return;
+
+        // Desactivar nav items del nav activo
+        const activeNav = currentRole === 'vendedor' ? '#navVendedor' : '#navComprador';
+        document.querySelectorAll(activeNav + ' .nav-item').forEach(i => i.classList.remove('active'));
+        el.classList.add('active');
+
+        // Ocultar todas las vistas
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        const target = document.getElementById('view-' + view);
+        if (target) target.classList.add('active');
+
+        // Actualizar título
+        document.getElementById('topbarTitle').innerHTML = viewTitles[view] || view;
+
+        currentView = view;
+        updateTopbarActions();
+        closeSidebar();
       }
 
-      function openModal() {
-        document.getElementById("modalOverlay").classList.add("open");
+      function updateTopbarActions() {
+        const btn = document.getElementById('btnNuevaPublicacion');
+        // Mostrar "Nueva publicación" solo a vendedor en panel general o publicaciones
+        const showBtn = currentRole === 'vendedor' &&
+          (currentView === 'panel-general' || currentView === 'publicaciones');
+        btn.style.display = showBtn ? 'flex' : 'none';
       }
 
-      function closeModal(e) {
-        if (!e || e.target === document.getElementById("modalOverlay")) {
-          document.getElementById("modalOverlay").classList.remove("open");
+      // ── Cambio de rol ────────────────────────────────
+      function setRole(role) {
+        currentRole = role;
+        document.body.dataset.role = role;
+
+        // Actualizar nav visible
+        document.getElementById('navVendedor').style.display = role === 'vendedor' ? '' : 'none';
+        document.getElementById('navComprador').style.display = role === 'comprador' ? '' : 'none';
+
+        // Actualizar datos usuario demo
+        if (role === 'vendedor') {
+          document.getElementById('sidebarUserName').textContent = 'María García';
+          document.getElementById('sidebarUserRole').textContent = 'Vendedora · Plus';
+          document.getElementById('userAvatarSidebar').textContent = 'MG';
+        } else {
+          document.getElementById('sidebarUserName').textContent = 'Carlos López';
+          document.getElementById('sidebarUserRole').textContent = 'Comprador';
+          document.getElementById('userAvatarSidebar').textContent = 'CL';
+        }
+
+        // Botones demo
+        document.getElementById('btnRoleVendedor').classList.toggle('active', role === 'vendedor');
+        document.getElementById('btnRoleComprador').classList.toggle('active', role === 'comprador');
+
+        // Navegar al panel general
+        const firstNavItem = document.querySelector((role === 'vendedor' ? '#navVendedor' : '#navComprador') + ' .nav-item');
+        if (firstNavItem) navigate(firstNavItem);
+
+        // Mostrar contenido correcto en panel general
+        document.getElementById('panelVendedor').style.display = role === 'vendedor' ? '' : 'none';
+        document.getElementById('panelComprador').style.display = role === 'comprador' ? '' : 'none';
+
+        if (role === 'comprador') renderPubGrid(publicacionesActivas);
+      }
+
+      // ── Sidebar mobile ───────────────────────────────
+      function openSidebar() {
+        document.getElementById('sidebar').classList.add('open');
+        document.getElementById('sidebarOverlay').classList.add('visible');
+      }
+      function closeSidebar() {
+        document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('sidebarOverlay').classList.remove('visible');
+      }
+
+      // ── Modal nueva publicación ──────────────────────
+      function openModalNuevaPublicacion() {
+        document.getElementById('modalNuevaPublicacion').classList.add('open');
+      }
+      function closeModalNuevaPublicacion(e) {
+        if (!e || e.target === document.getElementById('modalNuevaPublicacion')) {
+          document.getElementById('modalNuevaPublicacion').classList.remove('open');
         }
       }
 
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") closeModal();
+      // ── Tipos de obra CRUD (demo) ────────────────────
+      function showNuevoTipo() {
+        document.getElementById('nuevoTipoForm').style.display = '';
+        document.getElementById('nuevoTipoInput').focus();
+      }
+      function cancelarNuevoTipo() {
+        document.getElementById('nuevoTipoForm').style.display = 'none';
+        document.getElementById('nuevoTipoInput').value = '';
+      }
+      function guardarNuevoTipo() {
+        const nombre = document.getElementById('nuevoTipoInput').value.trim();
+        if (!nombre) { alert('Ingresá un nombre para el tipo de obra.'); return; }
+        if (nombre.length > 50) { alert('El nombre no puede superar 50 caracteres.'); return; }
+
+        const id = 'tipo_' + Date.now();
+        const tbody = document.getElementById('tiposObraTbody');
+        const tr = document.createElement('tr');
+        tr.dataset.tipoId = id;
+        tr.innerHTML = `
+          <td id="cell-nombre-${id}"><span class="tipo-nombre">${nombre}</span></td>
+          <td style="font-size:.72rem;color:var(--text-dim);font-family:monospace">${id}</td>
+          <td><div class="actions-col">
+            <button class="icon-btn" title="Editar" onclick="editarTipo('${id}')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </button>
+            <button class="icon-btn danger" title="Eliminar" onclick="eliminarTipo('${id}', '${nombre}')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+            </button>
+          </div></td>`;
+        tbody.appendChild(tr);
+        cancelarNuevoTipo();
+      }
+
+      function editarTipo(id) {
+        const cell = document.getElementById('cell-nombre-' + id);
+        const currentName = cell.querySelector('.tipo-nombre')?.textContent || '';
+        cell.innerHTML = `
+          <div style="display:flex;gap:.4rem;align-items:center">
+            <input type="text" value="${currentName}" maxlength="50"
+              style="background:var(--surface-2);border:1px solid var(--gold-dim);color:var(--text);font-family:Jost,sans-serif;font-size:.82rem;padding:.4rem .6rem;outline:none;flex:1"
+              id="editInput-${id}"/>
+            <button class="btn-mini save" onclick="guardarEdicionTipo('${id}')">Guardar</button>
+            <button class="btn-mini cancel" onclick="cancelarEdicionTipo('${id}', '${currentName}')">Cancelar</button>
+          </div>`;
+        document.getElementById('editInput-' + id).focus();
+      }
+
+      function guardarEdicionTipo(id) {
+        const input = document.getElementById('editInput-' + id);
+        const newName = input.value.trim();
+        if (!newName) { alert('El nombre no puede estar vacío.'); return; }
+        const cell = document.getElementById('cell-nombre-' + id);
+        cell.innerHTML = `<span class="tipo-nombre">${newName}</span>`;
+        // Aquí iría: PUT /tipoObra/:id  { nombre: newName }
+      }
+
+      function cancelarEdicionTipo(id, originalName) {
+        const cell = document.getElementById('cell-nombre-' + id);
+        cell.innerHTML = `<span class="tipo-nombre">${originalName}</span>`;
+      }
+
+      function eliminarTipo(id, nombre) {
+        if (!confirm(`¿Eliminar el tipo de obra "${nombre}"?`)) return;
+        const row = document.querySelector(`tr[data-tipo-id="${id}"]`);
+        if (row) row.remove();
+        // Aquí iría: DELETE /tipoObra/:id
+      }
+
+      // ── Grid publicaciones (Comprador) ───────────────
+      function renderPubGrid(pubs) {
+        const grid = document.getElementById('pubGrid');
+        if (!grid) return;
+        grid.innerHTML = pubs.map(p => `
+          <div class="pub-card" onclick='abrirDetalle(${JSON.stringify(p)})'>
+            <div class="pub-card-img" style="background:${p.bg}">
+              <div class="pub-card-tipo">${p.tipo}</div>
+              ${p.donacion ? '<div class="pub-card-donacion">Donación</div>' : ''}
+            </div>
+            <div class="pub-card-body">
+              <div class="pub-card-title">${p.titulo}</div>
+              <div class="pub-card-artist">${p.artista}</div>
+              <div class="pub-card-price">
+                ${p.ultimaOferta
+                  ? `<span style="color:var(--gold-light)">Última: ${p.ultimaOferta.toLocaleString()} USD</span>`
+                  : `<span style="color:var(--text-muted)">Base: ${p.precioBase.toLocaleString()} USD</span>`
+                }
+              </div>
+            </div>
+          </div>`).join('');
+      }
+
+      function filterPublicaciones() {
+        const q = document.getElementById('compradorSearch')?.value.toLowerCase() || '';
+        const tipo = document.getElementById('compradorTipo')?.value || '';
+        const filtered = publicacionesActivas.filter(p => {
+          const matchText = !q || p.titulo.toLowerCase().includes(q) || p.artista.toLowerCase().includes(q);
+          const matchTipo = !tipo || p.tipo === tipo;
+          return matchText && matchTipo;
+        });
+        renderPubGrid(filtered);
+      }
+
+      // ── Modal detalle publicación (Comprador) ────────
+      function abrirDetalle(pub) {
+        document.getElementById('detalleTitle').textContent = pub.titulo;
+        document.getElementById('detalleArtista').textContent = pub.artista;
+        document.getElementById('detalleTipo').textContent = pub.tipo;
+        document.getElementById('detallePrecioBase').textContent = pub.precioBase.toLocaleString() + ' USD';
+        document.getElementById('detalleUltimaOferta').textContent = pub.ultimaOferta ? pub.ultimaOferta.toLocaleString() + ' USD' : 'Sin ofertas';
+        document.getElementById('detalleVendedor').textContent = pub.vendedor;
+        document.getElementById('detalleDonacion').textContent = pub.donacion ? 'Sí' : 'No';
+        document.getElementById('detalleImg').style.background = pub.bg;
+        const estadoEl = document.getElementById('detalleEstado');
+        estadoEl.innerHTML = `<span class="badge badge-${pub.estado === 'activa' ? 'active' : 'pending'}">${pub.estado.charAt(0).toUpperCase() + pub.estado.slice(1)}</span>`;
+
+        // Reset oferta form
+        document.getElementById('ofertaForm').style.display = 'none';
+        document.getElementById('btnRealizarOferta').style.display = 'flex';
+        document.getElementById('ofertaMonto').value = '';
+
+        document.getElementById('modalDetalle').classList.add('open');
+      }
+
+      function closeModalDetalle(e) {
+        if (!e || e.target === document.getElementById('modalDetalle')) {
+          document.getElementById('modalDetalle').classList.remove('open');
+        }
+      }
+
+      function mostrarFormOferta() {
+        document.getElementById('ofertaForm').style.display = '';
+        document.getElementById('btnRealizarOferta').style.display = 'none';
+        document.getElementById('ofertaMonto').focus();
+      }
+
+      function cancelarOferta() {
+        document.getElementById('ofertaForm').style.display = 'none';
+        document.getElementById('btnRealizarOferta').style.display = 'flex';
+      }
+
+      function confirmarOferta() {
+        const monto = parseFloat(document.getElementById('ofertaMonto').value);
+        if (!monto || monto <= 0) { alert('Ingresá un monto válido.'); return; }
+        alert(`Oferta de ${monto.toLocaleString()} USD registrada (demo).\nAquí iría: POST /oferta con { publicacionId, monto }`);
+        closeModalDetalle();
+      }
+
+      // ── Foto de perfil ───────────────────────────────
+      function previewAvatar(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = e => {
+          const img = document.getElementById('avatarImg');
+          const initials = document.getElementById('avatarInitials');
+          img.src = e.target.result;
+          img.style.display = 'block';
+          initials.style.display = 'none';
+        };
+        reader.readAsDataURL(file);
+      }
+
+      // ── Init ─────────────────────────────────────────
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+          closeModalNuevaPublicacion();
+          closeModalDetalle();
+          closeSidebar();
+        }
       });
+
+      // Inicializar según el rol del body
+      (function init() {
+        const role = document.body.dataset.role || 'vendedor';
+        setRole(role);
+      })();
     </script>
   </body>
 </html>
