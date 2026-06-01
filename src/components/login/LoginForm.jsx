@@ -1,8 +1,44 @@
+import { useState } from "react";
+
 const LoginForm = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [errorVisible, setErrorVisible] = useState(false);
+
+  const isFormValid = email.trim().length > 0 && password.length > 0;
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const togglePass = () => {
+    setShowPassword((current) => !current);
+  };
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+    // Placeholder — se conectará con POST /auth/login
+    setErrorVisible(false);
+
+    if (!isFormValid) {
+      setErrorVisible(true);
+      return;
+    }
+
+    localStorage.setItem("userEmail", email);
+    localStorage.setItem("userPassword", password);
+
+    console.log("Intento de login", { email });
+  };
+
   return (
     <>
-      {" "}
-      <div id="errorBanner" className="error-banner">
+      <div className={`error-banner${errorVisible ? " visible" : ""}`}>
         Credenciales incorrectas. Verificá tu email y contraseña.
       </div>
       <div className="field">
@@ -13,7 +49,8 @@ const LoginForm = () => {
             id="email"
             placeholder="nombre@ejemplo.com"
             autoComplete="email"
-            oninput="validateLogin()"
+            value={email}
+            onChange={handleEmailChange}
           />
         </div>
         <div id="emailError" className="field-error">
@@ -24,16 +61,19 @@ const LoginForm = () => {
         <label htmlFor="password">Contraseña</label>
         <div className="input-wrap">
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             id="password"
             placeholder="••••••••"
             autoComplete="current-password"
-            oninput="validateLogin()"
+            value={password}
+            onChange={handlePasswordChange}
           />
           <span
-            className="input-icon"
-            onclick="togglePass('password', this)"
+            className={`input-icon${showPassword ? " active" : ""}`}
+            onClick={togglePass}
             title="Mostrar contraseña"
+            role="button"
+            tabIndex={0}
           >
             <svg
               width={16}
@@ -52,20 +92,11 @@ const LoginForm = () => {
           La contraseña no puede estar vacía.
         </div>
       </div>
-      <div className="options-row">
-        <label className="remember">
-          {" "}
-          <input type="checkbox" /> Recordarme{" "}
-        </label>
-        <a href="#" className="forgot">
-          ¿Olvidaste tu contraseña?
-        </a>
-      </div>
       <button
         id="btnLogin"
         className="btn-primary"
-        disabled=""
-        onclick="handleLogin()"
+        disabled={!isFormValid}
+        onClick={handleLogin}
       >
         Ingresar
       </button>
