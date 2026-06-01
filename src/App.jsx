@@ -1,4 +1,3 @@
-import "./App.css";
 import "../materials/login.css";
 import { BrowserRouter, Routes, Route } from "react-router";
 import { Provider } from "react-redux";

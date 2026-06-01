@@ -4,8 +4,10 @@ import LoginCard from "../components/login/LoginCard";
 const LoginPage = () => {
   return (
     <>
-      <PanelMosaico />
-      <LoginCard />
+      <div className="login-layout">
+        <PanelMosaico />
+        <LoginCard />
+      </div>
     </>
   );
 };
