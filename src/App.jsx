@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import { Provider } from "react-redux";
 import { store } from "./store/store.js";
 import LoginPage from "./pages/LoginPage";
+import { ToastContainer }  from "react-toastify";
 
 const App = () => {
   return (
@@ -17,6 +18,11 @@ const App = () => {
           <Route path="*" element={<LoginPage />} />
         </Routes>
       </BrowserRouter>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        theme="colored"
+      />
     </Provider>
   );
 };

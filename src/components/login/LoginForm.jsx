@@ -1,10 +1,15 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
+import api from "../../api/api.js";
+import { useNavigate } from "react-router";
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errorVisible, setErrorVisible] = useState(false);
+  const [message, setMessage] = useState("");
 
   const isFormValid = email.trim().length > 0 && password.length > 0;
 
@@ -30,8 +35,21 @@ const LoginForm = () => {
       return;
     }
 
-    localStorage.setItem("userEmail", email);
-    localStorage.setItem("userPassword", password);
+    api
+      .post("/auth/login", { email, password })
+      .then((response) => {
+        toast.success(response.data?.mensaje || "Login exitoso");
+        // Aquí podrías redirigir al usuario o guardar el token de autenticación
+        navigate("/dashboard");
+      })
+      .catch((error) => {
+        const errMsg =
+          error?.response?.data?.error?.[0]?.message ||
+          error?.response?.data?.message ||
+          "Error en el login";
+        setMessage(errMsg);
+        setErrorVisible(true);
+      });
 
     console.log("Intento de login", { email });
   };
@@ -39,7 +57,7 @@ const LoginForm = () => {
   return (
     <>
       <div className={`error-banner${errorVisible ? " visible" : ""}`}>
-        Credenciales incorrectas. Verificá tu email y contraseña.
+        {message || "Credenciales incorrectas. Verificá tu email y contraseña."}
       </div>
       <div className="field">
         <label htmlFor="email">Correo electrónico</label>
