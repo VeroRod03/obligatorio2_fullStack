@@ -1,7 +1,25 @@
 import "./App.css";
+import "../materials/login.css";
+import { BrowserRouter, Routes, Route } from "react-router";
+import { Provider } from "react-redux";
+import { store } from "./store/store.js";
+import LoginPage from "./pages/LoginPage";
 
 const App = () => {
-  return <></>;
+  return (
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
+          {/* <Route path="/register" element={<RegisterPage />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/dashboard" element={<DashboardPage />} />
+          </Route> */}
+          <Route path="*" element={<LoginPage />} />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
+  );
 };
 
 export default App;
