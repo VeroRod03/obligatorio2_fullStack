@@ -1,32 +1,13 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap");
+/* login.css — estilos específicos de la página de inicio de sesión */
+
+/* Sobreescrituras de variables */
 :root {
-  --gold: #c9a84c;
-  --gold-light: #e2c97e;
-  --gold-dim: #8a6e32;
-  --ink: #0d0c0a;
-  --surface: #141210;
-  --surface-2: #1e1b17;
-  --surface-3: #2a2620;
-  --border: rgba(201, 168, 76, 0.28);
-  --text: #f0e8d8;
-  --text-muted: #a89880;
-  --error: #d96056;
+  /* Tamaños propios de brand en esta página */
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
+/* ── Layout ── */
 body {
-  background-color: var(--ink);
-  color: var(--text);
-  font-family: "Jost", sans-serif;
-  font-weight: 300;
-  min-height: 100vh;
+  overflow: hidden;
 }
 
 .login-layout {
@@ -35,7 +16,39 @@ body {
   min-height: 100vh;
 }
 
-/* ── LEFT PANEL ── */
+/* ── Tamaños de brand ── */
+.brand {
+  margin-bottom: 3rem;
+}
+
+.brand-icon {
+  width: 36px;
+  height: 36px;
+}
+
+.brand-name {
+  font-size: 1.4rem;
+}
+
+/* ── Tipografía de página ── */
+h1 {
+  font-size: 2.2rem;
+}
+
+.subtitle {
+  font-size: 0.82rem;
+  margin-bottom: 2.5rem;
+}
+
+/* ── Inputs ── */
+input {
+  font-size: 0.95rem;
+  padding: 0.85rem 1rem;
+}
+
+/* ════════════════════════════════════════════
+   PANEL IZQUIERDO — mosaico de obras
+════════════════════════════════════════════ */
 .panel-left {
   position: relative;
   overflow: hidden;
@@ -98,50 +111,19 @@ body {
   );
 }
 
-/* fake artwork fills */
-.art-tile:nth-child(1) {
-  background: linear-gradient(160deg, #1a0f0a 0%, #2d1a0d 100%);
-}
-.art-tile:nth-child(2) {
-  background: linear-gradient(140deg, #0f1520 0%, #1a2535 100%);
-  grid-row: span 2;
-}
-.art-tile:nth-child(3) {
-  background: linear-gradient(120deg, #1a1208 0%, #2e2010 100%);
-}
-.art-tile:nth-child(4) {
-  background: linear-gradient(170deg, #0a0f0a 0%, #1a2e18 100%);
-  grid-column: span 2;
-}
-.art-tile:nth-child(5) {
-  background: linear-gradient(145deg, #1e0e12 0%, #3a1820 100%);
-  grid-row: span 2;
-}
-.art-tile:nth-child(6) {
-  background: linear-gradient(130deg, #12100a 0%, #241e10 100%);
-}
-.art-tile:nth-child(7) {
-  background: linear-gradient(155deg, #0e1318 0%, #1c2530 100%);
-}
-.art-tile:nth-child(8) {
-  background: linear-gradient(125deg, #180e0a 0%, #301a10 100%);
-  grid-column: span 2;
-}
-.art-tile:nth-child(9) {
-  background: linear-gradient(165deg, #100e08 0%, #201c10 100%);
-}
-.art-tile:nth-child(10) {
-  background: linear-gradient(135deg, #0e1210 0%, #182018 100%);
-}
-.art-tile:nth-child(11) {
-  background: linear-gradient(150deg, #14090c 0%, #2a1018 100%);
-  grid-row: span 2;
-}
-.art-tile:nth-child(12) {
-  background: linear-gradient(140deg, #0d0e12 0%, #181a22 100%);
-}
+.art-tile:nth-child(1)  { background: linear-gradient(160deg, #1a0f0a 0%, #2d1a0d 100%); }
+.art-tile:nth-child(2)  { background: linear-gradient(140deg, #0f1520 0%, #1a2535 100%); grid-row: span 2; }
+.art-tile:nth-child(3)  { background: linear-gradient(120deg, #1a1208 0%, #2e2010 100%); }
+.art-tile:nth-child(4)  { background: linear-gradient(170deg, #0a0f0a 0%, #1a2e18 100%); grid-column: span 2; }
+.art-tile:nth-child(5)  { background: linear-gradient(145deg, #1e0e12 0%, #3a1820 100%); grid-row: span 2; }
+.art-tile:nth-child(6)  { background: linear-gradient(130deg, #12100a 0%, #241e10 100%); }
+.art-tile:nth-child(7)  { background: linear-gradient(155deg, #0e1318 0%, #1c2530 100%); }
+.art-tile:nth-child(8)  { background: linear-gradient(125deg, #180e0a 0%, #301a10 100%); grid-column: span 2; }
+.art-tile:nth-child(9)  { background: linear-gradient(165deg, #100e08 0%, #201c10 100%); }
+.art-tile:nth-child(10) { background: linear-gradient(135deg, #0e1210 0%, #182018 100%); }
+.art-tile:nth-child(11) { background: linear-gradient(150deg, #14090c 0%, #2a1018 100%); grid-row: span 2; }
+.art-tile:nth-child(12) { background: linear-gradient(140deg, #0d0e12 0%, #181a22 100%); }
 
-/* decorative art overlays */
 .art-tile:nth-child(2) svg,
 .art-tile:nth-child(4) svg,
 .art-tile:nth-child(5) svg {
@@ -197,7 +179,9 @@ body {
   color: var(--text-muted);
 }
 
-/* ── RIGHT PANEL ── */
+/* ════════════════════════════════════════════
+   PANEL DERECHO — formulario
+════════════════════════════════════════════ */
 .panel-right {
   display: flex;
   flex-direction: column;
@@ -212,10 +196,7 @@ body {
 .panel-right::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: radial-gradient(
     ellipse 70% 50% at 50% 50%,
     rgba(184, 146, 46, 0.06) 0%,
@@ -230,64 +211,6 @@ body {
   animation: slideUp 0.9s 0.2s ease both;
 }
 
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  margin-bottom: 3rem;
-}
-
-.brand-icon {
-  width: 36px;
-  height: 36px;
-  border: 1px solid var(--gold-dim);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.brand-icon svg {
-  color: var(--gold);
-}
-
-.brand-name {
-  font-family: "Cormorant Garamond", serif;
-  font-size: 1.4rem;
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  color: var(--text);
-}
-
-.brand-name span {
-  color: var(--gold);
-}
-
-h1 {
-  font-family: "Cormorant Garamond", serif;
-  font-size: 2.2rem;
-  font-weight: 300;
-  color: var(--text);
-  margin-bottom: 0.4rem;
-}
-
-.subtitle {
-  font-size: 0.82rem;
-  color: var(--text-muted);
-  margin-bottom: 2.5rem;
-  letter-spacing: 0.05em;
-}
-
 .divider-line {
   width: 40px;
   height: 1px;
@@ -295,74 +218,7 @@ h1 {
   margin-bottom: 2.5rem;
 }
 
-.field {
-  margin-bottom: 1.4rem;
-}
-
-label {
-  display: block;
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin-bottom: 0.5rem;
-}
-
-.input-wrap {
-  position: relative;
-}
-
-input {
-  width: 100%;
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  color: var(--text);
-  font-family: "Jost", sans-serif;
-  font-size: 0.95rem;
-  font-weight: 300;
-  padding: 0.85rem 1rem;
-  outline: none;
-  transition:
-    border-color 0.2s,
-    background 0.2s;
-  -webkit-appearance: none;
-}
-
-input:focus {
-  border-color: var(--gold-dim);
-  background: var(--surface-3);
-}
-
-input::placeholder {
-  color: var(--text-muted);
-  opacity: 0.6;
-}
-
-.input-icon {
-  position: absolute;
-  right: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-.input-icon:hover {
-  color: var(--gold);
-}
-
-.field-error {
-  font-size: 0.72rem;
-  color: var(--error);
-  margin-top: 0.4rem;
-  display: none;
-}
-
-.field-error.visible {
-  display: block;
-}
-
+/* ── Opciones del form ── */
 .options-row {
   display: flex;
   align-items: center;
@@ -400,68 +256,7 @@ input::placeholder {
   color: var(--gold-light);
 }
 
-.btn-primary {
-  width: 100%;
-  background: linear-gradient(135deg, var(--gold-dim) 0%, var(--gold) 100%);
-  border: none;
-  color: var(--ink);
-  font-family: "Jost", sans-serif;
-  font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  padding: 1rem;
-  cursor: pointer;
-  transition:
-    opacity 0.2s,
-    transform 0.15s;
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-primary::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.1) 100%
-  );
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-
-.btn-primary:hover::after {
-  opacity: 1;
-}
-.btn-primary:hover {
-  transform: translateY(-1px);
-}
-.btn-primary:active {
-  transform: translateY(0);
-}
-
-.btn-primary:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.error-banner {
-  background: rgba(176, 62, 54, 0.1);
-  border: 1px solid rgba(176, 62, 54, 0.3);
-  color: #e08078;
-  font-size: 0.8rem;
-  padding: 0.75rem 1rem;
-  margin-bottom: 1.5rem;
-  display: none;
-}
-
-.error-banner.visible {
-  display: block;
-}
-
+/* ── Links y ornamento ── */
 .register-link {
   text-align: center;
   margin-top: 2rem;
@@ -480,7 +275,6 @@ input::placeholder {
   color: var(--gold-light);
 }
 
-/* ── ORNAMENT ── */
 .ornament {
   text-align: center;
   color: var(--gold-dim);

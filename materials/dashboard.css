@@ -1,36 +1,14 @@
+/* dashboard.css — estilos específicos del dashboard
+   Requiere index.css cargado antes en el HTML */
+
+/* ── Sobreescrituras de variables ── */
 :root {
-  --gold: #c9a84c;
-  --gold-light: #e2c97e;
-  --gold-dim: #8a6e32;
-  --gold-pale: rgba(201, 168, 76, 0.08);
-  --ink: #0d0c0a;
-  --surface: #141210;
-  --surface-2: #1e1b17;
-  --surface-3: #2a2620;
-  --border: rgba(201, 168, 76, 0.22);
-  --border-subtle: rgba(201, 168, 76, 0.12);
-  --text: #f0e8d8;
-  --text-muted: #a89880;
-  --text-dim: #5a5040;
-  --error: #d96056;
-  --success: #4a9c5c;
+  --border: rgba(201, 168, 76, 0.22); /* más sutil que login/registro */
   --sidebar-w: 240px;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
+/* ── Layout body ── */
 body {
-  background-color: var(--ink);
-  color: var(--text);
-  font-family: "Jost", sans-serif;
-  font-weight: 300;
-  min-height: 100vh;
   display: flex;
 }
 
@@ -1270,18 +1248,6 @@ body {
 
 .modal-body {
   padding: 1.5rem;
-}
-
-/* scrollbar */
-::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
-}
-::-webkit-scrollbar-track {
-  background: var(--surface);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--gold-dim);
 }
 
 /* ════════════════════════════════════════════
