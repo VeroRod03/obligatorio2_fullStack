@@ -1,19 +1,10 @@
 /* login.css — estilos específicos de la página de inicio de sesión */
 
-/* Sobreescrituras de variables */
-:root {
-  /* Tamaños propios de brand en esta página */
-}
-
-/* ── Layout ── */
-body {
-  overflow: hidden;
-}
-
 .login-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
   min-height: 100vh;
+  overflow: hidden;
 }
 
 /* ── Tamaños de brand ── */
@@ -111,18 +102,47 @@ input {
   );
 }
 
-.art-tile:nth-child(1)  { background: linear-gradient(160deg, #1a0f0a 0%, #2d1a0d 100%); }
-.art-tile:nth-child(2)  { background: linear-gradient(140deg, #0f1520 0%, #1a2535 100%); grid-row: span 2; }
-.art-tile:nth-child(3)  { background: linear-gradient(120deg, #1a1208 0%, #2e2010 100%); }
-.art-tile:nth-child(4)  { background: linear-gradient(170deg, #0a0f0a 0%, #1a2e18 100%); grid-column: span 2; }
-.art-tile:nth-child(5)  { background: linear-gradient(145deg, #1e0e12 0%, #3a1820 100%); grid-row: span 2; }
-.art-tile:nth-child(6)  { background: linear-gradient(130deg, #12100a 0%, #241e10 100%); }
-.art-tile:nth-child(7)  { background: linear-gradient(155deg, #0e1318 0%, #1c2530 100%); }
-.art-tile:nth-child(8)  { background: linear-gradient(125deg, #180e0a 0%, #301a10 100%); grid-column: span 2; }
-.art-tile:nth-child(9)  { background: linear-gradient(165deg, #100e08 0%, #201c10 100%); }
-.art-tile:nth-child(10) { background: linear-gradient(135deg, #0e1210 0%, #182018 100%); }
-.art-tile:nth-child(11) { background: linear-gradient(150deg, #14090c 0%, #2a1018 100%); grid-row: span 2; }
-.art-tile:nth-child(12) { background: linear-gradient(140deg, #0d0e12 0%, #181a22 100%); }
+.art-tile:nth-child(1) {
+  background: linear-gradient(160deg, #1a0f0a 0%, #2d1a0d 100%);
+}
+.art-tile:nth-child(2) {
+  background: linear-gradient(140deg, #0f1520 0%, #1a2535 100%);
+  grid-row: span 2;
+}
+.art-tile:nth-child(3) {
+  background: linear-gradient(120deg, #1a1208 0%, #2e2010 100%);
+}
+.art-tile:nth-child(4) {
+  background: linear-gradient(170deg, #0a0f0a 0%, #1a2e18 100%);
+  grid-column: span 2;
+}
+.art-tile:nth-child(5) {
+  background: linear-gradient(145deg, #1e0e12 0%, #3a1820 100%);
+  grid-row: span 2;
+}
+.art-tile:nth-child(6) {
+  background: linear-gradient(130deg, #12100a 0%, #241e10 100%);
+}
+.art-tile:nth-child(7) {
+  background: linear-gradient(155deg, #0e1318 0%, #1c2530 100%);
+}
+.art-tile:nth-child(8) {
+  background: linear-gradient(125deg, #180e0a 0%, #301a10 100%);
+  grid-column: span 2;
+}
+.art-tile:nth-child(9) {
+  background: linear-gradient(165deg, #100e08 0%, #201c10 100%);
+}
+.art-tile:nth-child(10) {
+  background: linear-gradient(135deg, #0e1210 0%, #182018 100%);
+}
+.art-tile:nth-child(11) {
+  background: linear-gradient(150deg, #14090c 0%, #2a1018 100%);
+  grid-row: span 2;
+}
+.art-tile:nth-child(12) {
+  background: linear-gradient(140deg, #0d0e12 0%, #181a22 100%);
+}
 
 .art-tile:nth-child(2) svg,
 .art-tile:nth-child(4) svg,

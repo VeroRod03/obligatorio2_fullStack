@@ -24,7 +24,10 @@ const RegistroForm = () => {
     api
       .post("/auth/registro", {
         rol: data.rol,
-        nombreCompleto: `${data.nombre} ${data.apellido}`,
+        nombreCompleto: {
+          nombre: data.nombre,
+          apellido: data.apellido,
+        },
         email: data.email,
         password: data.password,
         confirmedPassword: data.confirmPass,
@@ -55,7 +58,7 @@ const RegistroForm = () => {
     const cls =
       score <= 1
         ? "active-weak"
-        : score <= 2
+        : score <= 3
           ? "active-medium"
           : "active-strong";
     const labels = ["", "Débil", "Regular", "Buena", "Fuerte"];
@@ -205,6 +208,13 @@ const RegistroForm = () => {
               </svg>
             </span>
           </div>
+          <div className="strength-bar">
+            <div className="strength-segment" id="s1" />
+            <div className="strength-segment" id="s2" />
+            <div className="strength-segment" id="s3" />
+            <div className="strength-segment" id="s4" />
+          </div>
+
           {errors.password && (
             <div className="field-error">{errors.password.message}</div>
           )}

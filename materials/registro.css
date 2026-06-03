@@ -1,9 +1,10 @@
 /* registro.css — estilos específicos de la página de registro */
 
 /* ── Layout ── */
-body {
+.registro-layout {
   display: flex;
   align-items: stretch;
+  min-height: 100vh;
 }
 
 /* ── Tamaños de brand ── */
@@ -219,9 +220,15 @@ input.valid {
   transition: background 0.3s;
 }
 
-.strength-segment.active-weak   { background: var(--error); }
-.strength-segment.active-medium { background: #c9943c; }
-.strength-segment.active-strong { background: var(--success); }
+.strength-segment.active-weak {
+  background: var(--error);
+}
+.strength-segment.active-medium {
+  background: #c9943c;
+}
+.strength-segment.active-strong {
+  background: var(--success);
+}
 
 .strength-label {
   font-size: 0.68rem;
