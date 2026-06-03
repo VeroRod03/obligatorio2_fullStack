@@ -12,10 +12,14 @@ const App = () => {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/registro" element={<RegistroPage />} />
-          {/*
           <Route element={<ProtectedRoute />}>
-            <Route path="/dashboard" element={<DashboardPage />} />
-          </Route> */}
+            <Route element={<ProtectedRouteVendedor />}>
+              <Route path="/vendedor/dashboard" element={<DashboardPageVendedor />} />
+            </Route>
+            <Route element={<ProtectedRouteComprador />}>
+              <Route path="/comprador/dashboard" element={<DashboardPageComprador />} />
+            </Route>
+          </Route>
           <Route path="*" element={<LoginPage />} />
         </Routes>
       </BrowserRouter>

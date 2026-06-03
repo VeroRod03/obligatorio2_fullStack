@@ -21,9 +21,12 @@ const LoginForm = () => {
       .post("/auth/login", { email: data.email, password: data.password })
       .then((response) => {
         toast.success(response.data?.mensaje || "Login exitoso");
+        localStorage.setItem("email", response.data?.user?.email || "");
         if (response.data?.user.rol === "vendedor") {
+          localStorage.setItem("rol", "vendedor");
           navigate("/vendedor/dashboard");
         } else if (response.data?.user.rol === "comprador") {
+          localStorage.setItem("rol", "comprador");
           navigate("/comprador/dashboard");
         }
       })
