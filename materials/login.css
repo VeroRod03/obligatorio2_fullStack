@@ -225,9 +225,9 @@ input {
   pointer-events: none;
 }
 
-.form-card {
+.panel-right .form-card {
   width: 100%;
-  max-width: 400px;
+  max-width: 450px;
   animation: slideUp 0.9s 0.2s ease both;
 }
 
