@@ -983,7 +983,6 @@
 
         currentView = view;
         updateTopbarActions();
-        closeSidebar();
       }
 
       function updateTopbarActions() {
@@ -1031,11 +1030,15 @@
 
       // ── Sidebar mobile ───────────────────────────────
       function openSidebar() {
+        document.body.classList.remove('sidebar-collapsed');
+        document.getElementById('sidebar').classList.remove('closed');
         document.getElementById('sidebar').classList.add('open');
-        document.getElementById('sidebarOverlay').classList.add('visible');
+        document.getElementById('sidebarOverlay').classList.remove('visible');
       }
       function closeSidebar() {
+        document.body.classList.add('sidebar-collapsed');
         document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('sidebar').classList.add('closed');
         document.getElementById('sidebarOverlay').classList.remove('visible');
       }
 
