@@ -15,7 +15,6 @@ const RegistroForm = () => {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm({
-
     defaultValues: { rol: "vendedor" },
     mode: "onChange",
   });
@@ -43,6 +42,30 @@ const RegistroForm = () => {
       });
   };
 
+  const checkStrength = () => {
+    const val = document.getElementById("password").value;
+    const segs = ["s1", "s2", "s3", "s4"];
+    const label = document.getElementById("strengthLabel");
+    let score = 0;
+    if (val.length >= 1) score++;
+    if (val.length >= 4) score++;
+    if (val.length >= 6) score++;
+    if (val.length >= 8) score++;
+
+    const cls =
+      score <= 1
+        ? "active-weak"
+        : score <= 2
+          ? "active-medium"
+          : "active-strong";
+    const labels = ["", "Débil", "Regular", "Buena", "Fuerte"];
+    segs.forEach((id, i) => {
+      const el = document.getElementById(id);
+      el.className = "strength-segment" + (i < score ? " " + cls : "");
+    });
+    label.textContent = val.length ? labels[score] : "";
+  };
+
   return (
     <form className="form-card" onSubmit={handleSubmit(onSubmit)}>
       {/* Rol */}
@@ -57,7 +80,14 @@ const RegistroForm = () => {
           />
           <label htmlFor="rolVendedor" className="role-label">
             <span className="role-icon">
-              <svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3">
+              <svg
+                width={22}
+                height={22}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.3"
+              >
                 <rect x={3} y={7} width={18} height={14} rx={1} />
                 <path d="M16 7V5a2 2 0 0 0-4 0v2" />
                 <path d="M8 7V5a2 2 0 0 0-4 0v2" />
@@ -77,7 +107,14 @@ const RegistroForm = () => {
           />
           <label htmlFor="rolComprador" className="role-label">
             <span className="role-icon">
-              <svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3">
+              <svg
+                width={22}
+                height={22}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.3"
+              >
                 <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
                 <line x1={3} y1={6} x2={21} y2={6} />
                 <path d="M16 10a4 4 0 01-8 0" />
@@ -146,6 +183,7 @@ const RegistroForm = () => {
               id="password"
               placeholder="Mínimo 8 caracteres"
               {...register("password")}
+              onInput={checkStrength}
             />
             <span
               className={`input-icon${showPassword ? " active" : ""}`}
@@ -154,7 +192,14 @@ const RegistroForm = () => {
               tabIndex={0}
               title="Mostrar contraseña"
             >
-              <svg width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <svg
+                width={15}
+                height={15}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+              >
                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
                 <circle cx={12} cy={12} r={3} />
               </svg>
@@ -180,7 +225,14 @@ const RegistroForm = () => {
               tabIndex={0}
               title="Mostrar contraseña"
             >
-              <svg width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <svg
+                width={15}
+                height={15}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+              >
                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
                 <circle cx={12} cy={12} r={3} />
               </svg>

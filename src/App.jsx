@@ -1,9 +1,11 @@
 import "../materials/login.css";
+import "../materials/registro.css";
 import { BrowserRouter, Routes, Route } from "react-router";
 import { Provider } from "react-redux";
 import { store } from "./store/store.js";
 import LoginPage from "./pages/LoginPage";
-import { ToastContainer }  from "react-toastify";
+import RegistroPage from "./pages/RegistroPage";
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
   return (
@@ -11,7 +13,8 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LoginPage />} />
-          {/* <Route path="/register" element={<RegisterPage />} />
+          <Route path="/registro" element={<RegistroPage />} />
+          {/*
           <Route element={<ProtectedRoute />}>
             <Route path="/dashboard" element={<DashboardPage />} />
           </Route> */}

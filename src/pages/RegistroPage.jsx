@@ -1,22 +1,21 @@
 import BrandIconName from "../components/BrandIconName";
-import RegistroHeader from "../components/RegistroHeader";
-import RegistroForm from "../components/RegistroForm";
+import RegistroHeader from "../components/registro/RegistroHeader";
+import RegistroForm from "../components/registro/RegistroForm";
 
 const RegistroPage = () => {
   return (
     <>
-      <div class="side-deco"></div>
-          <div class="main">
-            <div class="page-header">
-              <BrandIconName />
-              <RegistroHeader />
-              <RegistroForm />
-            </div>
-          </div>
-      <div class="side-deco"></div>
+      <div className="side-deco"></div>
+      <div className="main">
+        <div className="page-header">
+          <BrandIconName />
+          <RegistroHeader />
+          <RegistroForm />
+        </div>
+      </div>
+      <div className="side-deco"></div>
     </>
-    
-  )
+  );
 };
 
 export default RegistroPage;
