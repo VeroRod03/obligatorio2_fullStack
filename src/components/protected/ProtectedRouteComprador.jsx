@@ -8,4 +8,4 @@ const ProtectedRouteComprador = () => {
   return <Outlet />;
 };
 
-export default ProtectedRouteVendedor;
+export default ProtectedRouteComprador;

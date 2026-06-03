@@ -9,7 +9,9 @@ const RegistroPage = () => {
       <div className="side-deco"></div>
       <div className="main">
         <div className="page-header">
-          <BrandIconName />
+          <div className="brand">
+            <BrandIconName />
+          </div>
           <RegistroHeader />
           <RegistroForm />
         </div>

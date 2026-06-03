@@ -4,6 +4,11 @@ import { store } from "./store/store.js";
 import LoginPage from "./pages/LoginPage";
 import RegistroPage from "./pages/RegistroPage";
 import { ToastContainer } from "react-toastify";
+import ProtectedRoute from "./components/protected/ProtectedRoute.jsx";
+import ProtectedRouteVendedor from "./components/protected/ProtectedRouteVendedor.jsx";
+import ProtectedRouteComprador from "./components/protected/ProtectedRouteComprador.jsx";
+import DashboardPageVendedor from "./pages/DashboardPageVendedor.jsx";
+import DashboardPageComprador from "./pages/DashboardPageComprador.jsx";
 
 const App = () => {
   return (

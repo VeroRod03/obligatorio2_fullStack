@@ -6,7 +6,9 @@ const LoginCard = () => {
   return (
     <div className="panel-right">
       <div className="form-card">
-        <BrandIconName />
+        <div className="brand">
+          <BrandIconName />
+        </div>
         <LoginHeader />
         <LoginForm />
       </div>

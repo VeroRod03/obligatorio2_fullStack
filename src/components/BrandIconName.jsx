@@ -1,6 +1,6 @@
 const BrandIconName = () => {
   return (
-    <div className="brand">
+    <>
       <div className="brand-icon">
         <svg
           width={18}
@@ -17,7 +17,7 @@ const BrandIconName = () => {
       <div className="brand-name">
         Galería <span>Áurea</span>
       </div>
-    </div>
+    </>
   );
 };
 

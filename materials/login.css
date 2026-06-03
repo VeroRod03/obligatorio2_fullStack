@@ -172,8 +172,8 @@ input {
 
 .panel-left-content {
   position: absolute;
-  bottom: 3rem;
-  left: 3rem;
+  bottom: 4rem;
+  left: 4rem;
   right: 3rem;
   animation: slideUp 1s 0.4s ease both;
 }

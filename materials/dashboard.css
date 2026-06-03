@@ -8,9 +8,10 @@
 }
 
 /* ── Layout body ── */
-body {
+.dashboard-layout {
   display: flex;
   overflow-x: hidden;
+  min-height: 100vh;
 }
 
 /* ═══════════════ SIDEBAR ═══════════════ */

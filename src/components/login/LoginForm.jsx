@@ -21,7 +21,8 @@ const LoginForm = () => {
       .post("/auth/login", { email: data.email, password: data.password })
       .then((response) => {
         toast.success(response.data?.mensaje || "Login exitoso");
-        localStorage.setItem("email", response.data?.user?.email || "");
+        localStorage.setItem("token", response.data?.token || "");
+        localStorage.setItem("userId", response.data?.user?.id || "");
         if (response.data?.user.rol === "vendedor") {
           localStorage.setItem("rol", "vendedor");
           navigate("/vendedor/dashboard");
