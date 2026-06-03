@@ -4,7 +4,6 @@ import { useNavigate, Link } from "react-router";
 import { toast } from "react-toastify";
 import api from "../../api/api.js";
 
-
 const LoginForm = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -22,7 +21,11 @@ const LoginForm = () => {
       .post("/auth/login", { email: data.email, password: data.password })
       .then((response) => {
         toast.success(response.data?.mensaje || "Login exitoso");
-        navigate("/dashboard");
+        if (response.data?.user.rol === "vendedor") {
+          navigate("/vendedor/dashboard");
+        } else if (response.data?.user.rol === "comprador") {
+          navigate("/comprador/dashboard");
+        }
       })
       .catch((error) => {
         const errMsg =
@@ -72,7 +75,14 @@ const LoginForm = () => {
             role="button"
             tabIndex={0}
           >
-            <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <svg
+              width={16}
+              height={16}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+            >
               <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
               <circle cx={12} cy={12} r={3} />
             </svg>
