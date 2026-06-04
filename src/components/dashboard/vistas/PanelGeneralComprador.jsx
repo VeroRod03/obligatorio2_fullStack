@@ -7,7 +7,7 @@ const PanelGeneralComprador = () => {
   const [tipoObra, setTipoObra] = useState("");
 
   const fetchPublicaciones = () => {
-    const params = {};
+    const params = { estado: "activa" };
     if (buscar.trim()) params.buscar = buscar;
     if (tipoObra) params.tipoObra = tipoObra;
 
