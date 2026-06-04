@@ -12,7 +12,7 @@ const PanelGeneralComprador = () => {
     if (tipoObra) params.tipoObra = tipoObra;
 
     api
-      .get("/publicaciones", { params })
+      .get("/publicacion", { params })
       .then((res) => setPublicaciones(res.data.publicaciones))
       .catch(() => setPublicaciones([]));
   };

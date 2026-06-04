@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import api from "../../api/api.js";
+import api from "../../../api/api.js";
 
 const SidebarFooter = () => {
   const navigate = useNavigate();

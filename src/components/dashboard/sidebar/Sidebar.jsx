@@ -1,5 +1,5 @@
-import BrandIconName from "../BrandIconName"
-import SidebarFooter from "../SidebarFooter";
+import BrandIconName from "../../BrandIconName";
+import SidebarFooter from "./SidebarFooter";
 import SidebarNavVendedor from "./SidebarNavVendedor";
 import SidebarNavComprador from "./SidebarNavComprador";
 
