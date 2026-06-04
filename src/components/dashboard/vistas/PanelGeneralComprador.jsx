@@ -6,20 +6,20 @@ const PanelGeneralComprador = () => {
   const [buscar, setBuscar] = useState("");
   const [tipoObra, setTipoObra] = useState("");
 
-  const fetchPublicaciones = () => {
-    const params = { estado: "activa" };
-    if (buscar.trim()) params.buscar = buscar;
-    if (tipoObra) params.tipoObra = tipoObra;
-
-    api
-      .get("/publicacion", { params })
-      .then((res) => setPublicaciones(res.data.publicaciones))
-      .catch(() => setPublicaciones([]));
-  };
-
   useEffect(() => {
-    fetchPublicaciones();
-  }, []);
+    const timer = setTimeout(() => {
+      const params = { estado: "activa" };
+      if (buscar.trim()) params.buscar = buscar;
+      if (tipoObra) params.tipoObra = tipoObra;
+
+      api
+        .get("/publicacion", { params })
+        .then((res) => setPublicaciones(res.data.publicaciones))
+        .catch(() => setPublicaciones([]));
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, [buscar, tipoObra]);
 
   return (
     <div className="dashboard-body">
@@ -47,9 +47,6 @@ const PanelGeneralComprador = () => {
               <option value="Fotografía">Fotografía</option>
               <option value="Cerámica">Cerámica</option>
             </select>
-            <button className="btn-primary" onClick={fetchPublicaciones}>
-              Buscar
-            </button>
           </div>
         </div>
         <div className="panel-body">
