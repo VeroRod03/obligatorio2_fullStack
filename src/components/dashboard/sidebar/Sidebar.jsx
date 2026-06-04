@@ -4,7 +4,7 @@ import SidebarNavVendedor from "./SidebarNavVendedor";
 import SidebarNavComprador from "./SidebarNavComprador";
 
 
-const Sidebar = () => {
+const Sidebar = ({ setVista, vistaActual }) => {
   const rol = localStorage.getItem("rol");
 
   const closeSidebar = () => {
@@ -37,8 +37,8 @@ const Sidebar = () => {
           </svg>
         </button>
       </div>
-      {rol === "vendedor" && <SidebarNavVendedor />}
-      {rol === "comprador" && <SidebarNavComprador />}
+      {rol === "vendedor" && <SidebarNavVendedor setVista={setVista} vistaActual={vistaActual} />}
+      {rol === "comprador" && <SidebarNavComprador setVista={setVista} vistaActual={vistaActual} />}
       
         <SidebarFooter />
     </aside>
