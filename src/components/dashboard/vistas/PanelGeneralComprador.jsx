@@ -3,9 +3,19 @@ import api from "../../../api/api.js";
 
 const PanelGeneralComprador = () => {
   const [publicaciones, setPublicaciones] = useState([]);
+  const [tiposObra, setTiposObra] = useState([]);
   const [buscar, setBuscar] = useState("");
   const [tipoObra, setTipoObra] = useState("");
 
+  // Carga los tipos de obra al montar
+  useEffect(() => {
+    api
+      .get("/tipoObra")
+      .then((res) => setTiposObra(res.data.tiposObra || res.data))
+      .catch(() => setTiposObra([]));
+  }, []);
+
+  // Busca publicaciones con debounce
   useEffect(() => {
     const timer = setTimeout(() => {
       const params = { estado: "activa" };
@@ -42,10 +52,11 @@ const PanelGeneralComprador = () => {
               onChange={(e) => setTipoObra(e.target.value)}
             >
               <option value="">Todos los tipos</option>
-              <option value="Pintura">Pintura</option>
-              <option value="Escultura">Escultura</option>
-              <option value="Fotografía">Fotografía</option>
-              <option value="Cerámica">Cerámica</option>
+              {tiposObra.map((tipo) => (
+                <option key={tipo._id} value={tipo._id}>
+                  {tipo.nombre}
+                </option>
+              ))}
             </select>
           </div>
         </div>
