@@ -1,7 +1,7 @@
 import BrandIconName from "../BrandIconName"
-import SidebarFooter from "./SidebarFooter";
-import SidebarNavVendedor from "./sidebar/SidebarNavVendedor";
-import SidebarNavComprador from "./sidebar/SidebarNavComprador";
+import SidebarFooter from "../SidebarFooter";
+import SidebarNavVendedor from "./SidebarNavVendedor";
+import SidebarNavComprador from "./SidebarNavComprador";
 
 
 const Sidebar = () => {
@@ -19,7 +19,6 @@ const Sidebar = () => {
     <aside className="sidebar" id="sidebar">
       <div className="sidebar-brand">
         <BrandIconName />
-        {/* Botón cerrar sidebar en mobile */}
         <button
           className="sidebar-close-btn"
           onClick={closeSidebar}
