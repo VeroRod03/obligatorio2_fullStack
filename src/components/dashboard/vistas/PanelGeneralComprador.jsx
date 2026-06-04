@@ -15,21 +15,30 @@ const PanelGeneralComprador = () => {
       .catch(() => setTiposObra([]));
   }, []);
 
-  // Busca publicaciones con debounce
+  const fetchPublicaciones = (buscarVal, tipoObraVal) => {
+    const params = { estado: "activa" };
+    if (buscarVal.trim()) params.buscar = buscarVal;
+    if (tipoObraVal) params.tipoObra = tipoObraVal;
+
+    api
+      .get("/publicacion", { params })
+      .then((res) => setPublicaciones(res.data.publicaciones))
+      .catch(() => setPublicaciones([]));
+  };
+
+  // Debounce solo para el texto
   useEffect(() => {
     const timer = setTimeout(() => {
-      const params = { estado: "activa" };
-      if (buscar.trim()) params.buscar = buscar;
-      if (tipoObra) params.tipoObra = tipoObra;
-
-      api
-        .get("/publicacion", { params })
-        .then((res) => setPublicaciones(res.data.publicaciones))
-        .catch(() => setPublicaciones([]));
+      fetchPublicaciones(buscar, tipoObra);
     }, 400);
 
     return () => clearTimeout(timer);
-  }, [buscar, tipoObra]);
+  }, [buscar]);
+
+  // Inmediato para el tipo
+  useEffect(() => {
+    fetchPublicaciones(buscar, tipoObra);
+  }, [tipoObra]);
 
   return (
     <div className="dashboard-body">
