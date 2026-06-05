@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import api from "../../../api/api.js";
+import PublicacionesGrid from "./PublicacionesGrid.jsx";
+import DetallePublicacionModal from "./DetallePublicacionModal.jsx";
 
 const PanelGeneralComprador = () => {
   const [publicaciones, setPublicaciones] = useState([]);
   const [tiposObra, setTiposObra] = useState([]);
   const [buscar, setBuscar] = useState("");
   const [tipoObra, setTipoObra] = useState("");
+  const [publicacionSeleccionada, setPublicacionSeleccionada] = useState(null);
 
   // Carga los tipos de obra al montar
   useEffect(() => {
@@ -70,20 +73,15 @@ const PanelGeneralComprador = () => {
           </div>
         </div>
         <div className="panel-body">
-          <div className="pub-grid">
-            {publicaciones.length === 0 ? (
-              <p>No se encontraron publicaciones.</p>
-            ) : (
-              publicaciones.map((pub) => (
-                <div key={pub._id} className="pub-card">
-                  <div className="pub-card-body">
-                    <div className="pub-title">{pub.obra?.titulo}</div>
-                    <div className="pub-artist">{pub.obra?.artista}</div>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
+          {/* al grid le pasamos las publicaciones y la función para seleccionar una */}
+          <PublicacionesGrid
+            publicaciones={publicaciones}
+            onSeleccionar={setPublicacionSeleccionada}
+          />
+          <DetallePublicacionModal
+            publicacion={publicacionSeleccionada}
+            cerrar={() => setPublicacionSeleccionada(null)}
+          />
         </div>
       </div>
     </div>

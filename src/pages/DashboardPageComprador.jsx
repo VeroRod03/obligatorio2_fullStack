@@ -2,14 +2,14 @@ import { useState } from "react";
 import Sidebar from "../components/dashboard/sidebar/Sidebar.jsx";
 import "../../materials/dashboard.css";
 import Topbar from "../components/dashboard/topbar/Topbar.jsx";
-import PanelGeneralComprador from "../components/dashboard/vistas/PanelGeneralComprador.jsx";
+import PanelGeneralComprador from "../components/dashboard/panelGeneral/PanelGeneralComprador.jsx";
 import MisOfertas from "../components/dashboard/vistas/MisOfertas.jsx";
 import Perfil from "../components/dashboard/vistas/Perfil.jsx";
 
 const titulosComprador = {
   "panel-general": "Panel General",
   "mis-ofertas": "Mis ofertas",
-  "perfil": "Mi perfil",
+  perfil: "Mi perfil",
 };
 
 const DashboardPageComprador = () => {
