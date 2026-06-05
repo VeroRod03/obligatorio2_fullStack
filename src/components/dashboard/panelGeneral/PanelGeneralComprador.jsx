@@ -18,8 +18,8 @@ const PanelGeneralComprador = () => {
       .catch(() => setTiposObra([]));
   }, []);
 
-  const fetchPublicaciones = (buscarVal, tipoObraVal) => {
-    const params = { estado: "activa" };
+  const fetchPublicaciones = (buscarVal, tipoObraVal, page = 1, limit = 12) => {
+    const params = { estado: "activa", page, limit };
     if (buscarVal.trim()) params.buscar = buscarVal;
     if (tipoObraVal) params.tipoObra = tipoObraVal;
 
