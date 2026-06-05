@@ -43,6 +43,16 @@ const PanelGeneralComprador = () => {
     fetchPublicaciones(buscar, tipoObra);
   }, [tipoObra]);
 
+  const actualizarPublicacion = (pubActualizada) => {
+    setPublicacionSeleccionada(pubActualizada);
+
+    setPublicaciones((prev) =>
+      prev.map((pub) =>
+        pub._id === pubActualizada._id ? pubActualizada : pub,
+      ),
+    );
+  };
+
   return (
     <div className="dashboard-body">
       <div className="panel">
@@ -81,6 +91,7 @@ const PanelGeneralComprador = () => {
           <DetallePublicacionModal
             publicacion={publicacionSeleccionada}
             cerrar={() => setPublicacionSeleccionada(null)}
+            actualizarPublicacion={actualizarPublicacion}
           />
         </div>
       </div>

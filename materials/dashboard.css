@@ -1159,24 +1159,30 @@ body.sidebar-collapsed .sidebar-close-btn {
 /* ════════════════════════════════════════════
    DETALLE PUBLICACIÓN (modal comprador)
 ════════════════════════════════════════════ */
-.modal-detalle {
-  max-width: 850px;
+.modal.modal-detalle {
+  max-width: 900px;
 }
 
 .detalle-layout {
   display: grid;
-  grid-template-columns: 320px 1fr;
-  gap: 1.5rem;
+  grid-template-columns: 360px 1fr;
+  gap: 2rem;
 }
 
 .detalle-img {
-  width: 320px;
-  height: 420px;
+  width: 360px;
+  height: 450px;
   aspect-ratio: auto;
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  background-size: cover;
-  background-position: center;
+}
+
+.oferta-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.oferta-actions button {
+  flex: 1;
 }
 
 .detalle-info {
