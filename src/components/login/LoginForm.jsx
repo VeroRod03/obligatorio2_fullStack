@@ -3,8 +3,11 @@ import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router";
 import { toast } from "react-toastify";
 import api from "../../api/api.js";
+import { useDispatch } from "react-redux";
+import { setUsuario, setToken } from "../../features/usuario/usuario.slice.js";
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -20,16 +23,22 @@ const LoginForm = () => {
     api
       .post("/auth/login", { email: data.email, password: data.password })
       .then((response) => {
-        toast.success(response.data?.mensaje || "Login exitoso");
-        localStorage.setItem("token", response.data?.token || "");
-        localStorage.setItem("userId", response.data?.user?.id || "");
-        if (response.data?.user.rol === "vendedor") {
-          localStorage.setItem("rol", "vendedor");
-          navigate("/vendedor/dashboard");
-        } else if (response.data?.user.rol === "comprador") {
-          localStorage.setItem("rol", "comprador");
-          navigate("/comprador/dashboard");
-        }
+        const token = response.data?.token || "";
+        const userId = response.data?.user?.id || "";
+        const rol = response.data?.user?.rol;
+
+        localStorage.setItem("token", token);
+        localStorage.setItem("userId", userId);
+        localStorage.setItem("rol", rol || "");
+        dispatch(setToken(token));
+
+        // Fetchear usuario completo (con nombreCompleto) antes de navegar
+        return api.get(`/usuario/${userId}`).then((userRes) => {
+          dispatch(setUsuario(userRes.data.usuario));
+          toast.success(response.data?.mensaje || "Login exitoso");
+          if (rol === "vendedor") navigate("/vendedor/dashboard");
+          else if (rol === "comprador") navigate("/comprador/dashboard");
+        });
       })
       .catch((error) => {
         const errMsg =

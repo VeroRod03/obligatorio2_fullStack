@@ -1,31 +1,18 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import api from "../../../api/api.js";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../../features/usuario/usuario.slice.js";
+
 
 const SidebarFooter = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [usuario, setUsuario] = useState(null);
-  const userId = localStorage.getItem("userId");
-
-  useEffect(() => {
-  api
-    .get(`/usuario/${userId}`)
-    .then((response) => {
-      console.log("Usuario cargado:", response.data);
-      setUsuario(response.data.usuario);
-    })
-    .catch((error) => {
-      console.log("Error:", error);
-      setUsuario(null);
-    });
-}, []);
-
-
+  const usuario = useSelector((state) => state.user.usuario);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("rol");
     localStorage.removeItem("userId");
+    dispatch(logout());
     navigate("/login");
   };
 
@@ -40,7 +27,11 @@ const SidebarFooter = () => {
   return (
     <div className="sidebar-footer">
       <div className="user-pill">
-        <div className="user-avatar">{iniciales}</div>
+        <div className="user-avatar" style={usuario?.urlFotoPerfil ? { padding: 0, overflow: "hidden" } : {}}>
+          {usuario?.urlFotoPerfil
+            ? <img src={usuario.urlFotoPerfil} alt="avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            : iniciales}
+        </div>
         <div className="user-info">
           <div className="user-name">{nombreCompleto}</div>
           <div className="user-role">{rol}</div>

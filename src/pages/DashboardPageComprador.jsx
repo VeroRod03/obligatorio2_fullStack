@@ -4,12 +4,12 @@ import "../../materials/dashboard.css";
 import Topbar from "../components/dashboard/topbar/Topbar.jsx";
 import PanelGeneralComprador from "../components/dashboard/panelGeneral/PanelGeneralComprador.jsx";
 import MisOfertas from "../components/dashboard/misOfertas/MisOfertas.jsx";
-import Perfil from "../components/dashboard/vistas/Perfil.jsx";
+import MiPerfil from "../components/dashboard/miPerfil/MiPerfil.jsx";
 
 const titulosComprador = {
   "panel-general": "Panel General",
   "mis-ofertas": "Mis ofertas",
-  perfil: "Mi perfil",
+  "perfil": "Mi perfil",
 };
 
 const DashboardPageComprador = () => {
@@ -25,7 +25,7 @@ const DashboardPageComprador = () => {
         </div>
         {vista === "panel-general" && <PanelGeneralComprador />}
         {vista === "mis-ofertas" && <MisOfertas />}
-        {vista === "perfil" && <Perfil />}
+        {vista === "perfil" && <MiPerfil />}
       </div>
     </div>
   );

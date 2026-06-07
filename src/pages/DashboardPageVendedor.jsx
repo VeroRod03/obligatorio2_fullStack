@@ -7,7 +7,7 @@ import PanelGeneralVendedor from "../components/dashboard/vistas/PanelGeneralVen
 import Publicaciones from "../components/dashboard/vistas/Publicaciones.jsx";
 import TiposObra from "../components/dashboard/vistas/TiposObra.jsx";
 import ExplorarObras from "../components/dashboard/vistas/ExplorarObras.jsx";
-import Perfil from "../components/dashboard/vistas/Perfil.jsx";
+import MiPerfil from "../components/dashboard/miPerfil/MiPerfil.jsx";
 import Plan from "../components/dashboard/vistas/Plan.jsx";
 
 const titulosVendedor = {
@@ -35,7 +35,7 @@ const DashboardPageVendedor = () => {
         {vista === "publicaciones" && <Publicaciones />}
         {vista === "tipos-obra" && <TiposObra />}
         {vista === "explorar" && <ExplorarObras />}
-        {vista === "perfil" && <Perfil />}
+        {vista === "perfil" && <MiPerfil />}
         {vista === "plan" && <Plan />}
       </div>
     </div>
