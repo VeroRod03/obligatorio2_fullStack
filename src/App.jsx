@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router";
 import { Provider, useDispatch } from "react-redux";
 import { store } from "./store/store.js";
@@ -17,27 +17,26 @@ import DashboardPageComprador from "./pages/DashboardPageComprador.jsx";
 // Componente interno para poder usar useDispatch (necesita estar dentro del Provider)
 const AppRoutes = () => {
   const dispatch = useDispatch();
+  const [listo, setListo] = useState(false);
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
-    if (!userId) return;
 
-    api
-      .get(`/usuario/${userId}`)
-      .then((response) => {
-        dispatch(setUsuario(response.data.usuario));
-      })
-      .catch((error) => {
-        console.log("Error cargando usuario:", error);
-      });
+    // Sin sesión activa: renderizar igual (login/registro no necesitan usuario)
+    if (!userId) {
+      setListo(true);
+      return;
+    }
 
-    api
-      .get("/tipoObra")
-      .then((res) => dispatch(setTiposObra(res.data.tiposObra || res.data)))
-      .catch(() => console.log("Error cargando tipos de obra"));
+    Promise.all([
+      api.get(`/usuario/${userId}`).then((res) => dispatch(setUsuario(res.data.usuario))),
+      api.get("/tipoObra").then((res) => dispatch(setTiposObra(res.data.tiposObra || res.data))),
+    ])
+      .catch((err) => console.log("Error inicializando sesión:", err))
+      .finally(() => setListo(true));
   }, []);
 
-
+  if (!listo) return null;
 
   return (
     <BrowserRouter>

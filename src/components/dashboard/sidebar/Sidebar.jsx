@@ -40,7 +40,7 @@ const Sidebar = ({ setVista, vistaActual }) => {
       {rol === "vendedor" && <SidebarNavVendedor setVista={setVista} vistaActual={vistaActual} />}
       {rol === "comprador" && <SidebarNavComprador setVista={setVista} vistaActual={vistaActual} />}
       
-        <SidebarFooter />
+        <SidebarFooter setVista={setVista} />
     </aside>
   );
 };

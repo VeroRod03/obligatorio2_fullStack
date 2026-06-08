@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../features/usuario/usuario.slice.js";
 
 
-const SidebarFooter = () => {
+const SidebarFooter = ({ setVista }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const usuario = useSelector((state) => state.user.usuario);
@@ -26,7 +26,7 @@ const SidebarFooter = () => {
 
   return (
     <div className="sidebar-footer">
-      <div className="user-pill">
+      <div className="user-pill" onClick={() => setVista?.("perfil")} style={{ cursor: "pointer" }}>
         <div className="user-avatar" style={usuario?.urlFotoPerfil ? { padding: 0, overflow: "hidden" } : {}}>
           {usuario?.urlFotoPerfil
             ? <img src={usuario.urlFotoPerfil} alt="avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
@@ -36,7 +36,7 @@ const SidebarFooter = () => {
           <div className="user-name">{nombreCompleto}</div>
           <div className="user-role">{rol}</div>
         </div>
-        <button className="logout-btn" title="Cerrar sesión" onClick={handleLogout}>
+        <button className="logout-btn" title="Cerrar sesión" onClick={(e) => { e.stopPropagation(); handleLogout(); }}>
           <svg width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
             <polyline points="16 17 21 12 16 7" />

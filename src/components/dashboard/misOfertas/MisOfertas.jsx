@@ -44,7 +44,7 @@ const MisOfertas = () => {
 
   useEffect(() => {
     api
-      .get("/publicacion/mis-publicaciones")
+      .get("/publicacion/mis-publicaciones", { params: { limit: 100 } })
       .then((res) => {
         console.log("MisOfertas response:", res.data.publicaciones || res.data);
         const pubs = res.data.publicaciones || res.data || [];
