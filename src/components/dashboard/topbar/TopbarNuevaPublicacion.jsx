@@ -5,7 +5,7 @@ const TopbarNuevaPublicacion = () => {
   <button
     className="btn-gold"
     id="btnNuevaPublicacion"
-    onclick="openModalNuevaPublicacion()"
+    onClick="openModalNuevaPublicacion()"
   >
     <svg
       width={13}

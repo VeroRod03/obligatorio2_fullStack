@@ -1,22 +1,17 @@
 import { useState, useEffect } from "react";
-import api from "../../../api/api.js";
+import api from "../../../../api/api.js";
 import PublicacionesGrid from "./PublicacionesGrid.jsx";
 import DetallePublicacionModal from "./DetallePublicacionModal.jsx";
+import { useSelector } from "react-redux";
 
 const PanelGeneralComprador = () => {
   const [publicaciones, setPublicaciones] = useState([]);
-  const [tiposObra, setTiposObra] = useState([]);
   const [buscar, setBuscar] = useState("");
   const [tipoObra, setTipoObra] = useState("");
   const [publicacionSeleccionada, setPublicacionSeleccionada] = useState(null);
+  const tiposObra = useSelector((state) => state.tiposDeObra.tiposObra);
 
   // Carga los tipos de obra al montar
-  useEffect(() => {
-    api
-      .get("/tipoObra")
-      .then((res) => setTiposObra(res.data.tiposObra || res.data))
-      .catch(() => setTiposObra([]));
-  }, []);
 
   const fetchPublicaciones = (buscarVal, tipoObraVal, page = 1, limit = 12) => {
     const params = { estado: "activa", page, limit };

@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import { Provider, useDispatch } from "react-redux";
 import { store } from "./store/store.js";
 import { setUsuario } from "./features/usuario/usuario.slice.js";
+import { setTiposObra } from "./features/tiposObra/tipoObra.slice.js";
 import api from "./api/api.js";
 import LoginPage from "./pages/LoginPage";
 import RegistroPage from "./pages/RegistroPage";
@@ -29,7 +30,14 @@ const AppRoutes = () => {
       .catch((error) => {
         console.log("Error cargando usuario:", error);
       });
+
+    api
+      .get("/tipoObra")
+      .then((res) => dispatch(setTiposObra(res.data.tiposObra || res.data)))
+      .catch(() => console.log("Error cargando tipos de obra"));
   }, []);
+
+
 
   return (
     <BrowserRouter>

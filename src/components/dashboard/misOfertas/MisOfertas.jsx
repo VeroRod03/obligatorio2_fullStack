@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import api from "../../../api/api.js";
-import DetallePublicacionModal from "../panelGeneral/DetallePublicacionModal.jsx";
+import DetallePublicacionModal from "../panelGeneral/comprador/DetallePublicacionModal.jsx";
 
 const MisOfertas = () => {
 

@@ -1,0 +1,155 @@
+import { useState } from "react";
+import { useSelector } from "react-redux";
+
+const NuevaPublicacionModal = (idObra) => {
+  const tiposObra = useSelector((state) => state.tiposDeObra.tiposObra);
+  const [donacion, setDonacion] = useState(false);
+    
+  return (
+    <div
+      className="modal-overlay"
+      id="modalNuevaPublicacion"
+      onClick="closeModalNuevaPublicacion(event)"
+    >
+      <div className="modal" onClick="event.stopPropagation()">
+        <div className="modal-header">
+          <div className="modal-title">Nueva publicación</div>
+          <button className="close-btn" onClick="closeModalNuevaPublicacion()">
+            <svg
+              width={18}
+              height={18}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+            >
+              <line x1={18} y1={6} x2={6} y2={18} />
+              <line x1={6} y1={6} x2={18} y2={18} />
+            </svg>
+          </button>
+        </div>
+        <div className="modal-body">
+          <div style={{ marginBottom: "1.2rem" }}>
+            <p
+              className="form-section-title"
+              style={{
+                borderBottom: "1px solid var(--border-subtle)",
+                paddingBottom: ".6rem",
+                marginBottom: "1rem",
+              }}
+            >
+              Datos de la obra
+            </p>
+            <div className="form-row">
+              <div className="form-field">
+                <label>
+                  ID de obra{" "}
+                </label>
+                <input type="text" defaultValue={idObra} />
+              </div>
+              <div className="form-field">
+                <label>Tipo de obra</label>
+                <select>
+                  <option value="">Seleccioná un tipo…</option>
+                  {tiposObra.map((tipo) => (
+                    <option key={tipo.id} value={tipo.id}>
+                      {tipo.nombre}
+                    </option>
+                  ))}
+
+                </select>
+              </div>
+            </div>
+          </div>
+          <div style={{ marginBottom: "1.5rem" }}>
+            <p
+              className="form-section-title"
+              style={{
+                borderBottom: "1px solid var(--border-subtle)",
+                paddingBottom: ".6rem",
+                marginBottom: "1rem",
+              }}
+            >
+              Configuración de subasta
+            </p>
+            <div className="form-row">
+              <div className="form-field">
+                <label>Precio base (USD)</label>
+                <input type="number" placeholder="ej. 500" min={0} />
+              </div>
+              <div className="form-field">
+                <label>Estado</label>
+                <select>
+                  <option value="activa">Activa</option>
+                  <option value="pausada">Pausada</option>
+                </select>
+              </div>
+            </div>
+            <div className="form-row">
+              <div className="form-field full">
+                <div
+                  onClick={() => setDonacion((v) => !v)}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: ".75rem",
+                    padding: ".6rem .9rem",
+                    borderRadius: "8px",
+                    border: `1px solid ${donacion ? "var(--gold)" : "var(--border-subtle)"}`,
+                    background: donacion ? "rgba(212,175,55,.08)" : "transparent",
+                    cursor: "pointer",
+                    transition: "all .2s",
+                    userSelect: "none",
+                  }}
+                >
+                  {/* Toggle pill */}
+                  <div style={{
+                    width: "36px",
+                    height: "20px",
+                    borderRadius: "999px",
+                    background: donacion ? "var(--gold)" : "var(--border-subtle)",
+                    position: "relative",
+                    flexShrink: 0,
+                    transition: "background .2s",
+                  }}>
+                    <div style={{
+                      position: "absolute",
+                      top: "3px",
+                      left: donacion ? "19px" : "3px",
+                      width: "14px",
+                      height: "14px",
+                      borderRadius: "50%",
+                      background: "#fff",
+                      transition: "left .2s",
+                    }} />
+                  </div>
+                  <span style={{
+                    fontSize: ".85rem",
+                    color: donacion ? "var(--gold)" : "var(--text-muted)",
+                    transition: "color .2s",
+                    fontWeight: donacion ? 500 : 400,
+                  }}>
+                    Marcar como donación
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button
+            className="btn-gold"
+            style={{
+              width: "100%",
+              justifyContent: "center",
+              padding: ".9rem",
+            }}
+            onClick="alert('Publicación creada (demo)')"
+          >
+            Publicar obra
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default NuevaPublicacionModal;

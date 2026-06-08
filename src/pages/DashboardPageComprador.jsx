@@ -2,7 +2,7 @@ import { useState } from "react";
 import Sidebar from "../components/dashboard/sidebar/Sidebar.jsx";
 import "../../materials/dashboard.css";
 import Topbar from "../components/dashboard/topbar/Topbar.jsx";
-import PanelGeneralComprador from "../components/dashboard/panelGeneral/PanelGeneralComprador.jsx";
+import PanelGeneralComprador from "../components/dashboard/panelGeneral/comprador/PanelGeneralComprador.jsx";
 import MisOfertas from "../components/dashboard/misOfertas/MisOfertas.jsx";
 import MiPerfil from "../components/dashboard/miPerfil/MiPerfil.jsx";
 
