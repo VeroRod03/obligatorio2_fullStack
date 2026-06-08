@@ -1,11 +1,10 @@
-const TopbarNuevaPublicacion = () => {
-    //agregar funcion openModalNuevaPublicacion()
+const TopbarNuevaPublicacion = ({ setVista }) => {
   return (
     <div className="topbar-actions" id="topbarActions">
   <button
     className="btn-gold"
     id="btnNuevaPublicacion"
-    onClick="openModalNuevaPublicacion()"
+    onClick={() => setVista("explorar")}
   >
     <svg
       width={13}

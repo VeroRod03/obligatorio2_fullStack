@@ -29,7 +29,7 @@ const DashboardPageVendedor = () => {
       <div className="main-content">
         <div className="topbar">
           <Topbar titulo={titulosVendedor[vista] || "Panel General"} />
-          {vista === "panel-general" && <TopbarNuevaPublicacion />}
+          {vista === "panel-general" && <TopbarNuevaPublicacion setVista={setVista} />}
         </div>
         {vista === "panel-general" && <PanelGeneralVendedor />}
         {vista === "publicaciones" && <Publicaciones />}
