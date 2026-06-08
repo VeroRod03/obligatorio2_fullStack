@@ -3,7 +3,7 @@ import Sidebar from "../components/dashboard/sidebar/Sidebar.jsx";
 import "../../materials/dashboard.css";
 import Topbar from "../components/dashboard/topbar/Topbar.jsx";
 import TopbarNuevaPublicacion from "../components/dashboard/topbar/TopbarNuevaPublicacion.jsx";
-import PanelGeneralVendedor from "../components/dashboard/vistas/PanelGeneralVendedor.jsx";
+import PanelGeneralVendedor from "../components/dashboard/panelGeneral/PanelGeneralVendedor.jsx";
 import Publicaciones from "../components/dashboard/vistas/Publicaciones.jsx";
 import TiposObra from "../components/dashboard/vistas/TiposObra.jsx";
 import ExplorarObras from "../components/dashboard/vistas/ExplorarObras.jsx";
