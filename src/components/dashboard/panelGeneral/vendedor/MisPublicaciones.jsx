@@ -141,8 +141,10 @@ const MisPublicaciones = ({ onTotalChange }) => {
       donacion: editingValues.donacion,
       estado: editingValues.estado,
     };
+    console.log("payload enviado:", payload);
+
     api
-      .patch(`/publicacion/${id}`, payload)
+      .put(`/publicacion/${id}`, payload)
       .then((res) => {
         const updated = res.data?.data || res.data || {};
         setPublicaciones((prev) =>
@@ -152,6 +154,7 @@ const MisPublicaciones = ({ onTotalChange }) => {
         setEditingId(null);
       })
       .catch((error) =>
+        console.error("Error al actualizar:", error),
         toast.error(
           error?.response?.data?.error?.[0]?.message || 
           error?.response?.data?.message || "Error al actualizar"),
