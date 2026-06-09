@@ -41,7 +41,7 @@ const TiposObra = () => {
         toast.success(res.data.mensaje || "Tipo de obra creado");
       })
       .catch((err) => toast.error(err?.response?.data?.error?.[0]?.message || 
-        err?.response?.data?.mensaje || "No se pudo crear"));
+        err?.response?.data?.message || "No se pudo crear"));
   };
 
   const handleEditar = (tipo) => {
@@ -61,7 +61,7 @@ const TiposObra = () => {
         toast.success(res.data.mensaje || "Tipo de obra actualizado");
       })
       .catch((err) => toast.error(err?.response?.data?.error?.[0]?.message || 
-        err?.response?.data?.mensaje || "No se pudo actualizar"));
+        err?.response?.data?.message || "No se pudo actualizar"));
   };
 
   const handleEliminar = (tipo) => {
@@ -79,7 +79,7 @@ const TiposObra = () => {
         toast.success("Tipo de obra eliminado");
       })
       .catch((err) => toast.error(err?.response?.data?.error?.[0]?.message || 
-        err?.response?.data?.mensaje || "No se pudo eliminar"))
+        err?.response?.data?.message || "No se pudo eliminar"))
       .finally(() => setModalConfirmacion(null));
   };
 
