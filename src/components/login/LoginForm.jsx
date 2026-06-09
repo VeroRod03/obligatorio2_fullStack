@@ -39,6 +39,7 @@ const LoginForm = () => {
           if (rol === "vendedor") navigate("/vendedor/dashboard");
           else if (rol === "comprador") navigate("/comprador/dashboard");
         });
+
       })
       .catch((error) => {
         const errMsg =
