@@ -21,6 +21,7 @@ const badgeClass = (estado) => {
 const MisPublicaciones = ({ onTotalChange }) => {
   const usuario = useSelector((state) => state.user.usuario);
   const tiposObra = useSelector((state) => state.tiposDeObra.tiposObra);
+  console.log("TIPOS EN SELECT", tiposObra);
 
   const [publicaciones, setPublicaciones] = useState([]);
   const [totalPublicaciones, setTotalPublicaciones] = useState(0);
