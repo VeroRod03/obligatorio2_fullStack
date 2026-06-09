@@ -5,7 +5,7 @@ import Topbar from "../components/dashboard/topbar/Topbar.jsx";
 import TopbarNuevaPublicacion from "../components/dashboard/topbar/TopbarNuevaPublicacion.jsx";
 import PanelGeneralVendedor from "../components/dashboard/panelGeneral/vendedor/PanelGeneralVendedor.jsx";
 import Publicaciones from "../components/dashboard/vistas/Publicaciones.jsx";
-import TiposObra from "../components/dashboard/vistas/TiposObra.jsx";
+import TiposObra from "../components/dashboard/tiposDeObra/TiposObra.jsx";
 import ExplorarObras from "../components/dashboard/explorarObras/ExplorarObras.jsx";
 import MiPerfil from "../components/dashboard/miPerfil/MiPerfil.jsx";
 import Plan from "../components/dashboard/vistas/Plan.jsx";
