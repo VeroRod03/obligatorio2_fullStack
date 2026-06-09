@@ -20,20 +20,30 @@ const AppRoutes = () => {
   const [listo, setListo] = useState(false);
 
   useEffect(() => {
-    const userId = localStorage.getItem("userId");
+    const inicializar = async () => {
+      try {
+        const userId = localStorage.getItem("userId");
 
-    // Sin sesión activa: renderizar igual (login/registro no necesitan usuario)
-    if (!userId) {
-      setListo(true);
-      return;
-    }
+        if (!userId) {
+          setListo(true);
+          return;
+        }
 
-    Promise.all([
-      api.get(`/usuario/${userId}`).then((res) => dispatch(setUsuario(res.data.usuario))),
-      api.get("/tipoObra").then((res) => dispatch(setTiposObra(res.data.tiposObra || res.data))),
-    ])
-      .catch((err) => console.log("Error inicializando sesión:", err))
-      .finally(() => setListo(true));
+        const resUsuario = await api.get(`/usuario/${userId}`);
+
+        dispatch(setUsuario(resUsuario.data.usuario));
+
+        const resTipos = await api.get("/tipoObra");
+
+        dispatch(setTiposObra(resTipos.data.tiposObra || resTipos.data));
+      } catch (err) {
+        console.log("Error inicializando:", err);
+      } finally {
+        setListo(true);
+      }
+    };
+
+    inicializar();
   }, []);
 
   if (!listo) return null;

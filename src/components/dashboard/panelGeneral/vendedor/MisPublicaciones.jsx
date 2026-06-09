@@ -23,13 +23,18 @@ const MisPublicaciones = ({ onTotalChange }) => {
   const tiposObra = useSelector((state) => state.tiposDeObra.tiposObra);
 
   const [publicaciones, setPublicaciones] = useState([]);
+  const [totalPublicaciones, setTotalPublicaciones] = useState(0);
   const [cargando, setCargando] = useState(true);
   const [buscar, setBuscar] = useState("");
   const [buscarDebounced, setBuscarDebounced] = useState("");
   const [filtroEstado, setFiltroEstado] = useState("");
   const [filtroTipo, setFiltroTipo] = useState("");
   const [editingId, setEditingId] = useState(null);
-  const [editingValues, setEditingValues] = useState({ tipoObra: "", donacion: false, estado: "" });
+  const [editingValues, setEditingValues] = useState({
+    tipoObra: "",
+    donacion: false,
+    estado: "",
+  });
   const [modalConfirmacion, setModalConfirmacion] = useState(null);
 
   const fetchPublicaciones = (buscarVal, estado, tipo) => {
@@ -38,11 +43,20 @@ const MisPublicaciones = ({ onTotalChange }) => {
     if (estado) params.estado = estado;
     if (tipo) params.tipoObra = tipo;
     setCargando(true);
-    api.get("/publicacion/mis-publicaciones", { params: { ...params, limit: 100 } })
+    api
+      .get("/publicacion/mis-publicaciones", {
+        params: { ...params, limit: 100 },
+      })
       .then((res) => {
         const pubs = res.data.publicaciones || res.data || [];
         setPublicaciones(pubs);
-        onTotalChange?.(pubs.length);
+        // solamente actualizar el contador si NO hay filtros aplicados, asi se refleja bien el total de publicaciones
+        const sinFiltros = !buscarVal.trim() && !estado && !tipo;
+
+        if (sinFiltros) {
+          setTotalPublicaciones(pubs.length);
+          onTotalChange?.(pubs.length);
+        }
       })
       .catch(() => {
         setPublicaciones([]);
@@ -61,16 +75,25 @@ const MisPublicaciones = ({ onTotalChange }) => {
   }, [buscarDebounced, filtroEstado, filtroTipo]);
 
   const handleEliminar = (pub) =>
-    setModalConfirmacion({ tipo: "eliminar", id: pub._id, titulo: pub.obra?.titulo });
+    setModalConfirmacion({
+      tipo: "eliminar",
+      id: pub._id,
+      titulo: pub.obra?.titulo,
+    });
 
   const handleFinalizar = (pub) =>
-    setModalConfirmacion({ tipo: "finalizar", id: pub._id, titulo: pub.obra?.titulo });
+    setModalConfirmacion({
+      tipo: "finalizar",
+      id: pub._id,
+      titulo: pub.obra?.titulo,
+    });
 
   const confirmarAccion = () => {
     if (!modalConfirmacion) return;
     const { tipo, id } = modalConfirmacion;
     if (tipo === "eliminar") {
-      api.delete(`/publicacion/${id}`)
+      api
+        .delete(`/publicacion/${id}`)
         .then(() => {
           toast.success("Publicación eliminada");
           setPublicaciones((prev) => {
@@ -79,16 +102,23 @@ const MisPublicaciones = ({ onTotalChange }) => {
             return updated;
           });
         })
-        .catch((error) => toast.error(error?.response?.data?.message || "No se pudo eliminar"));
+        .catch((error) =>
+          toast.error(error?.response?.data?.message || "No se pudo eliminar"),
+        );
     } else {
-      api.patch(`/publicacion/${id}/finalizar`)
+      api
+        .patch(`/publicacion/${id}/finalizar`)
         .then(() => {
           toast.success("Publicación finalizada");
           setPublicaciones((prev) =>
-            prev.map((p) => p._id === id ? { ...p, estado: "finalizada" } : p)
+            prev.map((p) =>
+              p._id === id ? { ...p, estado: "finalizada" } : p,
+            ),
           );
         })
-        .catch((error) => toast.error(error?.response?.data?.message || "No se pudo finalizar"));
+        .catch((error) =>
+          toast.error(error?.response?.data?.message || "No se pudo finalizar"),
+        );
     }
     setModalConfirmacion(null);
   };
@@ -111,28 +141,41 @@ const MisPublicaciones = ({ onTotalChange }) => {
       donacion: editingValues.donacion,
       estado: editingValues.estado,
     };
-    api.patch(`/publicacion/${id}`, payload)
+    api
+      .patch(`/publicacion/${id}`, payload)
       .then((res) => {
         const updated = res.data.publicacion || res.data || {};
-        setPublicaciones((prev) => prev.map((p) => (p._id === id ? { ...p, ...updated } : p)));
+        setPublicaciones((prev) =>
+          prev.map((p) => (p._id === id ? { ...p, ...updated } : p)),
+        );
         toast.success("Publicación actualizada");
         setEditingId(null);
       })
-      .catch((error) => toast.error(error?.response?.data?.message || "Error al actualizar"));
+      .catch((error) =>
+        toast.error(error?.response?.data?.message || "Error al actualizar"),
+      );
   };
 
   const cancelEdit = () => setEditingId(null);
 
   const esPlus = (usuario?.subscripcion || "plus") === "plus";
-  const totalPubs = publicaciones.length;
+  const totalPubs = totalPublicaciones;
 
   return (
     <>
       <div className="panel">
         <div className="panel-header">
-          <div className="panel-title">Mis <em>publicaciones</em></div>
+          <div className="panel-title">
+            Mis <em>publicaciones</em>
+          </div>
           {esPlus && (
-            <div style={{ fontSize: "0.7rem", color: totalPubs >= LIMIT_PLUS ? "#e05252" : "var(--text-muted)" }}>
+            <div
+              style={{
+                fontSize: "0.7rem",
+                color:
+                  totalPubs >= LIMIT_PLUS ? "#e05252" : "var(--text-muted)",
+              }}
+            >
               {totalPubs} / {LIMIT_PLUS}
             </div>
           )}
@@ -146,17 +189,27 @@ const MisPublicaciones = ({ onTotalChange }) => {
               value={buscar}
               onChange={(e) => setBuscar(e.target.value)}
             />
-            <select className="filter-select" value={filtroEstado} onChange={(e) => setFiltroEstado(e.target.value)}>
+            <select
+              className="filter-select"
+              value={filtroEstado}
+              onChange={(e) => setFiltroEstado(e.target.value)}
+            >
               <option value="">Todos los estados</option>
               <option value="activa">Activa</option>
               <option value="pausada">Pausada</option>
               <option value="finalizada">Finalizada</option>
               <option value="cancelada">Cancelada</option>
             </select>
-            <select className="filter-select" value={filtroTipo} onChange={(e) => setFiltroTipo(e.target.value)}>
+            <select
+              className="filter-select"
+              value={filtroTipo}
+              onChange={(e) => setFiltroTipo(e.target.value)}
+            >
               <option value="">Todos los tipos</option>
               {tiposObra.map((t) => (
-                <option key={t._id} value={t._id}>{t.nombre}</option>
+                <option key={t._id} value={t._id}>
+                  {t.nombre}
+                </option>
               ))}
             </select>
           </div>
@@ -174,138 +227,292 @@ const MisPublicaciones = ({ onTotalChange }) => {
             </thead>
             <tbody>
               {cargando ? (
-                <tr><td colSpan={6} style={{ textAlign: "center", padding: "2rem", color: "var(--text-muted)" }}>Cargando…</td></tr>
+                <tr>
+                  <td
+                    colSpan={6}
+                    style={{
+                      textAlign: "center",
+                      padding: "2rem",
+                      color: "var(--text-muted)",
+                    }}
+                  >
+                    Cargando…
+                  </td>
+                </tr>
               ) : publicaciones.length === 0 ? (
-                <tr><td colSpan={6} style={{ textAlign: "center", padding: "2rem", color: "var(--text-muted)" }}>No hay publicaciones.</td></tr>
-              ) : publicaciones.map((pub) => (
-                <tr key={pub._id}>
-                  <td>
-                    <div
-                      className="obra-thumb"
-                      style={pub.obra?.imagenId
-                        ? { backgroundImage: `url(${getImageUrl(pub.obra.imagenId)})`, backgroundSize: "cover", backgroundPosition: "center" }
-                        : { background: "linear-gradient(135deg,#1a0f0a,#2d1a0d)" }
-                      }
-                    />
+                <tr>
+                  <td
+                    colSpan={6}
+                    style={{
+                      textAlign: "center",
+                      padding: "2rem",
+                      color: "var(--text-muted)",
+                    }}
+                  >
+                    No hay publicaciones.
                   </td>
-                  <td>
-                    <div className="obra-name">{pub.obra?.titulo}</div>
-                    <div className="obra-artist">{pub.obra?.artista}</div>
-                  </td>
-                  {editingId === pub._id ? (
-                    <>
-                      <td>
-                        <select
-                          className="filter-select"
-                          value={editingValues.tipoObra}
-                          onChange={(e) => handleEditChange("tipoObra", e.target.value)}
-                          style={{ fontSize: ".78rem", width: "100%" }}
-                        >
-                          <option value="">-- Tipo --</option>
-                          {tiposObra.map((t) => (
-                            <option key={t._id} value={t._id}>{t.nombre}</option>
-                          ))}
-                        </select>
-                      </td>
-                      <td className="price-col">
-                        {pub.precioBase?.toLocaleString()} <span style={{ fontSize: ".7rem", color: "var(--text-muted)" }}>USD</span>
-                      </td>
-                      <td>
-                        <select
-                          className="filter-select"
-                          value={editingValues.estado}
-                          onChange={(e) => handleEditChange("estado", e.target.value)}
-                          style={{ fontSize: ".78rem", width: "100%" }}
-                        >
-                          <option value="activa">Activa</option>
-                          <option value="pausada">Pausada</option>
-                          <option value="cancelada">Cancelada</option>
-                          <option value="finalizada">Finalizada</option>
-                        </select>
-                      </td>
-                      <td>
-                        <div className="actions-col" style={{ gap: "0.5rem" }}>
-                          <div
-                            onClick={() => handleEditChange("donacion", !editingValues.donacion)}
+                </tr>
+              ) : (
+                publicaciones.map((pub) => (
+                  <tr key={pub._id}>
+                    <td>
+                      <div
+                        className="obra-thumb"
+                        style={
+                          pub.obra?.imagenId
+                            ? {
+                                backgroundImage: `url(${getImageUrl(pub.obra.imagenId)})`,
+                                backgroundSize: "cover",
+                                backgroundPosition: "center",
+                              }
+                            : {
+                                background:
+                                  "linear-gradient(135deg,#1a0f0a,#2d1a0d)",
+                              }
+                        }
+                      />
+                    </td>
+                    <td>
+                      <div className="obra-name">{pub.obra?.titulo}</div>
+                      <div className="obra-artist">{pub.obra?.artista}</div>
+                    </td>
+                    {editingId === pub._id ? (
+                      <>
+                        <td>
+                          <select
+                            className="filter-select"
+                            value={editingValues.tipoObra}
+                            onChange={(e) =>
+                              handleEditChange("tipoObra", e.target.value)
+                            }
+                            style={{ fontSize: ".78rem", width: "100%" }}
+                          >
+                            <option value="">-- Tipo --</option>
+                            {tiposObra.map((t) => (
+                              <option key={t._id} value={t._id}>
+                                {t.nombre}
+                              </option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="price-col">
+                          {pub.precioBase?.toLocaleString()}{" "}
+                          <span
                             style={{
-                              display: "inline-flex", alignItems: "center", gap: 5, cursor: "pointer",
-                              border: `1px solid ${editingValues.donacion ? "var(--gold)" : "var(--border-subtle)"}`,
-                              borderRadius: 6, padding: "2px 7px",
-                              background: editingValues.donacion ? "rgba(212,175,55,.08)" : "transparent",
-                              transition: "all .2s",
+                              fontSize: ".7rem",
+                              color: "var(--text-muted)",
                             }}
                           >
-                            <div style={{
-                              width: 26, height: 14, borderRadius: 7, position: "relative",
-                              background: editingValues.donacion ? "var(--gold)" : "var(--border-subtle)",
-                              transition: "background .2s", flexShrink: 0,
-                            }}>
-                              <div style={{
-                                position: "absolute", top: 2,
-                                left: editingValues.donacion ? 13 : 2,
-                                width: 10, height: 10, borderRadius: "50%",
-                                background: "#fff", transition: "left .2s",
-                              }} />
+                            USD
+                          </span>
+                        </td>
+                        <td>
+                          <select
+                            className="filter-select"
+                            value={editingValues.estado}
+                            onChange={(e) =>
+                              handleEditChange("estado", e.target.value)
+                            }
+                            style={{ fontSize: ".78rem", width: "100%" }}
+                          >
+                            <option value="activa">Activa</option>
+                            <option value="pausada">Pausada</option>
+                            <option value="cancelada">Cancelada</option>
+                            <option value="finalizada">Finalizada</option>
+                          </select>
+                        </td>
+                        <td>
+                          <div
+                            className="actions-col"
+                            style={{ gap: "0.5rem" }}
+                          >
+                            <div
+                              onClick={() =>
+                                handleEditChange(
+                                  "donacion",
+                                  !editingValues.donacion,
+                                )
+                              }
+                              style={{
+                                display: "inline-flex",
+                                alignItems: "center",
+                                gap: 5,
+                                cursor: "pointer",
+                                border: `1px solid ${editingValues.donacion ? "var(--gold)" : "var(--border-subtle)"}`,
+                                borderRadius: 6,
+                                padding: "2px 7px",
+                                background: editingValues.donacion
+                                  ? "rgba(212,175,55,.08)"
+                                  : "transparent",
+                                transition: "all .2s",
+                              }}
+                            >
+                              <div
+                                style={{
+                                  width: 26,
+                                  height: 14,
+                                  borderRadius: 7,
+                                  position: "relative",
+                                  background: editingValues.donacion
+                                    ? "var(--gold)"
+                                    : "var(--border-subtle)",
+                                  transition: "background .2s",
+                                  flexShrink: 0,
+                                }}
+                              >
+                                <div
+                                  style={{
+                                    position: "absolute",
+                                    top: 2,
+                                    left: editingValues.donacion ? 13 : 2,
+                                    width: 10,
+                                    height: 10,
+                                    borderRadius: "50%",
+                                    background: "#fff",
+                                    transition: "left .2s",
+                                  }}
+                                />
+                              </div>
+                              <span
+                                style={{
+                                  fontSize: ".72rem",
+                                  color: editingValues.donacion
+                                    ? "var(--gold)"
+                                    : "var(--text-muted)",
+                                  fontWeight: editingValues.donacion
+                                    ? 500
+                                    : 400,
+                                  transition: "color .2s",
+                                  userSelect: "none",
+                                }}
+                              >
+                                Donación
+                              </span>
                             </div>
-                            <span style={{
-                              fontSize: ".72rem",
-                              color: editingValues.donacion ? "var(--gold)" : "var(--text-muted)",
-                              fontWeight: editingValues.donacion ? 500 : 400,
-                              transition: "color .2s", userSelect: "none",
-                            }}>Donación</span>
-                          </div>
-                          <button className="icon-btn" title="Guardar" onClick={() => saveEdit(pub._id)} style={{ color: "var(--gold)" }}>
-                            <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                              <polyline points="20 6 9 17 4 12" />
-                            </svg>
-                          </button>
-                          <button className="icon-btn" title="Cancelar" onClick={cancelEdit}>
-                            <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                              <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
-                            </svg>
-                          </button>
-                        </div>
-                      </td>
-                    </>
-                  ) : (
-                    <>
-                      <td style={{ fontSize: ".78rem" }}>{pub.tipoObra?.nombre}</td>
-                      <td className="price-col">
-                        {pub.precioBase?.toLocaleString()} <span style={{ fontSize: ".7rem", color: "var(--text-muted)" }}>USD</span>
-                      </td>
-                      <td>
-                        <span className={badgeClass(pub.estado)}>{pub.estado}</span>
-                      </td>
-                      <td>
-                        <div className="actions-col">
-                          {pub.estado !== "finalizada" && pub.estado !== "cancelada" && (
-                            <button className="icon-btn" title="Editar" onClick={() => handleEdit(pub)}>
-                              <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                              </svg>
-                            </button>
-                          )}
-                          <button className="icon-btn danger" title="Eliminar" onClick={() => handleEliminar(pub)}>
-                            <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                              <polyline points="3 6 5 6 21 6" />
-                              <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
-                              <path d="M10 11v6" /><path d="M14 11v6" />
-                            </svg>
-                          </button>
-                          {pub.estado === "activa" && (
-                            <button className="icon-btn" title="Finalizar" onClick={() => handleFinalizar(pub)}>
-                              <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                            <button
+                              className="icon-btn"
+                              title="Guardar"
+                              onClick={() => saveEdit(pub._id)}
+                              style={{ color: "var(--gold)" }}
+                            >
+                              <svg
+                                width={13}
+                                height={13}
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2.5"
+                              >
                                 <polyline points="20 6 9 17 4 12" />
                               </svg>
                             </button>
-                          )}
-                        </div>
-                      </td>
-                    </>
-                  )}
-                </tr>
-              ))}
+                            <button
+                              className="icon-btn"
+                              title="Cancelar"
+                              onClick={cancelEdit}
+                            >
+                              <svg
+                                width={13}
+                                height={13}
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                              >
+                                <line x1="18" y1="6" x2="6" y2="18" />
+                                <line x1="6" y1="6" x2="18" y2="18" />
+                              </svg>
+                            </button>
+                          </div>
+                        </td>
+                      </>
+                    ) : (
+                      <>
+                        <td style={{ fontSize: ".78rem" }}>
+                          {pub.tipoObra?.nombre}
+                        </td>
+                        <td className="price-col">
+                          {pub.precioBase?.toLocaleString()}{" "}
+                          <span
+                            style={{
+                              fontSize: ".7rem",
+                              color: "var(--text-muted)",
+                            }}
+                          >
+                            USD
+                          </span>
+                        </td>
+                        <td>
+                          <span className={badgeClass(pub.estado)}>
+                            {pub.estado}
+                          </span>
+                        </td>
+                        <td>
+                          <div className="actions-col">
+                            {pub.estado !== "finalizada" &&
+                              pub.estado !== "cancelada" && (
+                                <button
+                                  className="icon-btn"
+                                  title="Editar"
+                                  onClick={() => handleEdit(pub)}
+                                >
+                                  <svg
+                                    width={13}
+                                    height={13}
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="1.5"
+                                  >
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                                  </svg>
+                                </button>
+                              )}
+                            <button
+                              className="icon-btn danger"
+                              title="Eliminar"
+                              onClick={() => handleEliminar(pub)}
+                            >
+                              <svg
+                                width={13}
+                                height={13}
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                              >
+                                <polyline points="3 6 5 6 21 6" />
+                                <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                                <path d="M10 11v6" />
+                                <path d="M14 11v6" />
+                              </svg>
+                            </button>
+                            {pub.estado === "activa" && (
+                              <button
+                                className="icon-btn"
+                                title="Finalizar"
+                                onClick={() => handleFinalizar(pub)}
+                              >
+                                <svg
+                                  width={13}
+                                  height={13}
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="1.5"
+                                >
+                                  <polyline points="20 6 9 17 4 12" />
+                                </svg>
+                              </button>
+                            )}
+                          </div>
+                        </td>
+                      </>
+                    )}
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
