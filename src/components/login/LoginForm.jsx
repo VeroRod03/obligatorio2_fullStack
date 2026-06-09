@@ -19,40 +19,50 @@ const LoginForm = () => {
     formState: { isValid },
   } = useForm({ mode: "onChange" });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     setErrorMessage("");
-    api
-      .post("/auth/login", { email: data.email, password: data.password })
-      .then((response) => {
-        const token = response.data?.token || "";
-        const userId = response.data?.user?.id || "";
-        const rol = response.data?.user?.rol;
 
-        localStorage.setItem("token", token);
-        localStorage.setItem("userId", userId);
-        localStorage.setItem("rol", rol || "");
-        dispatch(setToken(token));
-
-        // Fetchear usuario completo (con nombreCompleto) antes de navegar
-        return api.get(`/usuario/${userId}`).then((userRes) => {
-          dispatch(setUsuario(userRes.data.usuario));
-          toast.success(response.data?.mensaje || "Login exitoso");
-          if (rol === "vendedor") navigate("/vendedor/dashboard");
-          else if (rol === "comprador") navigate("/comprador/dashboard");
-        });
-
-        //cargamos los tipos de obra
-        api.get("/tipoObra").then((res) => {
-          dispatch(setTiposObra(res.data.tiposObra || res.data));
-        });
-      })
-      .catch((error) => {
-        const errMsg =
-          error?.response?.data?.error?.[0]?.message ||
-          error?.response?.data?.message ||
-          "Credenciales incorrectas. Verificá tu email y contraseña.";
-        setErrorMessage(errMsg);
+    try {
+      const response = await api.post("/auth/login", {
+        email: data.email,
+        password: data.password,
       });
+
+      const token = response.data?.token || "";
+      const userId = response.data?.user?.id || "";
+      const rol = response.data?.user?.rol;
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("userId", userId);
+      localStorage.setItem("rol", rol || "");
+
+      dispatch(setToken(token));
+
+      // cargar usuario completo
+      const userRes = await api.get(`/usuario/${userId}`);
+
+      dispatch(setUsuario(userRes.data.usuario));
+
+      // cargar tipos de obra antes de entrar al dashboard
+      const tiposRes = await api.get("/tipoObra");
+
+      dispatch(setTiposObra(tiposRes.data.tiposObra || tiposRes.data));
+
+      toast.success(response.data?.mensaje || "Login exitoso");
+
+      if (rol === "vendedor") {
+        navigate("/vendedor/dashboard");
+      } else if (rol === "comprador") {
+        navigate("/comprador/dashboard");
+      }
+    } catch (error) {
+      const errMsg =
+        error?.response?.data?.error?.[0]?.message ||
+        error?.response?.data?.message ||
+        "Credenciales incorrectas. Verificá tu email y contraseña.";
+
+      setErrorMessage(errMsg);
+    }
   };
 
   return (
