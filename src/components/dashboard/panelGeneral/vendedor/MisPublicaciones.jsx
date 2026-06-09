@@ -152,7 +152,9 @@ const MisPublicaciones = ({ onTotalChange }) => {
         setEditingId(null);
       })
       .catch((error) =>
-        toast.error(error?.response?.data?.message || "Error al actualizar"),
+        toast.error(
+          error?.response?.data?.error?.[0]?.message || 
+          error?.response?.data?.message || "Error al actualizar"),
       );
   };
 
