@@ -21,7 +21,6 @@ const badgeClass = (estado) => {
 const MisPublicaciones = ({ onTotalChange }) => {
   const usuario = useSelector((state) => state.user.usuario);
   const tiposObra = useSelector((state) => state.tiposDeObra.tiposObra);
-  console.log("TIPOS EN SELECT", tiposObra);
 
   const [publicaciones, setPublicaciones] = useState([]);
   const [totalPublicaciones, setTotalPublicaciones] = useState(0);
@@ -95,8 +94,8 @@ const MisPublicaciones = ({ onTotalChange }) => {
     if (tipo === "eliminar") {
       api
         .delete(`/publicacion/${id}`)
-        .then(() => {
-          toast.success("Publicación eliminada");
+        .then((res) => {
+          toast.success(res.data?.mensaje || "Publicación eliminada");
           setPublicaciones((prev) => {
             const updated = prev.filter((p) => p._id !== id);
             onTotalChange?.(updated.length);
@@ -109,8 +108,8 @@ const MisPublicaciones = ({ onTotalChange }) => {
     } else {
       api
         .patch(`/publicacion/${id}/finalizar`)
-        .then(() => {
-          toast.success("Publicación finalizada");
+        .then((res) => {
+          toast.success(res.data?.mensaje || "Publicación finalizada");
           setPublicaciones((prev) =>
             prev.map((p) =>
               p._id === id ? { ...p, estado: "finalizada" } : p,
@@ -145,11 +144,11 @@ const MisPublicaciones = ({ onTotalChange }) => {
     api
       .patch(`/publicacion/${id}`, payload)
       .then((res) => {
-        const updated = res.data.publicacion || res.data || {};
+        const updated = res.data?.data || res.data || {};
         setPublicaciones((prev) =>
           prev.map((p) => (p._id === id ? { ...p, ...updated } : p)),
         );
-        toast.success("Publicación actualizada");
+        toast.success(res.data?.mensaje || "Publicación actualizada");
         setEditingId(null);
       })
       .catch((error) =>

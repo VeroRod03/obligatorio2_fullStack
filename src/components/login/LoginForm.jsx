@@ -46,11 +46,7 @@ const LoginForm = () => {
       // cargar tipos de obra antes de entrar al dashboard
       const tiposRes = await api.get("/tipoObra");
 
-      console.log("TIPOS PRODUCCION", tiposRes.data);
-
       dispatch(setTiposObra(tiposRes.data.tiposObra || tiposRes.data));
-
-      console.log("DISPATCH HECHO");
 
       toast.success(response.data?.mensaje || "Login exitoso");
 
