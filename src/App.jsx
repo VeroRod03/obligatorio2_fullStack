@@ -19,11 +19,11 @@ const AppRoutes = () => {
   const dispatch = useDispatch();
   const [listo, setListo] = useState(false);
 
-  const userId = localStorage.getItem("userId");
-
   useEffect(() => {
     const inicializar = async () => {
       try {
+        const userId = localStorage.getItem("userId");
+
         if (!userId) {
           setListo(true);
           return;
@@ -44,7 +44,7 @@ const AppRoutes = () => {
     };
 
     inicializar();
-  }, [userId]);
+  }, []);
 
   if (!listo) return null;
 

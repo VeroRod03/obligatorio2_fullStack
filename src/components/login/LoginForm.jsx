@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import api from "../../api/api.js";
 import { useDispatch } from "react-redux";
 import { setUsuario, setToken } from "../../features/usuario/usuario.slice.js";
+import { setTiposObra } from "../../features/tiposObra/tipoObra.slice.js";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -40,6 +41,10 @@ const LoginForm = () => {
           else if (rol === "comprador") navigate("/comprador/dashboard");
         });
 
+        //cargamos los tipos de obra
+        api.get("/tipoObra").then((res) => {
+          dispatch(setTiposObra(res.data.tiposObra || res.data));
+        });
       })
       .catch((error) => {
         const errMsg =
