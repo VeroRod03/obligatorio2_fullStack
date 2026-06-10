@@ -242,7 +242,7 @@ const MisPublicaciones = ({ onTotalChange }) => {
                       color: "var(--text-muted)",
                     }}
                   >
-                    Cargando…
+                    Cargando mis publicaciones…
                   </td>
                 </tr>
               ) : publicaciones.length === 0 ? (

@@ -396,6 +396,10 @@ body.sidebar-collapsed .sidebar-close-btn {
   grid-template-columns: repeat(3, 1fr);
 }
 
+.stats-row-2 {
+  grid-template-columns: 1fr 2fr;
+}
+
 .stat-card {
   background: var(--surface);
   border: 1px solid var(--border);

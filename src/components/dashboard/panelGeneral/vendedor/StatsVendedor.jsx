@@ -25,24 +25,25 @@ const StatsVendedor = ({ totalPubs }) => {
       .then((res) => {
         const ofertas = res.data.ofertas || res.data || [];
         console.log("Ofertas obtenidas para estadísticas:", ofertas);
-        const meses = {};
-        //toma la fecha actual y crea las claves de los últimos 6 meses con valor 0
         const now = new Date();
+        // Construir mapa por "año-mes" numérico para evitar problemas de locale
+        const slots = [];
         for (let i = 5; i >= 0; i--) {
-          //crea un objeto Date para el primer día del mes correspondiente y obtiene su nombre en español
           const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-          meses[d.toLocaleString("es", { month: "short" })] = 0;
-        }
-        //recorre las ofertas y suma 1 a la clave del mes correspondiente según la fecha de creación de cada oferta
-        ofertas.forEach((o) => {
-          const key = new Date(o.fecha || o.createdAt).toLocaleString("es", {
-            month: "short",
+          slots.push({
+            key: `${d.getFullYear()}-${d.getMonth()}`,
+            label: d.toLocaleString("es", { month: "short" }).replace(".", ""),
+            cantidad: 0,
           });
-          if (key in meses) meses[key]++;
+        }
+        ofertas.forEach((o) => {
+          const d = new Date(o.fechaOferta);
+          const key = `${d.getFullYear()}-${d.getMonth()}`;
+          const slot = slots.find((s) => s.key === key);
+          if (slot) slot.cantidad++;
         });
-        //convierte el objeto meses en un array de objetos con las propiedades mes y cantidad para usarlo en el gráfico
         setOfertasPorMes(
-          Object.entries(meses).map(([mes, cantidad]) => ({ mes, cantidad })),
+          slots.map(({ label, cantidad }) => ({ mes: label, cantidad })),
         );
       })
       .catch(() => {
@@ -143,7 +144,7 @@ const StatsVendedor = ({ totalPubs }) => {
           Actividad <em>mensual</em>
         </div>
         <div style={{ marginTop: ".6rem", height: 70 }}>
-          <Bar
+          <Bar key={ofertasPorMes.map(m => m.cantidad).join("-")}
             data={{
               labels: ofertasPorMes.map((m) => m.mes),
               datasets: [

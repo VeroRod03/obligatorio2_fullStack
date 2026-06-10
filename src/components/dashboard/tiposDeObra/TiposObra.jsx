@@ -120,13 +120,13 @@ const TiposObra = () => {
               <thead>
                 <tr>
                   <th>Nombre</th>
-                  <th style={{ fontSize: ".72rem", color: "var(--text-muted)" }}>ID</th>
+                  <th>ID</th>
                   <th />
                 </tr>
               </thead>
               <tbody>
                 {cargando ? (
-                  <tr><td colSpan={3} style={{ textAlign: "center", padding: "2rem", color: "var(--text-muted)" }}>Cargando…</td></tr>
+                  <tr><td colSpan={3} style={{ textAlign: "center", padding: "2rem", color: "var(--text-muted)" }}>Cargando tipos de obra…</td></tr>
                 ) : tipos.length === 0 ? (
                   <tr><td colSpan={3} style={{ textAlign: "center", padding: "2rem", color: "var(--text-muted)" }}>No hay tipos de obra.</td></tr>
                 ) : tipos.map((tipo) => (
@@ -145,7 +145,7 @@ const TiposObra = () => {
                         <span>{tipo.nombre}</span>
                       )}
                     </td>
-                    <td style={{ fontSize: ".72rem", color: "var(--text-muted)", fontFamily: "monospace" }}>
+                    <td style={{ fontSize: ".72rem", color: "var(--text-dim)", fontFamily: "monospace" }}>
                       {tipo._id}
                     </td>
                     <td>
