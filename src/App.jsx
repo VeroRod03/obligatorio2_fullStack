@@ -7,7 +7,12 @@ import { setTiposObra } from "./features/tiposObra/tipoObra.slice.js";
 import api from "./api/api.js";
 import LoginPage from "./pages/LoginPage";
 import RegistroPage from "./pages/RegistroPage";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, cssTransition } from "react-toastify";
+
+const fadeToast = cssTransition({
+  enter: "fade-in-toast",
+  exit: "fade-out-toast",
+});
 import ProtectedRoute from "./components/protected/ProtectedRoute.jsx";
 import ProtectedRouteVendedor from "./components/protected/ProtectedRouteVendedor.jsx";
 import ProtectedRouteComprador from "./components/protected/ProtectedRouteComprador.jsx";
@@ -79,7 +84,8 @@ const App = () => {
       <AppRoutes />
       <ToastContainer
         position="bottom-right"
-        autoClose={4000}
+        autoClose={3500}
+        transition={fadeToast}
         hideProgressBar={false}
         closeOnClick
         pauseOnHover

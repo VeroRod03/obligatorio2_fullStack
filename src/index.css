@@ -261,3 +261,14 @@ input::placeholder {
 ::-webkit-scrollbar-thumb {
   background: var(--gold-dim);
 }
+
+@keyframes fadeInToast {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes fadeOutToast {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+.fade-in-toast  { animation: fadeInToast  0.35s ease forwards; }
+.fade-out-toast { animation: fadeOutToast 0.8s  ease forwards; }
