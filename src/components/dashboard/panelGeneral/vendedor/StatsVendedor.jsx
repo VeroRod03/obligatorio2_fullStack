@@ -21,7 +21,7 @@ const StatsVendedor = ({ totalPubs }) => {
 
   useEffect(() => {
     api
-      .get("/oferta/mis-ofertas-recibidas")
+      .get("/oferta/mis-ofertas")
       .then((res) => {
         const ofertas = res.data.ofertas || res.data || [];
         const meses = {};
