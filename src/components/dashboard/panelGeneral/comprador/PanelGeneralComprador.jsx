@@ -25,8 +25,7 @@ const PanelGeneralComprador = () => {
       .get("/publicacion", { params })
       .then((res) => {
         setPublicaciones(res.data.publicaciones);
-        const total = res.data.pagination?.total ?? res.data.total ?? 0;
-        setTotalPaginas(Math.max(1, Math.ceil(total / LIMIT)));
+        setTotalPaginas(res.data.paginas ?? 1);
       })
       .catch(() => setPublicaciones([]))
       .finally(() => setCargando(false));
@@ -83,10 +82,24 @@ const PanelGeneralComprador = () => {
             publicaciones={publicaciones}
             cargando={cargando}
             onSeleccionar={setPublicacionSeleccionada}
-            pagina={pagina}
-            totalPaginas={totalPaginas}
-            onPagina={setPagina}
           />
+          {publicaciones.length > 0 && (
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", marginTop: "1.5rem", fontSize: ".82rem", color: "var(--text-muted)" }}>
+              <button
+                className="btn-ghost"
+                style={{ padding: ".3rem .8rem", fontSize: ".8rem", opacity: pagina <= 1 ? .35 : 1 }}
+                disabled={pagina <= 1}
+                onClick={() => setPagina(pagina - 1)}
+              >← Anterior</button>
+              <span>Página {pagina} de {totalPaginas}</span>
+              <button
+                className="btn-ghost"
+                style={{ padding: ".3rem .8rem", fontSize: ".8rem", opacity: pagina >= totalPaginas ? .35 : 1 }}
+                disabled={pagina >= totalPaginas}
+                onClick={() => setPagina(pagina + 1)}
+              >Siguiente →</button>
+            </div>
+          )}
           <DetallePublicacionModal
             publicacion={publicacionSeleccionada}
             cerrar={() => setPublicacionSeleccionada(null)}
