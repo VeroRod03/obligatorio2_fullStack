@@ -84,7 +84,7 @@ const MisPublicaciones = ({ onTotalChange }) => {
 
   const handleFinalizar = (pub) =>
     setModalConfirmacion({
-      tipo: "finalizar",
+      tipo: pub.ultimaOferta ? "finalizar" : "sin-oferta",
       id: pub._id,
       titulo: pub.obra?.titulo,
     });
