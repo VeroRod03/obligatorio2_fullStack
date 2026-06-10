@@ -4,15 +4,13 @@ import "../../materials/dashboard.css";
 import Topbar from "../components/dashboard/topbar/Topbar.jsx";
 import TopbarNuevaPublicacion from "../components/dashboard/topbar/TopbarNuevaPublicacion.jsx";
 import PanelGeneralVendedor from "../components/dashboard/panelGeneral/vendedor/PanelGeneralVendedor.jsx";
-import Publicaciones from "../components/dashboard/vistas/Publicaciones.jsx";
 import TiposObra from "../components/dashboard/tiposDeObra/TiposObra.jsx";
 import ExplorarObras from "../components/dashboard/explorarObras/ExplorarObras.jsx";
 import MiPerfil from "../components/dashboard/miPerfil/MiPerfil.jsx";
-import Plan from "../components/dashboard/vistas/Plan.jsx";
+import MiPlan from "../components/dashboard/plan/MiPlan.jsx";
 
 const titulosVendedor = {
   "panel-general": "Panel General",
-  "publicaciones": "Publicaciones activas",
   "tipos-obra": "Tipos de obra",
   "explorar": "Explorar obras",
   "perfil": "Mi perfil",
@@ -32,11 +30,10 @@ const DashboardPageVendedor = () => {
           {vista === "panel-general" && <TopbarNuevaPublicacion setVista={setVista} />}
         </div>
         {vista === "panel-general" && <PanelGeneralVendedor />}
-        {vista === "publicaciones" && <Publicaciones />}
         {vista === "tipos-obra" && <TiposObra />}
         {vista === "explorar" && <ExplorarObras />}
         {vista === "perfil" && <MiPerfil />}
-        {vista === "plan" && <Plan />}
+        {vista === "plan" && <MiPlan />}
       </div>
     </div>
   );

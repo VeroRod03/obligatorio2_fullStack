@@ -1078,22 +1078,22 @@ body.sidebar-collapsed .sidebar-close-btn {
    PLAN Y SUSCRIPCIÓN (vista completa)
 ════════════════════════════════════════════ */
 .plan-page-layout {
-  display: grid;
-  grid-template-columns: 320px 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 1.5rem;
-  align-items: start;
 }
 
 .plan-options {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
 }
 
 .plan-option-card {
   background: var(--surface-2);
   border: 1px solid var(--border);
-  padding: 1.5rem;
+  padding: 2.8rem 2.2rem;
+  min-height: 320px;
   position: relative;
   display: flex;
   flex-direction: column;
