@@ -24,6 +24,7 @@ const StatsVendedor = ({ totalPubs }) => {
       .get("/oferta/mis-ofertas")
       .then((res) => {
         const ofertas = res.data.ofertas || res.data || [];
+        console.log("Ofertas obtenidas para estadísticas:", ofertas);
         const meses = {};
         //toma la fecha actual y crea las claves de los últimos 6 meses con valor 0
         const now = new Date();

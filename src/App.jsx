@@ -79,8 +79,20 @@ const App = () => {
       <AppRoutes />
       <ToastContainer
         position="bottom-right"
-        autoClose={5000}
-        theme="colored"
+        autoClose={4000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        toastStyle={{
+          background: "#1e1b17",
+          border: "1px solid rgba(201,168,76,0.22)",
+          color: "#f0e8d8",
+          fontFamily: "'Cormorant Garamond', serif",
+          fontSize: "0.9rem",
+          borderRadius: "8px",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.6)",
+        }}
+        progressStyle={{ background: "#c9a84c" }}
       />
     </Provider>
   );

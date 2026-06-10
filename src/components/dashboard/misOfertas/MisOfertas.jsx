@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import api from "../../../api/api.js";
 import DetallePublicacionModal from "../panelGeneral/comprador/DetallePublicacionModal.jsx";
 
 const MisOfertas = () => {
+  const usuario = useSelector((state) => state.user.usuario);
 
     const getImageUrl = (imageId) => {
     if (!imageId) return null;
@@ -10,6 +12,7 @@ const MisOfertas = () => {
     return `https://www.artic.edu/iiif/2/${imageId}/full/843,/0/default.jpg`;
   };
   const [publicaciones, setPublicaciones] = useState([]);
+  const [cargando, setCargando] = useState(true);
   const [misofertas, setMisOfertas] = useState({});
   const [publicacionSeleccionada, setPublicacionSeleccionada] = useState(null);
 
@@ -46,19 +49,12 @@ const MisOfertas = () => {
     api
       .get("/publicacion/mis-publicaciones", { params: { limit: 100 } })
       .then((res) => {
-        console.log("MisOfertas response:", res.data.publicaciones || res.data);
         const pubs = res.data.publicaciones || res.data || [];
         setPublicaciones(pubs);
-        
-        // Cargar las ofertas para cada publicación
-        pubs.forEach((pub) => {
-          fetchMiOferta(pub._id);
-        });
+        pubs.forEach((pub) => fetchMiOferta(pub._id));
       })
-      .catch((err) => {
-        console.log("MisOfertas error:", err);
-        setPublicaciones([]);
-      });
+      .catch(() => setPublicaciones([]))
+      .finally(() => setCargando(false));
   }, []);
 
   return (
@@ -82,10 +78,25 @@ const MisOfertas = () => {
               </tr>
             </thead>
             <tbody>
-              {publicaciones.length === 0 ? (
-                <tr><td colSpan={6} style={{ textAlign: "center", padding: "2rem" }}>No tenés ofertas activas.</td></tr>
-              ) : publicaciones.map((pub) => (
-                <tr key={pub._id} onClick={() => setPublicacionSeleccionada(pub)} style={{ cursor: "pointer" }}>
+              {cargando ? (
+                <tr><td colSpan={6} style={{ textAlign: "center", padding: "2rem", color: "var(--text-muted)" }}>Cargando mis ofertas…</td></tr>
+              ) : publicaciones.length === 0 ? (
+                <tr><td colSpan={6} style={{ textAlign: "center", padding: "2rem", color: "var(--text-muted)" }}>No tenés ofertas activas.</td></tr>
+              ) : publicaciones.map((pub) => {
+                const esGanador = pub.estado === "finalizada" && pub.ganador && pub.ganador._id === usuario?._id;
+                return (
+                <tr
+                  key={pub._id}
+                  onClick={() => setPublicacionSeleccionada(pub)}
+                  style={{
+                    cursor: "pointer",
+                    ...(esGanador ? {
+                      background: "rgba(201,168,76,0.1)",
+                      outline: "1px solid rgba(201,168,76,0.45)",
+                      borderLeft: "3px solid var(--gold)",
+                    } : {}),
+                  }}
+                >
                   <td>
                     <div
                       className="obra-thumb"
@@ -122,10 +133,24 @@ const MisOfertas = () => {
                     </span>
                   </td>
                   <td>
-                    <span className="badge badge-active">Activa</span>
+                    <span className="badge" style={esGanador ? {
+                      color: "var(--gold-light)",
+                      borderColor: "rgba(201,168,76,0.45)",
+                      background: "rgba(201,168,76,0.08)",
+                    } : pub.estado === "finalizada" ? {
+                      color: "var(--text-muted)",
+                      borderColor: "var(--border)",
+                    } : {
+                      color: "#6aaf7e",
+                      borderColor: "rgba(106,175,126,0.35)",
+                      background: "rgba(106,175,126,0.07)",
+                    }}>
+                      {pub.estado}
+                    </span>
                   </td>
                 </tr>
-              ))}
+                );
+              })}
             </tbody>
 
           </table>

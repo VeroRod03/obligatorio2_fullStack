@@ -226,6 +226,7 @@ const MisPublicaciones = ({ onTotalChange }) => {
                 <th>Obra / Artista</th>
                 <th>Tipo</th>
                 <th>Precio base</th>
+                <th>Última oferta</th>
                 <th>Estado</th>
                 <th />
               </tr>
@@ -234,7 +235,7 @@ const MisPublicaciones = ({ onTotalChange }) => {
               {cargando ? (
                 <tr>
                   <td
-                    colSpan={6}
+                    colSpan={7}
                     style={{
                       textAlign: "center",
                       padding: "2rem",
@@ -247,7 +248,7 @@ const MisPublicaciones = ({ onTotalChange }) => {
               ) : publicaciones.length === 0 ? (
                 <tr>
                   <td
-                    colSpan={6}
+                    colSpan={7}
                     style={{
                       textAlign: "center",
                       padding: "2rem",
@@ -310,6 +311,12 @@ const MisPublicaciones = ({ onTotalChange }) => {
                           >
                             USD
                           </span>
+                        </td>
+                        <td className="price-col">
+                          {pub.ultimaOferta
+                            ? <>{pub.ultimaOferta.monto?.toLocaleString()} <span style={{ fontSize: ".7rem", color: "var(--text-muted)" }}>USD</span></>
+                            : <span style={{ color: "var(--text-muted)", fontSize: ".78rem" }}>—</span>
+                          }
                         </td>
                         <td>
                           <select
@@ -446,6 +453,12 @@ const MisPublicaciones = ({ onTotalChange }) => {
                           >
                             USD
                           </span>
+                        </td>
+                        <td className="price-col">
+                          {pub.ultimaOferta
+                            ? <>{pub.ultimaOferta.monto?.toLocaleString()} <span style={{ fontSize: ".7rem", color: "var(--text-muted)" }}>USD</span></>
+                            : <span style={{ color: "var(--text-muted)", fontSize: ".78rem" }}>—</span>
+                          }
                         </td>
                         <td>
                           <span className={badgeClass(pub.estado)}>

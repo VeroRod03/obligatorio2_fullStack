@@ -1,13 +1,23 @@
-//recibe la funcion onSeleccionar que en relaidad es el setPublicacionSeleccionada del padre
-const PublicacionesGrid = ({ publicaciones, onSeleccionar }) => {
+const PublicacionesGrid = ({ publicaciones, onSeleccionar, cargando }) => {
   const getImageUrl = (imageId) => {
     if (!imageId) return null;
-
     return `https://www.artic.edu/iiif/2/${imageId}/full/843,/0/default.jpg`;
   };
 
+  if (cargando) {
+    return (
+      <div style={{ textAlign: "center", padding: "3rem", color: "var(--text-muted)", fontSize: ".88rem" }}>
+        Cargando mis publicaciones…
+      </div>
+    );
+  }
+
   if (publicaciones.length === 0) {
-    return <p>No se encontraron publicaciones.</p>;
+    return (
+      <div style={{ textAlign: "center", padding: "3rem", color: "var(--text-muted)", fontSize: ".88rem" }}>
+        No se encontraron publicaciones.
+      </div>
+    );
   }
 
   return (
@@ -16,7 +26,6 @@ const PublicacionesGrid = ({ publicaciones, onSeleccionar }) => {
         <div
           key={pub._id}
           className="pub-card"
-          /* Al hacer click en la tarjeta, se llama a onSeleccionar para settar la publicacion seleccionada */
           onClick={() => onSeleccionar(pub)}
         >
           <div
@@ -28,25 +37,20 @@ const PublicacionesGrid = ({ publicaciones, onSeleccionar }) => {
             }}
           >
             <div className="pub-card-tipo">{pub.tipoObra?.nombre}</div>
-
             {pub.donacion && <div className="pub-card-donacion">Donación</div>}
           </div>
 
           <div className="pub-card-body">
             <div className="pub-card-title">{pub.obra?.titulo}</div>
-
             <div className="pub-card-artist">{pub.obra?.artista}</div>
-
             <div className="pub-card-price">
               {pub.ultimaOferta ? (
                 <span style={{ color: "var(--gold-light)" }}>
-                  Última:
-                  {pub.ultimaOferta.monto.toLocaleString()} USD
+                  Última: {pub.ultimaOferta.monto.toLocaleString()} USD
                 </span>
               ) : (
                 <span style={{ color: "var(--text-muted)" }}>
-                  Base:
-                  {pub.precioBase.toLocaleString()} USD
+                  Base: {pub.precioBase.toLocaleString()} USD
                 </span>
               )}
             </div>

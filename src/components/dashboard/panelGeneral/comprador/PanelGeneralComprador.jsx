@@ -6,45 +6,39 @@ import { useSelector } from "react-redux";
 
 const PanelGeneralComprador = () => {
   const [publicaciones, setPublicaciones] = useState([]);
+  const [cargando, setCargando] = useState(true);
   const [buscar, setBuscar] = useState("");
   const [tipoObra, setTipoObra] = useState("");
   const [publicacionSeleccionada, setPublicacionSeleccionada] = useState(null);
   const tiposObra = useSelector((state) => state.tiposDeObra.tiposObra);
 
-  // Carga los tipos de obra al montar
-
   const fetchPublicaciones = (buscarVal, tipoObraVal, page = 1, limit = 12) => {
     const params = { estado: "activa", page, limit };
     if (buscarVal.trim()) params.buscar = buscarVal;
     if (tipoObraVal) params.tipoObra = tipoObraVal;
-
+    setCargando(true);
     api
       .get("/publicacion", { params })
       .then((res) => setPublicaciones(res.data.publicaciones))
-      .catch(() => setPublicaciones([]));
+      .catch(() => setPublicaciones([]))
+      .finally(() => setCargando(false));
   };
 
-  // Debounce solo para el texto
   useEffect(() => {
     const timer = setTimeout(() => {
       fetchPublicaciones(buscar, tipoObra);
     }, 400);
-
     return () => clearTimeout(timer);
   }, [buscar]);
 
-  // Inmediato para el tipo
   useEffect(() => {
     fetchPublicaciones(buscar, tipoObra);
   }, [tipoObra]);
 
   const actualizarPublicacion = (pubActualizada) => {
     setPublicacionSeleccionada(pubActualizada);
-
     setPublicaciones((prev) =>
-      prev.map((pub) =>
-        pub._id === pubActualizada._id ? pubActualizada : pub,
-      ),
+      prev.map((pub) => (pub._id === pubActualizada._id ? pubActualizada : pub)),
     );
   };
 
@@ -78,9 +72,9 @@ const PanelGeneralComprador = () => {
           </div>
         </div>
         <div className="panel-body">
-          {/* al grid le pasamos las publicaciones y la función para seleccionar una */}
           <PublicacionesGrid
             publicaciones={publicaciones}
+            cargando={cargando}
             onSeleccionar={setPublicacionSeleccionada}
           />
           <DetallePublicacionModal
