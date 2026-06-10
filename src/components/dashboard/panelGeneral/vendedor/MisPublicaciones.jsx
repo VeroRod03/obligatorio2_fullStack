@@ -11,11 +11,12 @@ const getImageUrl = (imageId) => {
   return `https://www.artic.edu/iiif/2/${imageId}/full/200,/0/default.jpg`;
 };
 
-const badgeClass = (estado) => {
-  if (estado === "activa") return "badge badge-active";
-  if (estado === "pausada") return "badge badge-pending";
-  if (estado === "finalizada") return "badge badge-inactive";
-  return "badge";
+const badgeStyle = (estado) => {
+  if (estado === "activa") return { borderColor: "#6aaf7e", color: "#6aaf7e" };
+  if (estado === "pausada") return { borderColor: "#c9943c", color: "#c9943c" };
+  if (estado === "finalizada") return { borderColor: "var(--text-muted)", color: "var(--text-muted)" };
+  if (estado === "cancelada") return { borderColor: "#e05252", color: "#e05252" };
+  return {};
 };
 
 const MisPublicaciones = ({ onTotalChange }) => {
@@ -111,9 +112,21 @@ const MisPublicaciones = ({ onTotalChange }) => {
         .then((res) => {
           toast.success(res.data?.mensaje || "Publicación finalizada");
           setPublicaciones((prev) =>
-            prev.map((p) =>
-              p._id === id ? { ...p, estado: "finalizada" } : p,
-            ),
+            prev.map((p) => {
+              if (p._id !== id) return p;
+              const updated = res.data?.data || res.data || {};
+              return {
+                ...p,
+                ...updated,
+                estado: "finalizada",
+                ultimaOferta: typeof updated.ultimaOferta === "object" && updated.ultimaOferta !== null
+                  ? updated.ultimaOferta
+                  : p.ultimaOferta,
+                tipoObra: typeof updated.tipoObra === "object" && updated.tipoObra !== null
+                  ? updated.tipoObra
+                  : p.tipoObra,
+              };
+            }),
           );
         })
         .catch((error) =>
@@ -147,8 +160,14 @@ const MisPublicaciones = ({ onTotalChange }) => {
       .put(`/publicacion/${id}`, payload)
       .then((res) => {
         const updated = res.data?.data || res.data || {};
+        const tipoObraObj = tiposObra.find((t) => t._id === editingValues.tipoObra);
         setPublicaciones((prev) =>
-          prev.map((p) => (p._id === id ? { ...p, ...updated } : p)),
+          prev.map((p) => {
+            if (p._id !== id) return p;
+            const merged = { ...p, ...updated };
+            if (tipoObraObj) merged.tipoObra = tipoObraObj;
+            return merged;
+          }),
         );
         toast.success(res.data?.mensaje || "Publicación actualizada");
         setEditingId(null);
@@ -202,8 +221,8 @@ const MisPublicaciones = ({ onTotalChange }) => {
               <option value="">Todos los estados</option>
               <option value="activa">Activa</option>
               <option value="pausada">Pausada</option>
-              <option value="finalizada">Finalizada</option>
               <option value="cancelada">Cancelada</option>
+              <option value="finalizada">Finalizada</option>
             </select>
             <select
               className="filter-select"
@@ -293,7 +312,6 @@ const MisPublicaciones = ({ onTotalChange }) => {
                             }
                             style={{ fontSize: ".78rem", width: "100%" }}
                           >
-                            <option value="">-- Tipo --</option>
                             {tiposObra.map((t) => (
                               <option key={t._id} value={t._id}>
                                 {t.nombre}
@@ -330,7 +348,6 @@ const MisPublicaciones = ({ onTotalChange }) => {
                             <option value="activa">Activa</option>
                             <option value="pausada">Pausada</option>
                             <option value="cancelada">Cancelada</option>
-                            <option value="finalizada">Finalizada</option>
                           </select>
                         </td>
                         <td>
@@ -461,9 +478,15 @@ const MisPublicaciones = ({ onTotalChange }) => {
                           }
                         </td>
                         <td>
-                          <span className={badgeClass(pub.estado)}>
+                          <span className="badge" style={badgeStyle(pub.estado)}>
                             {pub.estado}
                           </span>
+                          {pub.estado === "finalizada" && pub.ganador && (
+                            <div style={{ marginTop: "0.35rem", fontSize: ".7rem", color: "var(--text-muted)", lineHeight: 1.4 }}>
+                              <div style={{ color: "var(--text-dim)" }}>{pub.ganador.nombre}</div>
+                              <div>{pub.ganador.email}</div>
+                            </div>
+                          )}
                         </td>
                         <td>
                           <div className="actions-col">

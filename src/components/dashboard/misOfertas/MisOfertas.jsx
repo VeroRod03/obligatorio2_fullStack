@@ -137,9 +137,13 @@ const MisOfertas = () => {
                       color: "var(--gold-light)",
                       borderColor: "rgba(201,168,76,0.45)",
                       background: "rgba(201,168,76,0.08)",
-                    } : pub.estado === "finalizada" ? {
+                    } : pub.estado === "finalizada" || pub.estado === "cancelada" ? {
                       color: "var(--text-muted)",
                       borderColor: "var(--border)",
+                    } : pub.estado === "pausada" ? {
+                      color: "#c9943c",
+                      borderColor: "rgba(201,148,60,0.35)",
+                      background: "rgba(201,148,60,0.07)",
                     } : {
                       color: "#6aaf7e",
                       borderColor: "rgba(106,175,126,0.35)",
