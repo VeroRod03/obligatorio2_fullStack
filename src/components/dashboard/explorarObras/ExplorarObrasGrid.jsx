@@ -14,8 +14,8 @@ const ExplorarObrasGrid = ({ buscar, onSeleccionar }) => {
     setLoading(true);
     const fields = "id,title,artist_title,image_id,date_display";
     const url = buscar?.trim()
-      ? `https://api.artic.edu/api/v1/artworks/search?limit=14&q=${encodeURIComponent(buscar.trim())}&fields=${fields}`
-      : `https://api.artic.edu/api/v1/artworks?limit=14&fields=${fields}`;
+      ? `https://api.artic.edu/api/v1/artworks/search?limit=20&q=${encodeURIComponent(buscar.trim())}&fields=${fields}`
+      : `https://api.artic.edu/api/v1/artworks?limit=20&fields=${fields}`;
 
     axios
       .get(url)
